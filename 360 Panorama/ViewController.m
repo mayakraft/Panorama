@@ -16,8 +16,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    textures = [NSArray arrayWithObjects:@"park.jpg", @"marsh.jpg", @"narthex.png", @"cave.jpg", @"station.jpg", @"snow_small.jpg", @"office.jpg", nil];
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        textures = [NSArray arrayWithObjects:@"park.jpg", @"marsh.jpg", @"narthex.png", @"cave.jpg", @"station.jpg", @"snow_small.jpg", @"office.jpg", nil];
+    else
+        textures = [NSArray arrayWithObjects:@"narthex.png",nil];
     
     self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
     
@@ -29,6 +31,9 @@
     UISwipeGestureRecognizer *swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeHandler:)];
     [self.view addGestureRecognizer:swipeGesture];
     
+    UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchHandler:)];
+    [self.view addGestureRecognizer:pinchGesture];
+    
     glController = [[GLController alloc] initWithTexture:[textures objectAtIndex:arc4random()%[textures count]]];
     
     // init lighting
@@ -37,9 +42,10 @@
     glEnable(GL_LIGHTING);
     
     ///////////////////////////////////////////////////////////////////////////////
+    lastPinchScale = 1.0;
+    
     glMatrixMode(GL_PROJECTION);    // the frustum affects the projection matrix
     glLoadIdentity();               // not the model matrix
-    float aspectRatio;
     if(self.interfaceOrientation == 3 || self.interfaceOrientation == 4)
         aspectRatio = (float)[[UIScreen mainScreen] bounds].size.height / (float)[[UIScreen mainScreen] bounds].size.width;
     else
@@ -62,25 +68,16 @@
         [motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue] withHandler: ^(CMDeviceMotion *deviceMotion, NSError *error){
             CMAttitude *attitude = deviceMotion.attitude;
             [glController setEyeRotationX:(attitude.roll+M_PI/2.0)*180/M_PI Y:(-attitude.yaw)*180/M_PI Z:attitude.pitch*180/M_PI];
-            //            [glController buildEyeInterpolationVectorFromNewX:(attitude.roll+M_PI/2.0)*360/M_PI Y:(-attitude.yaw)*360/M_PI Z:attitude.pitch*360/M_PI];
             clock++;
             if(clock >= 15){
                 clock = 0;
-                [glController report];
                 NSLog(@"++++++++++++++++++++++++++++++++++++++++++++");
                 NSLog(@"(P:%.2f, R:%.2f, Y:%.2f)",(attitude.roll+M_PI/2.0)*180/M_PI, attitude.pitch*180/M_PI, (-attitude.yaw)*180/M_PI);
                 NSLog(@"--------------------------------------------");
             }
         }];
     }
-    
-    //    CFAbsoluteTimeGetCurrent();
-    //    displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayLinkCalled)];
-    //    [displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
-    
 }
-
--(void)displayLinkCalled {}
 
 -(void) glkView:(GLKView *)view drawInRect:(CGRect)rect{
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -89,7 +86,29 @@
 }
 
 -(void)swipeHandler:(UISwipeGestureRecognizer*)sender{
-    glController = [[GLController alloc] initWithTexture:[textures objectAtIndex:arc4random()%[textures count]]];
+    [glController swapTexture:[textures objectAtIndex:arc4random()%[textures count]]];
+}
+
+-(void)pinchHandler:(UIPinchGestureRecognizer*)sender{
+    if([sender state] == 2){
+        glMatrixMode(GL_PROJECTION);
+        glPushMatrix();
+        glLoadIdentity();
+        GLfloat fov = 60 /( lastPinchScale * [sender scale]);
+        if(fov < 45) fov = 45;
+        if(fov > 120) fov = 120;
+        float zNear = 0.1;
+        float zFar = 1000;
+        GLfloat frustum = zNear * tanf(GLKMathDegreesToRadians(fov) / 2.0);
+        glFrustumf(-frustum, frustum, -frustum/aspectRatio, frustum/aspectRatio, zNear, zFar);
+        glMatrixMode(GL_MODELVIEW);
+        glPopMatrix();
+    }
+    else if([sender state] == 3){
+        lastPinchScale *= [sender scale];
+        if(lastPinchScale < .5) lastPinchScale = .5;
+        if(lastPinchScale > 1.333333) lastPinchScale = 1.333333;
+    }
 }
 
 - (void)didReceiveMemoryWarning
