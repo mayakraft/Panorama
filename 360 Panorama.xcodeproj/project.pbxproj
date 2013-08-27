@@ -528,6 +528,7 @@
 				D5FAE0AC17C8956600AE6EC9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D5FAE0AD17C8956600AE6EC9 /* Build configuration list for PBXNativeTarget "360 PanoramaTests" */ = {
 			isa = XCConfigurationList;
@@ -536,6 +537,7 @@
 				D5FAE0AF17C8956600AE6EC9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
