@@ -8,28 +8,40 @@
 
 #import "ViewController.h"
 
+#define FOV 90
+
 @implementation ViewController
 
 @synthesize context = _context;
 @synthesize effect = _effect;
+@synthesize texturePath;
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    textures = [NSArray arrayWithObjects:@"park.jpg", @"marsh.jpg", @"narthex.png", @"cave.jpg", @"station.jpg", @"snow_small.jpg", @"office.jpg", nil];
-    
+
     self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
+    [(GLKView*)self.view setContext:self.context];
+    [(GLKView*)self.view setDrawableDepthFormat:GLKViewDrawableDepthFormat24];
     
-    GLKView *view = (GLKView*)self.view;
-    view.context = self.context;
-    view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
     [EAGLContext setCurrentContext:self.context];
     
-    UISwipeGestureRecognizer *swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeHandler:)];
-    [self.view addGestureRecognizer:swipeGesture];
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHandler:)];
+    [self.view addGestureRecognizer:tapGesture];
     
-    glController = [[GLController alloc] initWithTexture:[textures objectAtIndex:arc4random()%[textures count]]];
+    UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchHandler:)];
+    [self.view addGestureRecognizer:pinchGesture];
+    
+    glController = [[GLController alloc] initWithTexture:@"park_2048.png"];
     
     // init lighting
     glShadeModel(GL_SMOOTH);
@@ -37,20 +49,21 @@
     glEnable(GL_LIGHTING);
     
     ///////////////////////////////////////////////////////////////////////////////
+    lastPinchScale = 1.0;
+    
     glMatrixMode(GL_PROJECTION);    // the frustum affects the projection matrix
     glLoadIdentity();               // not the model matrix
-    float aspectRatio;
-    if(self.interfaceOrientation == 3 || self.interfaceOrientation == 4)
-        aspectRatio = (float)[[UIScreen mainScreen] bounds].size.height / (float)[[UIScreen mainScreen] bounds].size.width;
-    else
-        aspectRatio = (float)[[UIScreen mainScreen] bounds].size.width / (float)[[UIScreen mainScreen] bounds].size.height;
-    int fov = 60;
+    //[self.view setTransform:CGAffineTransformMakeRotation(M_PI*.5)];
+    //    aspectRatio = (float)[[UIScreen mainScreen] bounds].size.width / (float)[[UIScreen mainScreen] bounds].size.height;
+    aspectRatio = (float)[[UIScreen mainScreen] bounds].size.height / (float)[[UIScreen mainScreen] bounds].size.width;
+    int fov = FOV;
     float zNear = 0.1;
     float zFar = 1000;
     GLfloat frustum = zNear * tanf(GLKMathDegreesToRadians(fov) / 2.0);
     glFrustumf(-frustum, frustum, -frustum/aspectRatio, frustum/aspectRatio, zNear, zFar);
-    glViewport(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
+    glViewport(0, 0, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width);
     ///////////////////////////////////////////////////////////////////////////////
+    
     glEnable(GL_DEPTH_TEST);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -62,25 +75,24 @@
         [motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue] withHandler: ^(CMDeviceMotion *deviceMotion, NSError *error){
             CMAttitude *attitude = deviceMotion.attitude;
             [glController setEyeRotationX:(attitude.roll+M_PI/2.0)*180/M_PI Y:(-attitude.yaw)*180/M_PI Z:attitude.pitch*180/M_PI];
-            //            [glController buildEyeInterpolationVectorFromNewX:(attitude.roll+M_PI/2.0)*360/M_PI Y:(-attitude.yaw)*360/M_PI Z:attitude.pitch*360/M_PI];
             clock++;
             if(clock >= 15){
                 clock = 0;
-                [glController report];
                 NSLog(@"++++++++++++++++++++++++++++++++++++++++++++");
                 NSLog(@"(P:%.2f, R:%.2f, Y:%.2f)",(attitude.roll+M_PI/2.0)*180/M_PI, attitude.pitch*180/M_PI, (-attitude.yaw)*180/M_PI);
                 NSLog(@"--------------------------------------------");
             }
         }];
     }
-    
-    //    CFAbsoluteTimeGetCurrent();
-    //    displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayLinkCalled)];
-    //    [displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
-    
 }
 
--(void)displayLinkCalled {}
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    // funny this stuff just doesn't work in viewDidLoad
+    [(GLKView*)self.view setFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width)];
+    [(GLKView*)self.view setTransform:CGAffineTransformMakeRotation(M_PI*.5)];
+    [(GLKView*)self.view setCenter:CGPointMake([[UIScreen mainScreen] bounds].size.width*.5, [[UIScreen mainScreen] bounds].size.height*.5)];
+}
 
 -(void) glkView:(GLKView *)view drawInRect:(CGRect)rect{
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -88,12 +100,32 @@
     [glController execute];
 }
 
--(void)swipeHandler:(UISwipeGestureRecognizer*)sender{
-    glController = [[GLController alloc] initWithTexture:[textures objectAtIndex:arc4random()%[textures count]]];
+-(void) tapHandler:(UITapGestureRecognizer*)sender{
 }
 
-- (void)didReceiveMemoryWarning
-{
+-(void)pinchHandler:(UIPinchGestureRecognizer*)sender{
+    if([sender state] == 2){
+        glMatrixMode(GL_PROJECTION);
+        glPushMatrix();
+        glLoadIdentity();
+        GLfloat fov = FOV /( lastPinchScale * [sender scale]);
+        if(fov < 45) fov = 45;
+        if(fov > 120) fov = 120;
+        float zNear = 0.1;
+        float zFar = 1000;
+        GLfloat frustum = zNear * tanf(GLKMathDegreesToRadians(fov) / 2.0);
+        glFrustumf(-frustum, frustum, -frustum/aspectRatio, frustum/aspectRatio, zNear, zFar);
+        glMatrixMode(GL_MODELVIEW);
+        glPopMatrix();
+    }
+    else if([sender state] == 3){
+        lastPinchScale *= [sender scale];
+        if(lastPinchScale < .75) lastPinchScale = .75;
+        if(lastPinchScale > 2.0) lastPinchScale = 2.0;
+    }
+}
+
+- (void)didReceiveMemoryWarning{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }

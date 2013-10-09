@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D557A87E1805D48300EC6657 /* park_2048.png in Resources */ = {isa = PBXBuildFile; fileRef = D557A87D1805D48300EC6657 /* park_2048.png */; };
+		D557A8801805D51500EC6657 /* cave_4096.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D557A87F1805D51500EC6657 /* cave_4096.jpg */; };
 		D5FAE07917C8956600AE6EC9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5FAE07817C8956600AE6EC9 /* Foundation.framework */; };
 		D5FAE07B17C8956600AE6EC9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5FAE07A17C8956600AE6EC9 /* CoreGraphics.framework */; };
 		D5FAE07D17C8956600AE6EC9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5FAE07C17C8956600AE6EC9 /* UIKit.framework */; };
@@ -28,13 +30,12 @@
 		D5FAE0B817C8962500AE6EC9 /* gluLookAt.m in Sources */ = {isa = PBXBuildFile; fileRef = D5FAE0B717C8962500AE6EC9 /* gluLookAt.m */; };
 		D5FAE0BB17C8963200AE6EC9 /* GLController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5FAE0BA17C8963200AE6EC9 /* GLController.m */; };
 		D5FAE0BE17C8963D00AE6EC9 /* Sphere.m in Sources */ = {isa = PBXBuildFile; fileRef = D5FAE0BD17C8963D00AE6EC9 /* Sphere.m */; };
-		D5FAE0C617C8970200AE6EC9 /* cave.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D5FAE0BF17C8970200AE6EC9 /* cave.jpg */; };
-		D5FAE0C717C8970200AE6EC9 /* marsh.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D5FAE0C017C8970200AE6EC9 /* marsh.jpg */; };
-		D5FAE0C817C8970200AE6EC9 /* narthex.png in Resources */ = {isa = PBXBuildFile; fileRef = D5FAE0C117C8970200AE6EC9 /* narthex.png */; };
-		D5FAE0C917C8970200AE6EC9 /* office.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D5FAE0C217C8970200AE6EC9 /* office.jpg */; };
-		D5FAE0CA17C8970200AE6EC9 /* park.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D5FAE0C317C8970200AE6EC9 /* park.jpg */; };
-		D5FAE0CB17C8970200AE6EC9 /* snow_small.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D5FAE0C417C8970200AE6EC9 /* snow_small.jpg */; };
-		D5FAE0CC17C8970200AE6EC9 /* station.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D5FAE0C517C8970200AE6EC9 /* station.jpg */; };
+		D5FAE0C717C8970200AE6EC9 /* marsh_4096.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D5FAE0C017C8970200AE6EC9 /* marsh_4096.jpg */; };
+		D5FAE0C817C8970200AE6EC9 /* narthex_2048.png in Resources */ = {isa = PBXBuildFile; fileRef = D5FAE0C117C8970200AE6EC9 /* narthex_2048.png */; };
+		D5FAE0C917C8970200AE6EC9 /* office_4096.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D5FAE0C217C8970200AE6EC9 /* office_4096.jpg */; };
+		D5FAE0CA17C8970200AE6EC9 /* park_4096.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D5FAE0C317C8970200AE6EC9 /* park_4096.jpg */; };
+		D5FAE0CB17C8970200AE6EC9 /* snow_4096.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D5FAE0C417C8970200AE6EC9 /* snow_4096.jpg */; };
+		D5FAE0CC17C8970200AE6EC9 /* station_4096.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D5FAE0C517C8970200AE6EC9 /* station_4096.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D557A87D1805D48300EC6657 /* park_2048.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = park_2048.png; sourceTree = "<group>"; };
+		D557A87F1805D51500EC6657 /* cave_4096.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cave_4096.jpg; sourceTree = "<group>"; };
 		D5FAE07517C8956600AE6EC9 /* 360 Panorama.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "360 Panorama.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5FAE07817C8956600AE6EC9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D5FAE07A17C8956600AE6EC9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -71,19 +74,18 @@
 		D5FAE0B017C895AB00AE6EC9 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		D5FAE0B217C895B200AE6EC9 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		D5FAE0B417C895BE00AE6EC9 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
-		D5FAE0B617C8962500AE6EC9 /* gluLookAt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gluLookAt.h; sourceTree = "<group>"; };
-		D5FAE0B717C8962500AE6EC9 /* gluLookAt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = gluLookAt.m; sourceTree = "<group>"; };
+		D5FAE0B617C8962500AE6EC9 /* gluLookAt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gluLookAt.h; path = "360 Panorama/gluLookAt.h"; sourceTree = "<group>"; };
+		D5FAE0B717C8962500AE6EC9 /* gluLookAt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = gluLookAt.m; path = "360 Panorama/gluLookAt.m"; sourceTree = "<group>"; };
 		D5FAE0B917C8963200AE6EC9 /* GLController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLController.h; sourceTree = "<group>"; };
 		D5FAE0BA17C8963200AE6EC9 /* GLController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLController.m; sourceTree = "<group>"; };
 		D5FAE0BC17C8963D00AE6EC9 /* Sphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sphere.h; sourceTree = "<group>"; };
 		D5FAE0BD17C8963D00AE6EC9 /* Sphere.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Sphere.m; sourceTree = "<group>"; };
-		D5FAE0BF17C8970200AE6EC9 /* cave.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cave.jpg; sourceTree = "<group>"; };
-		D5FAE0C017C8970200AE6EC9 /* marsh.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = marsh.jpg; sourceTree = "<group>"; };
-		D5FAE0C117C8970200AE6EC9 /* narthex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = narthex.png; sourceTree = "<group>"; };
-		D5FAE0C217C8970200AE6EC9 /* office.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = office.jpg; sourceTree = "<group>"; };
-		D5FAE0C317C8970200AE6EC9 /* park.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = park.jpg; sourceTree = "<group>"; };
-		D5FAE0C417C8970200AE6EC9 /* snow_small.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = snow_small.jpg; sourceTree = "<group>"; };
-		D5FAE0C517C8970200AE6EC9 /* station.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = station.jpg; sourceTree = "<group>"; };
+		D5FAE0C017C8970200AE6EC9 /* marsh_4096.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = marsh_4096.jpg; sourceTree = "<group>"; };
+		D5FAE0C117C8970200AE6EC9 /* narthex_2048.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = narthex_2048.png; sourceTree = "<group>"; };
+		D5FAE0C217C8970200AE6EC9 /* office_4096.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = office_4096.jpg; sourceTree = "<group>"; };
+		D5FAE0C317C8970200AE6EC9 /* park_4096.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = park_4096.jpg; sourceTree = "<group>"; };
+		D5FAE0C417C8970200AE6EC9 /* snow_4096.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = snow_4096.jpg; sourceTree = "<group>"; };
+		D5FAE0C517C8970200AE6EC9 /* station_4096.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = station_4096.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D51D4B0817CCB214008EC9B4 /* shapes */ = {
+			isa = PBXGroup;
+			children = (
+				D5FAE0BC17C8963D00AE6EC9 /* Sphere.h */,
+				D5FAE0BD17C8963D00AE6EC9 /* Sphere.m */,
+			);
+			name = shapes;
+			sourceTree = "<group>";
+		};
+		D51D4B0A17CCB23D008EC9B4 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				D5FAE0C117C8970200AE6EC9 /* narthex_2048.png */,
+				D557A87D1805D48300EC6657 /* park_2048.png */,
+				D5FAE0C317C8970200AE6EC9 /* park_4096.jpg */,
+				D557A87F1805D51500EC6657 /* cave_4096.jpg */,
+				D5FAE0C017C8970200AE6EC9 /* marsh_4096.jpg */,
+				D5FAE0C217C8970200AE6EC9 /* office_4096.jpg */,
+				D5FAE0C417C8970200AE6EC9 /* snow_4096.jpg */,
+				D5FAE0C517C8970200AE6EC9 /* station_4096.jpg */,
+			);
+			name = images;
+			sourceTree = "<group>";
+		};
 		D5FAE06C17C8956500AE6EC9 = {
 			isa = PBXGroup;
 			children = (
@@ -135,6 +161,8 @@
 		D5FAE07717C8956600AE6EC9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D5FAE0B617C8962500AE6EC9 /* gluLookAt.h */,
+				D5FAE0B717C8962500AE6EC9 /* gluLookAt.m */,
 				D5FAE0B417C895BE00AE6EC9 /* OpenGLES.framework */,
 				D5FAE0B217C895B200AE6EC9 /* GLKit.framework */,
 				D5FAE0B017C895AB00AE6EC9 /* CoreMotion.framework */,
@@ -157,18 +185,9 @@
 				D5FAE09117C8956600AE6EC9 /* ViewController.m */,
 				D5FAE0B917C8963200AE6EC9 /* GLController.h */,
 				D5FAE0BA17C8963200AE6EC9 /* GLController.m */,
-				D5FAE0BC17C8963D00AE6EC9 /* Sphere.h */,
-				D5FAE0BD17C8963D00AE6EC9 /* Sphere.m */,
-				D5FAE0B617C8962500AE6EC9 /* gluLookAt.h */,
-				D5FAE0B717C8962500AE6EC9 /* gluLookAt.m */,
+				D51D4B0817CCB214008EC9B4 /* shapes */,
 				D5FAE09317C8956600AE6EC9 /* Images.xcassets */,
-				D5FAE0BF17C8970200AE6EC9 /* cave.jpg */,
-				D5FAE0C017C8970200AE6EC9 /* marsh.jpg */,
-				D5FAE0C117C8970200AE6EC9 /* narthex.png */,
-				D5FAE0C217C8970200AE6EC9 /* office.jpg */,
-				D5FAE0C317C8970200AE6EC9 /* park.jpg */,
-				D5FAE0C417C8970200AE6EC9 /* snow_small.jpg */,
-				D5FAE0C517C8970200AE6EC9 /* station.jpg */,
+				D51D4B0A17CCB23D008EC9B4 /* images */,
 				D5FAE07F17C8956600AE6EC9 /* Supporting Files */,
 			);
 			path = "360 Panorama";
@@ -280,15 +299,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				D5FAE08F17C8956600AE6EC9 /* Main_iPad.storyboard in Resources */,
-				D5FAE0C617C8970200AE6EC9 /* cave.jpg in Resources */,
 				D5FAE09417C8956600AE6EC9 /* Images.xcassets in Resources */,
-				D5FAE0C717C8970200AE6EC9 /* marsh.jpg in Resources */,
-				D5FAE0CB17C8970200AE6EC9 /* snow_small.jpg in Resources */,
-				D5FAE0CA17C8970200AE6EC9 /* park.jpg in Resources */,
-				D5FAE0C817C8970200AE6EC9 /* narthex.png in Resources */,
-				D5FAE0C917C8970200AE6EC9 /* office.jpg in Resources */,
+				D5FAE0C717C8970200AE6EC9 /* marsh_4096.jpg in Resources */,
+				D5FAE0CB17C8970200AE6EC9 /* snow_4096.jpg in Resources */,
+				D5FAE0CA17C8970200AE6EC9 /* park_4096.jpg in Resources */,
+				D5FAE0C817C8970200AE6EC9 /* narthex_2048.png in Resources */,
+				D557A87E1805D48300EC6657 /* park_2048.png in Resources */,
+				D5FAE0C917C8970200AE6EC9 /* office_4096.jpg in Resources */,
 				D5FAE08C17C8956600AE6EC9 /* Main_iPhone.storyboard in Resources */,
-				D5FAE0CC17C8970200AE6EC9 /* station.jpg in Resources */,
+				D557A8801805D51500EC6657 /* cave_4096.jpg in Resources */,
+				D5FAE0CC17C8970200AE6EC9 /* station_4096.jpg in Resources */,
 				D5FAE08317C8956600AE6EC9 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -528,6 +548,7 @@
 				D5FAE0AC17C8956600AE6EC9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D5FAE0AD17C8956600AE6EC9 /* Build configuration list for PBXNativeTarget "360 PanoramaTests" */ = {
 			isa = XCConfigurationList;
@@ -536,6 +557,7 @@
 				D5FAE0AF17C8956600AE6EC9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

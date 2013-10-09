@@ -16,21 +16,15 @@
 
 @interface GLController : NSObject{
     Sphere *m_CelestialSphere;
-    GLfloat m_Eyeposition[3];
     GLfloat m_Eyerotation[3];
     GLfloat m_EyeInterpolationVector[3];
-    
-    GLKMatrix4 eyeMatrix;
-    BOOL switchFlag;
 }
 
 -(void)execute;
 -(id) init;
 -(id) initWithTexture:(NSString*)fileName;
--(void) setEyeX:(GLfloat)x Y:(GLfloat)y Z:(GLfloat)z;
 -(void) setEyeRotationX:(GLfloat)x Y:(GLfloat)y Z:(GLfloat)z;
 -(void) buildEyeInterpolationVectorFromNewX:(GLfloat)x Y:(GLfloat)y Z:(GLfloat)z;
-
--(void) report;
+-(void) swapTexture:(NSString*)textureFile;
 
 @end

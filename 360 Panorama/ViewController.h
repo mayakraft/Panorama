@@ -18,7 +18,10 @@
     NSArray *textures;
     CADisplayLink *displayLink;
     NSInteger clock;
+    CGFloat aspectRatio;
+    CGFloat lastPinchScale;
 }
+@property (strong,nonatomic) NSString *texturePath;
 @property (strong,nonatomic) EAGLContext *context;
 @property (strong,nonatomic) GLKBaseEffect *effect;
 
