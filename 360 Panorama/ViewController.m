@@ -28,7 +28,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
     [(GLKView*)self.view setContext:self.context];
     [(GLKView*)self.view setDrawableDepthFormat:GLKViewDrawableDepthFormat24];
