@@ -17,7 +17,7 @@ initialize PanoramaView:
 ```objective-c
 panoramaView = [[PanoramaView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 [panoramaView setTexture:@"park_2048.png"];
-[panoramaView beginUpdates];
+[panoramaView beginUpdates];  // initialize device orientation sensors
 [self setView:panoramaView];
 ```
 

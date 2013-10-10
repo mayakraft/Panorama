@@ -15,7 +15,7 @@
 
 -(void) setTexture:(NSString*)fileName;
 -(void) swapTexture:(NSString*)fileName;
--(void) beginUpdates;
--(void) execute;
+-(void) beginUpdates;  // initialize device orientation sensors
+-(void) execute;       // redraw GLView
 
 @end

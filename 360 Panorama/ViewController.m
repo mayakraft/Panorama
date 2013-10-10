@@ -30,7 +30,7 @@
     
     panoramaView = [[PanoramaView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [panoramaView setTexture:@"park_2048.png"];
-    [panoramaView beginUpdates];
+    [panoramaView beginUpdates];  // initialize device orientation sensors
     [self setView:panoramaView];
     
     UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchHandler:)];
@@ -44,12 +44,10 @@
 
 // simple pinch to zoom
 -(void)pinchHandler:(UIPinchGestureRecognizer*)sender{
-    if([sender state] == 1){
+    if([sender state] == 1)
         zoom = [panoramaView FOV];
-    }
     if([sender state] == 2){
         CGFloat newFOV = zoom / [sender scale];
-        NSLog(@"%f",newFOV);
         if(newFOV < 30) newFOV = 30;
         if(newFOV > 160) newFOV = 160;
         [panoramaView setFOV:newFOV];

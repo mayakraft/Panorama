@@ -41,7 +41,6 @@
 -(id) init{
     return [self initWithFrame:[[UIScreen mainScreen] bounds]];
 }
-
 -(id) initWithFrame:(CGRect)frame context:(EAGLContext *)context{
     return [self initWithFrame:frame];
 }
