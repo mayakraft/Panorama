@@ -9,20 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <GLKit/GLKit.h>
 #import <OpenGLES/ES1/gl.h>
-#import <CoreMotion/CoreMotion.h>
-#import "GLController.h"
 
-@interface ViewController : GLKViewController{
-    GLController *glController;
-    CMMotionManager *motionManager;
-    NSArray *textures;
-    CADisplayLink *displayLink;
-    NSInteger clock;
-    CGFloat aspectRatio;
-    CGFloat lastPinchScale;
-}
-@property (strong,nonatomic) NSString *texturePath;
-@property (strong,nonatomic) EAGLContext *context;
-@property (strong,nonatomic) GLKBaseEffect *effect;
-
+// subclass of GLKViewController
+@interface ViewController : GLKViewController
 @end

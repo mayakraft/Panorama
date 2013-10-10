@@ -5,4 +5,4 @@
 * accelerometer-oriented
 
 example source data:
-![like this](https://raw.github.com/robbykraft/SphericalPanorama/master/360%20Panorama/marsh.jpg)
+![like this](https://raw.github.com/robbykraft/SphericalPanorama/master/360%20Panorama/park_2048.png)
