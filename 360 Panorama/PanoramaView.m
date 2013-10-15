@@ -22,6 +22,8 @@
     CGFloat aspectRatio;
     CMMotionManager *motionManager;
     NSInteger clock;
+//    GLfloat rotationalMatrix[16];
+    GLKMatrix4 deviceMotionAttitudeMatrix;
 }
 @end
 
@@ -99,9 +101,38 @@
         [motionManager startDeviceMotionUpdates];
         [motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue] withHandler: ^(CMDeviceMotion *deviceMotion, NSError *error){
             CMAttitude *attitude = deviceMotion.attitude;
-            [self setEyeRotationX:(attitude.roll+M_PI/2.0)*180/M_PI Y:(-attitude.yaw)*180/M_PI Z:attitude.pitch*180/M_PI];
-            if(clock % 15 == 0)
-                NSLog(@"(P:%.2f, R:%.2f, Y:%.2f)",(attitude.roll+M_PI/2.0)*180/M_PI, attitude.pitch*180/M_PI, (-attitude.yaw)*180/M_PI);
+            CMQuaternion quat = deviceMotion.attitude.quaternion;
+            CMRotationMatrix a = deviceMotion.attitude.rotationMatrix;
+            double pitch = atan2f(2*(quat.x*quat.y + quat.z*quat.w),1-2*(quat.y*quat.y + quat.z*quat.z));
+            double roll = asin(2*(quat.x*quat.z - quat.w*quat.y));
+            double yaw = atan2f(2*(quat.x*quat.w + quat.y*quat.z), 1-2*(quat.z*quat.z + quat.w*quat.w));
+            [self setEyeRotationX:(-roll+M_PI/2.0)*180/M_PI Y:(-attitude.yaw)*180/M_PI Z:attitude.pitch*180/M_PI];
+//            [self setEyeRotationX:(attitude.roll+M_PI/2.0)*180/M_PI Y:(-attitude.yaw)*180/M_PI Z:attitude.pitch*180/M_PI];
+
+            if (motionManager.deviceMotionActive) {
+                CMDeviceMotion *deviceMotion = motionManager.deviceMotion;
+                
+                CMRotationMatrix a = deviceMotion.attitude.rotationMatrix;
+                deviceMotionAttitudeMatrix =
+//                GLKMatrix4Make(a.m11, a.m12, a.m13, 0.0f,
+//                               a.m21, a.m22, a.m23, 0.0f,
+//                               a.m31, a.m32, a.m33, 0.0f,
+//                               0.0f, 0.0f, 0.0f, 1.0f);
+                  GLKMatrix4Make(a.m11, a.m21, a.m31, 0.0f,
+                                 a.m12, a.m22, a.m32, 0.0f,
+                                 a.m13, a.m23, a.m33, 0.0f,
+                                 0.0f, 0.0f, 0.0f, 1.0f);
+                //deviceMotionAttitudeMatrix = GLKMatrix4Multiply(baseRotation, deviceMotionAttitudeMatrix);
+            }
+            else{
+                // Look straight forward (we're probably in the simulator, or a device without a gyro)
+                deviceMotionAttitudeMatrix = GLKMatrix4MakeRotation(-M_PI_2, 1.0f, 0.0f, 0.0f);
+            }
+            if(clock % 15 == 0){
+                NSLog(@"\n%f :: %f :: %f :: %f\n%f :: %f :: %f :: %f\n%f :: %f :: %f :: %f\n%f :: %f :: %f :: %f",deviceMotionAttitudeMatrix.m00, deviceMotionAttitudeMatrix.m01, deviceMotionAttitudeMatrix.m02, deviceMotionAttitudeMatrix.m03,deviceMotionAttitudeMatrix.m10, deviceMotionAttitudeMatrix.m11, deviceMotionAttitudeMatrix.m12, deviceMotionAttitudeMatrix.m13,deviceMotionAttitudeMatrix.m20, deviceMotionAttitudeMatrix.m21, deviceMotionAttitudeMatrix.m22, deviceMotionAttitudeMatrix.m23,deviceMotionAttitudeMatrix.m30, deviceMotionAttitudeMatrix.m31, deviceMotionAttitudeMatrix.m32, deviceMotionAttitudeMatrix.m33);
+//                NSLog(@"%f :: %f |||| %f :: %f |||| %f :: %f",pitch, attitude.pitch, roll, attitude.roll, yaw, attitude.yaw);
+//                NSLog(@"(P:%.2f, R:%.2f, Y:%.2f)",(attitude.roll+M_PI/2.0)*180/M_PI, attitude.pitch*180/M_PI, (-attitude.yaw)*180/M_PI);
+            }
             clock++;
         }];
     }
@@ -109,6 +140,31 @@
 
 -(void) swapTexture:(NSString*)fileName{
     [m_CelestialSphere swapTexture:fileName];
+}
+
+
+-(void)setRotationMatrix:(double*)mat3x3 {
+    
+    _rotationalMatrix[0] = mat3x3[0];
+    _rotationalMatrix[1] = mat3x3[1];
+    _rotationalMatrix[2] = mat3x3[2];
+    _rotationalMatrix[3] = 0.0;
+    
+    _rotationalMatrix[4] = mat3x3[3];
+    _rotationalMatrix[5] = mat3x3[4];
+    _rotationalMatrix[6] = mat3x3[5];
+    _rotationalMatrix[7] = 0.0;
+    
+    _rotationalMatrix[8] = mat3x3[6];
+    _rotationalMatrix[9] = mat3x3[7];
+    _rotationalMatrix[10] = mat3x3[8];
+    _rotationalMatrix[11] = 0.0;
+    
+    _rotationalMatrix[12] = 0.0;
+    _rotationalMatrix[13] = 0.0;
+    _rotationalMatrix[14] = 0.0;
+    _rotationalMatrix[15] = 1.0;
+    
 }
 
 -(void)execute
@@ -138,8 +194,15 @@
     
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
-    gluLookAt(0.0, 0.0, 0.0, -sinf(yawrad), tanpitchrad, cosf(yawrad),
-              cosf(yawrad)*( -sinf(rollrad)/fabsf(1/cosf(pitchrad)) ),cosf(rollrad)*1/cosf(pitchrad), sinf(yawrad)*( -sinf(rollrad)/fabsf(1/cosf(pitchrad)) ) );
+    
+    glMultMatrixf(deviceMotionAttitudeMatrix.m);
+    
+//    gluLookAt(0.0, 0.0, 0.0,
+//              -sinf(yawrad), tanf(pitchrad), cosf(yawrad),
+//              cosf(yawrad)*( -sinf(rollrad)/fabsf(1/cosf(pitchrad)) ),cosf(rollrad)*1/cosf(pitchrad), sinf(yawrad)*( -sinf(rollrad)/fabsf(1/cosf(pitchrad)) ) );
+
+//    gluLookAt(0.0, 0.0, 0.0, -sinf(yawrad), tanpitchrad, cosf(yawrad),
+//              cosf(yawrad)*( -sinf(rollrad)/fabsf(1/cosf(pitchrad)) ),cosf(rollrad)*1/cosf(pitchrad), sinf(yawrad)*( -sinf(rollrad)/fabsf(1/cosf(pitchrad)) ) );
     glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, white);
     [self executeSphere:m_CelestialSphere];
     glPopMatrix();

@@ -12,6 +12,8 @@
 @interface PanoramaView : GLKView
 
 @property (nonatomic) float FOV;
+@property (nonatomic) GLfloat *rotationalMatrix;   //implement these
+@property (nonatomic) BOOL hardwareOrientationOn;  //   ''
 
 -(void) setTexture:(NSString*)fileName;
 -(void) swapTexture:(NSString*)fileName;
