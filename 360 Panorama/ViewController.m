@@ -30,9 +30,9 @@
     
     panoramaView = [[PanoramaView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [panoramaView setTexture:@"park_2048.png"];
-    [panoramaView beginUpdates];  // initialize device orientation sensors
+    [panoramaView setHardwareOrientationActive:YES];   // initialize device orientation sensors
     [self setView:panoramaView];
-    
+
     UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchHandler:)];
     [self.view addGestureRecognizer:pinchGesture];
 }

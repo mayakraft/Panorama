@@ -33,7 +33,6 @@
 		D5FAE0B117C895AB00AE6EC9 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5FAE0B017C895AB00AE6EC9 /* CoreMotion.framework */; };
 		D5FAE0B317C895B200AE6EC9 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5FAE0B217C895B200AE6EC9 /* GLKit.framework */; };
 		D5FAE0B517C895BE00AE6EC9 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5FAE0B417C895BE00AE6EC9 /* OpenGLES.framework */; };
-		D5FAE0B817C8962500AE6EC9 /* gluLookAt.m in Sources */ = {isa = PBXBuildFile; fileRef = D5FAE0B717C8962500AE6EC9 /* gluLookAt.m */; };
 		D5FAE0BB17C8963200AE6EC9 /* PanoramaView.m in Sources */ = {isa = PBXBuildFile; fileRef = D5FAE0BA17C8963200AE6EC9 /* PanoramaView.m */; };
 		D5FAE0BE17C8963D00AE6EC9 /* Sphere.m in Sources */ = {isa = PBXBuildFile; fileRef = D5FAE0BD17C8963D00AE6EC9 /* Sphere.m */; };
 		D5FAE0CA17C8970200AE6EC9 /* park_4096.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D5FAE0C317C8970200AE6EC9 /* park_4096.jpg */; };
@@ -81,8 +80,6 @@
 		D5FAE0B017C895AB00AE6EC9 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		D5FAE0B217C895B200AE6EC9 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		D5FAE0B417C895BE00AE6EC9 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
-		D5FAE0B617C8962500AE6EC9 /* gluLookAt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gluLookAt.h; path = "360 Panorama/gluLookAt.h"; sourceTree = "<group>"; };
-		D5FAE0B717C8962500AE6EC9 /* gluLookAt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = gluLookAt.m; path = "360 Panorama/gluLookAt.m"; sourceTree = "<group>"; };
 		D5FAE0B917C8963200AE6EC9 /* PanoramaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PanoramaView.h; sourceTree = "<group>"; };
 		D5FAE0BA17C8963200AE6EC9 /* PanoramaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PanoramaView.m; sourceTree = "<group>"; };
 		D5FAE0BC17C8963D00AE6EC9 /* Sphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sphere.h; sourceTree = "<group>"; };
@@ -126,6 +123,15 @@
 			name = images;
 			sourceTree = "<group>";
 		};
+		D52CE3EF180E77DD00AA93B0 /* shapes */ = {
+			isa = PBXGroup;
+			children = (
+				D5FAE0BC17C8963D00AE6EC9 /* Sphere.h */,
+				D5FAE0BD17C8963D00AE6EC9 /* Sphere.m */,
+			);
+			name = shapes;
+			sourceTree = "<group>";
+		};
 		D557A8911805FC6F00EC6657 /* icons */ = {
 			isa = PBXGroup;
 			children = (
@@ -163,8 +169,6 @@
 		D5FAE07717C8956600AE6EC9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D5FAE0B617C8962500AE6EC9 /* gluLookAt.h */,
-				D5FAE0B717C8962500AE6EC9 /* gluLookAt.m */,
 				D5FAE0B417C895BE00AE6EC9 /* OpenGLES.framework */,
 				D5FAE0B217C895B200AE6EC9 /* GLKit.framework */,
 				D5FAE0B017C895AB00AE6EC9 /* CoreMotion.framework */,
@@ -187,8 +191,7 @@
 				D5FAE09117C8956600AE6EC9 /* ViewController.m */,
 				D5FAE0B917C8963200AE6EC9 /* PanoramaView.h */,
 				D5FAE0BA17C8963200AE6EC9 /* PanoramaView.m */,
-				D5FAE0BC17C8963D00AE6EC9 /* Sphere.h */,
-				D5FAE0BD17C8963D00AE6EC9 /* Sphere.m */,
+				D52CE3EF180E77DD00AA93B0 /* shapes */,
 				D51D4B0A17CCB23D008EC9B4 /* images */,
 				D5FAE07F17C8956600AE6EC9 /* Supporting Files */,
 			);
@@ -333,7 +336,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D5FAE0BE17C8963D00AE6EC9 /* Sphere.m in Sources */,
-				D5FAE0B817C8962500AE6EC9 /* gluLookAt.m in Sources */,
 				D5FAE09217C8956600AE6EC9 /* ViewController.m in Sources */,
 				D5FAE08917C8956600AE6EC9 /* AppDelegate.m in Sources */,
 				D5FAE0BB17C8963200AE6EC9 /* PanoramaView.m in Sources */,

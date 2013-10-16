@@ -7,21 +7,18 @@
 example source data:
 ![like this](https://raw.github.com/robbykraft/SphericalPanorama/master/360%20Panorama/park_2048.png)
 
-## setup:
-
-* complete implementation included in ViewController.h & .m
-* view controller is a subclass of GLKViewController
+## setup
 
 initialize PanoramaView:
 
 ```objective-c
 panoramaView = [[PanoramaView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 [panoramaView setTexture:@"park_2048.png"];
-[panoramaView beginUpdates];  // initialize device orientation sensors
+[panoramaView setHardwareOrientationActive:YES];   // initialize device orientation sensors
 [self setView:panoramaView];
 ```
 
-screen refresh:
+redraw screen:
 
 ```objective-c
 -(void) glkView:(GLKView *)view drawInRect:(CGRect)rect{
@@ -29,5 +26,14 @@ screen refresh:
 }
 ```
 
-* OpenGL texture limitations 2^n × (2^n)/2
-* iOS hardware limited to 4096 × 2048, older hardware (iPhone 4) 2048 × 1024
+make sure to subclass:
+
+```objective-c
+@interface ViewController : GLKViewController
+@end
+```
+
+* Portrait mode only right now
+* OpenGL texture size 1:2, H:W, and pixels must be 2^n × (2^n)/2
+* iOS hardware limited to 4096 × 2048, older hardware (iPhone 4, 3G) 2048 × 1024
+* include frameworks: OpenGLES, GLKit, CoreMotion

@@ -171,12 +171,10 @@
 
 -(GLKTextureInfo *) loadTexture:(NSString *) filename
 {
-    NSLog(@"%@",filename);
     NSError *error;
     GLKTextureInfo *info;
     NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], GLKTextureLoaderOriginBottomLeft, nil];
     NSString *path = [[NSBundle mainBundle] pathForResource:filename ofType:NULL];
-    NSLog(@"%@",path);
     info=[GLKTextureLoader textureWithContentsOfFile:path options:options error:&error];
     
     glBindTexture(GL_TEXTURE_2D, info.name);

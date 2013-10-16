@@ -10,6 +10,5 @@
 #import <GLKit/GLKit.h>
 #import <OpenGLES/ES1/gl.h>
 
-// subclass of GLKViewController
 @interface ViewController : GLKViewController
 @end

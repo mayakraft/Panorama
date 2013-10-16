@@ -12,12 +12,11 @@
 @interface PanoramaView : GLKView
 
 @property (nonatomic) float FOV;
-@property (nonatomic) GLfloat *rotationalMatrix;   //implement these
-@property (nonatomic) BOOL hardwareOrientationOn;  //   ''
+@property (nonatomic) BOOL hardwareOrientationActive;
+@property (nonatomic) GLKMatrix4 deviceMotionAttitudeMatrix;
 
+-(void) execute;  // draw screen
 -(void) setTexture:(NSString*)fileName;
 -(void) swapTexture:(NSString*)fileName;
--(void) beginUpdates;  // initialize device orientation sensors
--(void) execute;       // redraw GLView
 
 @end
