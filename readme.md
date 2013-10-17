@@ -33,7 +33,7 @@ make sure to subclass:
 @end
 ```
 
-* Portrait mode only right now
+* restrict UIDeviceOrientation to portrait only
 * OpenGL texture size 1:2, H:W, and pixels must be 2^n × (2^n)/2
 * iOS hardware limited to 4096 × 2048, older hardware (iPhone 4, 3G) 2048 × 1024
 * include frameworks: OpenGLES, GLKit, CoreMotion
