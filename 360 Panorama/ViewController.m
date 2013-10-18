@@ -19,9 +19,9 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     panoramaView = [[PanoramaView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    [panoramaView setTexture:@"park_2048.png"];
+    [panoramaView setTexture:@"park_4096.jpg"];
     [panoramaView setOrientToDevice:YES];   // initialize device orientation sensors
-    [panoramaView setPinchZoom:YES];   // activate touch gesture, alters field of view
+    [panoramaView setPinchZoom:NO];   // activate touch gesture, alters field of view
     [self setView:panoramaView];
 }
 

@@ -62,7 +62,7 @@ this gets multiplied by the following matrix, which amounts to a 90° rotation a
 0  0  0  1
 ```
 
-which is an identity matrix with the following formula on the Y and Z axis
+which is an identity matrix with the following, affecting the Y and Z values
 
 ![wikipedia](http://upload.wikimedia.org/math/d/f/a/dfa9eccf5f8f2de1ac8ee1134ba88a86.png)
 
