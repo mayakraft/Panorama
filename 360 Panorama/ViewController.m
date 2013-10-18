@@ -11,52 +11,23 @@
 
 @interface ViewController (){
     PanoramaView *panoramaView;
-    CGFloat zoom;
 }
 @end
 
 @implementation ViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad{
     [super viewDidLoad];
-    
     panoramaView = [[PanoramaView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [panoramaView setTexture:@"park_2048.png"];
-    [panoramaView setHardwareOrientationActive:YES];   // initialize device orientation sensors
+    [panoramaView setOrientToDevice:YES];   // initialize device orientation sensors
+    [panoramaView setPinchZoom:YES];   // activate touch gesture, alters field of view
     [self setView:panoramaView];
-
-    UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchHandler:)];
-    [self.view addGestureRecognizer:pinchGesture];
 }
 
 // OpenGL redraw screen
 -(void) glkView:(GLKView *)view drawInRect:(CGRect)rect{
     [panoramaView execute];
-}
-
-// simple pinch to zoom
--(void)pinchHandler:(UIPinchGestureRecognizer*)sender{
-    if([sender state] == 1)
-        zoom = [panoramaView FOV];
-    if([sender state] == 2){
-        CGFloat newFOV = zoom / [sender scale];
-        if(newFOV < 30) newFOV = 30;
-        if(newFOV > 160) newFOV = 160;
-        [panoramaView setFOV:newFOV];
-    }
-}
-
-- (void)didReceiveMemoryWarning{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end

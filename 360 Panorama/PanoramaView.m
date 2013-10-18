@@ -10,10 +10,15 @@
 #import "PanoramaView.h"
 #import "Sphere.h"
 
+#define FOV_MAX 160
+#define FOV_MIN 10
+
 @interface PanoramaView (){
-    Sphere *m_CelestialSphere;
+    Sphere *celestialSphere;
     CGFloat aspectRatio;
+    CGFloat zoom;
     CMMotionManager *motionManager;
+    UIPinchGestureRecognizer *pinchGesture;
 }
 @end
 
@@ -25,26 +30,31 @@
 -(id) initWithFrame:(CGRect)frame context:(EAGLContext *)context{
     return [self initWithFrame:frame];
 }
-- (id)initWithFrame:(CGRect)frame
-{
+- (id)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
         motionManager = [[CMMotionManager alloc] init];
-        motionManager.deviceMotionUpdateInterval = 1.0/30.0;
-        EAGLContext *context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
-        [EAGLContext setCurrentContext:context];
-        self.context = context;
-        [self initGeometry];
+        motionManager.deviceMotionUpdateInterval = 1.0/45.0; // this will exhaust the battery!
+        pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchHandler:)];
+        [pinchGesture setEnabled:NO];
+        [self addGestureRecognizer:pinchGesture];
+        [self initGL];
     }
     return self;
 }
 
--(void)initGeometry{
-    _FOV = 90;    
-    _deviceMotionAttitudeMatrix = GLKMatrix4MakeRotation(-M_PI_2, 1.0f, 0.0f, 0.0f);
+-(void)initGL{
+    EAGLContext *context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
+    [EAGLContext setCurrentContext:context];
+    self.context = context;
+
+    _fieldOfView = 75;
+    _attitudeMatrix = GLKMatrix4MakeRotation(-M_PI_2, 1.0f, 0.0f, 0.0f);
     aspectRatio = (float)[[UIScreen mainScreen] bounds].size.width / (float)[[UIScreen mainScreen] bounds].size.height;
     if([UIApplication sharedApplication].statusBarOrientation > 2)
         aspectRatio = 1/aspectRatio;
+
+    celestialSphere = [[Sphere alloc] init:15 slices:15 radius:1.0 squash:1.0 textureFile:nil];
 
     // init lighting
     glShadeModel(GL_SMOOTH);
@@ -54,7 +64,7 @@
     glLoadIdentity();               // not the model matrix
     float zNear = 0.1;
     float zFar = 1000;
-    GLfloat frustum = zNear * tanf(GLKMathDegreesToRadians(_FOV) / 2.0);
+    GLfloat frustum = zNear * tanf(GLKMathDegreesToRadians(_fieldOfView) / 2.0);
     glFrustumf(-frustum, frustum, -frustum/aspectRatio, frustum/aspectRatio, zNear, zFar);
     glViewport(0, 0, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width);
     glEnable(GL_DEPTH_TEST);
@@ -68,39 +78,53 @@
     glLoadIdentity();
     float zNear = 0.1;
     float zFar = 1000;
-    GLfloat frustum = zNear * tanf(GLKMathDegreesToRadians(_FOV) / 2.0);
+    GLfloat frustum = zNear * tanf(GLKMathDegreesToRadians(_fieldOfView) / 2.0);
     glFrustumf(-frustum, frustum, -frustum/aspectRatio, frustum/aspectRatio, zNear, zFar);
     glMatrixMode(GL_MODELVIEW);
     glPopMatrix();
 }
 
 -(void) setTexture:(NSString*)fileName{
-    m_CelestialSphere = [[Sphere alloc] init:15 slices:15 radius:1.0 squash:1.0 textureFile:fileName];
-    [m_CelestialSphere setPositionX:0.0 Y:0.0 Z:0.0];
+    [celestialSphere swapTexture:fileName];
 }
 
--(void) swapTexture:(NSString*)fileName{
-    [m_CelestialSphere swapTexture:fileName];
-}
-
--(void)setFOV:(float)fov{
-    _FOV = fov;
+-(void)setFieldOfView:(float)fieldOfView{
+    _fieldOfView = fieldOfView;
     [self updateFieldOfView];
 }
 
--(void) setHardwareOrientationActive:(BOOL)hardwareOrientationActive{
-    _hardwareOrientationActive = hardwareOrientationActive;
-    if(hardwareOrientationActive){
+-(void) setPinchZoom:(BOOL)pinchZoom{
+    _pinchZoom = pinchZoom;
+    if(_pinchZoom)
+        [pinchGesture setEnabled:YES];
+    else
+        [pinchGesture setEnabled:NO];
+}
+
+-(void)pinchHandler:(UIPinchGestureRecognizer*)sender{
+    if([sender state] == 1)
+        zoom = _fieldOfView;
+    if([sender state] == 2){
+        CGFloat newFOV = zoom / [sender scale];
+        if(newFOV < FOV_MIN) newFOV = FOV_MIN;
+        else if(newFOV > FOV_MAX) newFOV = FOV_MAX;
+        [self setFieldOfView:newFOV];
+    }
+}
+
+-(void) setOrientToDevice:(BOOL)orientToDevice{
+    _orientToDevice = orientToDevice;
+    if(_orientToDevice){
         if(motionManager.isDeviceMotionAvailable){
             [motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue] withHandler: ^(CMDeviceMotion *deviceMotion, NSError *error){
                 CMRotationMatrix a = deviceMotion.attitude.rotationMatrix;
-                _deviceMotionAttitudeMatrix =
+                _attitudeMatrix =
                 GLKMatrix4Make(a.m11, a.m21, a.m31, 0.0f,
                                a.m12, a.m22, a.m32, 0.0f,
                                a.m13, a.m23, a.m33, 0.0f,
-                               0.0f, 0.0f, 0.0f, 1.0f);
+                               0.0f , 0.0f , 0.0f , 1.0f);
                 GLKMatrix4 rotate = GLKMatrix4MakeRotation(M_PI/2, 1, 0, 0);
-                _deviceMotionAttitudeMatrix = GLKMatrix4Multiply(_deviceMotionAttitudeMatrix, rotate);
+                _attitudeMatrix = GLKMatrix4Multiply(_attitudeMatrix, rotate);
             }];
         }
     }
@@ -117,10 +141,10 @@
     
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
-    glMultMatrixf(_deviceMotionAttitudeMatrix.m);
+    glMultMatrixf(_attitudeMatrix.m);
     
     glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, white);
-    [self executeSphere:m_CelestialSphere];
+    [self executeSphere:celestialSphere];
     glPopMatrix();
     glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, black);
 }

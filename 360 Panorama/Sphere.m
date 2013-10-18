@@ -36,9 +36,7 @@
         // Normal pointers for lighting
         GLfloat *nPtr = m_NormalData = (GLfloat*)malloc(sizeof(GLfloat) * 3 * ((m_Slices*2+2) * (m_Stacks)));
         GLfloat *tPtr = nil;
-        if(textureFile != nil){
-            tPtr = m_TexCoordsData = (GLfloat*)malloc(sizeof(GLfloat) * 2 * ((m_Slices*2+2) * (m_Stacks)));
-        }
+        tPtr = m_TexCoordsData = (GLfloat*)malloc(sizeof(GLfloat) * 2 * ((m_Slices*2+2) * (m_Stacks)));
         
         unsigned int phiIdx, thetaIdx;
         // Latitude

@@ -11,12 +11,13 @@
 
 @interface PanoramaView : GLKView
 
-@property (nonatomic) float FOV;
-@property (nonatomic) BOOL hardwareOrientationActive;
-@property (nonatomic) GLKMatrix4 deviceMotionAttitudeMatrix;
+@property (nonatomic) float fieldOfView;  // 60 - 90 is about average
+@property (nonatomic) BOOL pinchZoom;
+@property (nonatomic) BOOL orientToDevice;
+
+@property (nonatomic) GLKMatrix4 attitudeMatrix;
 
 -(void) execute;  // draw screen
 -(void) setTexture:(NSString*)fileName;
--(void) swapTexture:(NSString*)fileName;
 
 @end
