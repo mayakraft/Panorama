@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <GLKit/GLKit.h>
 #import <OpenGLES/ES1/gl.h>
+//#import <OpenGLES/ES2/gl.h>
 
 @interface ViewController : GLKViewController
 @end

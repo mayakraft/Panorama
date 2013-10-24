@@ -10,8 +10,9 @@
 #import "PanoramaView.h"
 #import "Sphere.h"
 
-#define FOV_MAX 160
-#define FOV_MIN 10
+#define FOV_MAX 155
+#define FOV_MIN 1
+#define SLICES 48
 
 @interface PanoramaView (){
     Sphere *celestialSphere;
@@ -19,6 +20,7 @@
     CGFloat zoom;
     CMMotionManager *motionManager;
     UIPinchGestureRecognizer *pinchGesture;
+    NSInteger logCount;
 }
 @end
 
@@ -54,7 +56,7 @@
     if([UIApplication sharedApplication].statusBarOrientation > 2)
         aspectRatio = 1/aspectRatio;
 
-    celestialSphere = [[Sphere alloc] init:15 slices:15 radius:1.0 squash:1.0 textureFile:nil];
+    celestialSphere = [[Sphere alloc] init:SLICES slices:SLICES radius:1.0 squash:1.0 textureFile:nil];
 
     // init lighting
     glShadeModel(GL_SMOOTH);
@@ -116,7 +118,8 @@
     _orientToDevice = orientToDevice;
     if(_orientToDevice){
         if(motionManager.isDeviceMotionAvailable){
-            [motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue] withHandler: ^(CMDeviceMotion *deviceMotion, NSError *error){
+//            [motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue] withHandler:^(CMDeviceMotion *deviceMotion, NSError *error) {
+            [motionManager startDeviceMotionUpdatesUsingReferenceFrame:CMAttitudeReferenceFrameXMagneticNorthZVertical toQueue:[NSOperationQueue currentQueue] withHandler:^(CMDeviceMotion *deviceMotion, NSError *error) {
                 CMRotationMatrix a = deviceMotion.attitude.rotationMatrix;
                 _attitudeMatrix =
                 GLKMatrix4Make(a.m11, a.m21, a.m31, 0.0f,
@@ -125,6 +128,16 @@
                                0.0f , 0.0f , 0.0f , 1.0f);
                 GLKMatrix4 rotate = GLKMatrix4MakeRotation(M_PI/2, 1, 0, 0);
                 _attitudeMatrix = GLKMatrix4Multiply(_attitudeMatrix, rotate);
+                GLKMatrix4 earthTilt = GLKMatrix4MakeRotation(M_PI/180.0*23.45, 1, 0, 0);
+                _attitudeMatrix = GLKMatrix4Multiply(_attitudeMatrix, earthTilt);
+//                GLKMatrix4 seasonDirection = GLKMatrix4MakeRotation(M_PI, 0, 1, 0);
+//                _attitudeMatrix = GLKMatrix4Multiply(_attitudeMatrix, seasonDirection);
+                
+//                CMCalibratedMagneticField mag = deviceMotion.magneticField;
+//                logCount++;
+//                if(logCount%15 == 0){
+//                    NSLog(@"(%d) (%.3f, %.3f, %.3f)",mag.accuracy,mag.field.x, mag.field.y, mag.field.z);
+//                }
             }];
         }
     }
