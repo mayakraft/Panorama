@@ -16,6 +16,7 @@
 
 @interface PanoramaView (){
     Sphere *celestialSphere;
+    Sphere *planetarySphere;
     CGFloat aspectRatio;
     CGFloat zoom;
     CMMotionManager *motionManager;
@@ -56,7 +57,8 @@
     if([UIApplication sharedApplication].statusBarOrientation > 2)
         aspectRatio = 1/aspectRatio;
 
-    celestialSphere = [[Sphere alloc] init:SLICES slices:SLICES radius:1.0 squash:1.0 textureFile:nil];
+    celestialSphere = [[Sphere alloc] init:SLICES slices:SLICES radius:20.0 squash:1.0 textureFile:nil];
+    planetarySphere = [[Sphere alloc] init:SLICES slices:SLICES radius:10.0 squash:1.0 textureFile:nil];
 
     // init lighting
     glShadeModel(GL_SMOOTH);
@@ -71,6 +73,7 @@
     glViewport(0, 0, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width);
     glEnable(GL_DEPTH_TEST);
     glMatrixMode(GL_MODELVIEW);
+//    self.drawableDepthFormat = GLKViewDrawableDepthFormat24;
     glLoadIdentity();
 }
 
@@ -83,11 +86,15 @@
     GLfloat frustum = zNear * tanf(GLKMathDegreesToRadians(_fieldOfView) / 2.0);
     glFrustumf(-frustum, frustum, -frustum/aspectRatio, frustum/aspectRatio, zNear, zFar);
     glMatrixMode(GL_MODELVIEW);
+    glEnable(GL_DEPTH_TEST);
     glPopMatrix();
 }
 
--(void) setTexture:(NSString*)fileName{
+-(void) setCelestialTexture:(NSString*)fileName{
     [celestialSphere swapTexture:fileName];
+}
+-(void) setPlanetaryTexture:(NSString*)fileName{
+    [planetarySphere swapTexture:fileName];
 }
 
 -(void)setFieldOfView:(float)fieldOfView{
@@ -118,20 +125,14 @@
     _orientToDevice = orientToDevice;
     if(_orientToDevice){
         if(motionManager.isDeviceMotionAvailable){
-//            [motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue] withHandler:^(CMDeviceMotion *deviceMotion, NSError *error) {
-            [motionManager startDeviceMotionUpdatesUsingReferenceFrame:CMAttitudeReferenceFrameXMagneticNorthZVertical toQueue:[NSOperationQueue currentQueue] withHandler:^(CMDeviceMotion *deviceMotion, NSError *error) {
+            [motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue] withHandler:^(CMDeviceMotion *deviceMotion, NSError *error) {
+//            [motionManager startDeviceMotionUpdatesUsingReferenceFrame:CMAttitudeReferenceFrameXMagneticNorthZVertical toQueue:[NSOperationQueue currentQueue] withHandler:^(CMDeviceMotion *deviceMotion, NSError *error) {
                 CMRotationMatrix a = deviceMotion.attitude.rotationMatrix;
                 _attitudeMatrix =
                 GLKMatrix4Make(a.m11, a.m21, a.m31, 0.0f,
-                               a.m12, a.m22, a.m32, 0.0f,
                                a.m13, a.m23, a.m33, 0.0f,
+                               -a.m12,-a.m22,-a.m32,0.0f,
                                0.0f , 0.0f , 0.0f , 1.0f);
-                GLKMatrix4 rotate = GLKMatrix4MakeRotation(M_PI/2, 1, 0, 0);
-                _attitudeMatrix = GLKMatrix4Multiply(_attitudeMatrix, rotate);
-                GLKMatrix4 earthTilt = GLKMatrix4MakeRotation(M_PI/180.0*23.45, 1, 0, 0);
-                _attitudeMatrix = GLKMatrix4Multiply(_attitudeMatrix, earthTilt);
-//                GLKMatrix4 seasonDirection = GLKMatrix4MakeRotation(M_PI, 0, 1, 0);
-//                _attitudeMatrix = GLKMatrix4Multiply(_attitudeMatrix, seasonDirection);
                 
 //                CMCalibratedMagneticField mag = deviceMotion.magneticField;
 //                logCount++;
@@ -153,13 +154,34 @@
     GLfloat black[] = {0.0,0.0,0.0,0.0};
     
     glMatrixMode(GL_MODELVIEW);
+    
     glPushMatrix();
     glMultMatrixf(_attitudeMatrix.m);
     
     glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, white);
+    
+    GLKMatrix4 latitude = GLKMatrix4MakeRotation(M_PI/180.0*45.0, 0, 0, 1);
+    glMultMatrixf(latitude.m);
+    GLKMatrix4 earthTilt = GLKMatrix4MakeRotation(M_PI/180.0*23.45, 1, 0, 0);
+    glMultMatrixf(earthTilt.m);
+    GLKMatrix4 daytime = GLKMatrix4MakeRotation(2*M_PI/24.0*_time, 0, 1, 0);
+    glMultMatrixf(daytime.m);
+    
     [self executeSphere:celestialSphere];
+    
     glPopMatrix();
+    glPushMatrix();
+    glMultMatrixf(_attitudeMatrix.m);
+    
+    glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, white);
+    
+    [self executeSphere:planetarySphere];
+    glPopMatrix();
+    
     glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, black);
+    
+    _time+=.01;
+    if(_time >= 24) _time = 0;
 }
 
 -(void)executeSphere:(Sphere *)sphere{

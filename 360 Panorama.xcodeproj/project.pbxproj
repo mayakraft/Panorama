@@ -7,7 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D51C8965181A6E5700F1C0B4 /* Tycho_4096_city_r.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D51C8964181A6E5700F1C0B4 /* Tycho_4096_city_r.jpg */; };
+		D522C72918192C79009EBD21 /* Tycho_4096_r.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D522C72818192C79009EBD21 /* Tycho_4096_r.jpg */; };
 		D557A87E1805D48300EC6657 /* park_2048.png in Resources */ = {isa = PBXBuildFile; fileRef = D557A87D1805D48300EC6657 /* park_2048.png */; };
+		D575729618265C1E0071B21E /* outside_transparent_2048.png in Resources */ = {isa = PBXBuildFile; fileRef = D575729418265C1E0071B21E /* outside_transparent_2048.png */; };
+		D575729718265C1E0071B21E /* outside__transparent_4096.png in Resources */ = {isa = PBXBuildFile; fileRef = D575729518265C1E0071B21E /* outside__transparent_4096.png */; };
+		D575729918265D8F0071B21E /* Tycho_2048_city_r.png in Resources */ = {isa = PBXBuildFile; fileRef = D575729818265D8F0071B21E /* Tycho_2048_city_r.png */; };
+		D57DB55E18136FCE00BA5493 /* cave_4096.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D57DB55D18136FCE00BA5493 /* cave_4096.jpg */; };
 		D5A6D0B81806801400613DD5 /* 57.png in Resources */ = {isa = PBXBuildFile; fileRef = D5A6D0B01806801400613DD5 /* 57.png */; };
 		D5A6D0B91806801400613DD5 /* 60.png in Resources */ = {isa = PBXBuildFile; fileRef = D5A6D0B11806801400613DD5 /* 60.png */; };
 		D5A6D0BA1806801400613DD5 /* 72.png in Resources */ = {isa = PBXBuildFile; fileRef = D5A6D0B21806801400613DD5 /* 72.png */; };
@@ -49,7 +55,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D51C8964181A6E5700F1C0B4 /* Tycho_4096_city_r.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Tycho_4096_city_r.jpg; sourceTree = "<group>"; };
+		D522C72818192C79009EBD21 /* Tycho_4096_r.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Tycho_4096_r.jpg; sourceTree = "<group>"; };
 		D557A87D1805D48300EC6657 /* park_2048.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = park_2048.png; sourceTree = "<group>"; };
+		D575729418265C1E0071B21E /* outside_transparent_2048.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = outside_transparent_2048.png; sourceTree = "<group>"; };
+		D575729518265C1E0071B21E /* outside__transparent_4096.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = outside__transparent_4096.png; sourceTree = "<group>"; };
+		D575729818265D8F0071B21E /* Tycho_2048_city_r.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tycho_2048_city_r.png; sourceTree = "<group>"; };
+		D57DB55D18136FCE00BA5493 /* cave_4096.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cave_4096.jpg; sourceTree = "<group>"; };
 		D5A6D0B01806801400613DD5 /* 57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 57.png; path = icons/57.png; sourceTree = "<group>"; };
 		D5A6D0B11806801400613DD5 /* 60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 60.png; path = icons/60.png; sourceTree = "<group>"; };
 		D5A6D0B21806801400613DD5 /* 72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 72.png; path = icons/72.png; sourceTree = "<group>"; };
@@ -119,6 +131,12 @@
 			children = (
 				D557A87D1805D48300EC6657 /* park_2048.png */,
 				D5FAE0C317C8970200AE6EC9 /* park_4096.jpg */,
+				D57DB55D18136FCE00BA5493 /* cave_4096.jpg */,
+				D575729418265C1E0071B21E /* outside_transparent_2048.png */,
+				D575729518265C1E0071B21E /* outside__transparent_4096.png */,
+				D575729818265D8F0071B21E /* Tycho_2048_city_r.png */,
+				D51C8964181A6E5700F1C0B4 /* Tycho_4096_city_r.jpg */,
+				D522C72818192C79009EBD21 /* Tycho_4096_r.jpg */,
 			);
 			name = images;
 			sourceTree = "<group>";
@@ -304,17 +322,23 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D575729618265C1E0071B21E /* outside_transparent_2048.png in Resources */,
 				D5A6D0BC1806801400613DD5 /* 114.png in Resources */,
 				D5A6D0BA1806801400613DD5 /* 72.png in Resources */,
 				D5FAE08F17C8956600AE6EC9 /* Main_iPad.storyboard in Resources */,
+				D522C72918192C79009EBD21 /* Tycho_4096_r.jpg in Resources */,
+				D575729718265C1E0071B21E /* outside__transparent_4096.png in Resources */,
 				D5A6D0BB1806801400613DD5 /* 76.png in Resources */,
 				D5FAE0CA17C8970200AE6EC9 /* park_4096.jpg in Resources */,
+				D51C8965181A6E5700F1C0B4 /* Tycho_4096_city_r.jpg in Resources */,
 				D557A87E1805D48300EC6657 /* park_2048.png in Resources */,
 				D5A6D0B91806801400613DD5 /* 60.png in Resources */,
 				D5A6D0BF1806801400613DD5 /* 152.png in Resources */,
 				D5A6D0B81806801400613DD5 /* 57.png in Resources */,
+				D57DB55E18136FCE00BA5493 /* cave_4096.jpg in Resources */,
 				D5FAE08C17C8956600AE6EC9 /* Main_iPhone.storyboard in Resources */,
 				D5FAE08317C8956600AE6EC9 /* InfoPlist.strings in Resources */,
+				D575729918265D8F0071B21E /* Tycho_2048_city_r.png in Resources */,
 				D5A6D0BD1806801400613DD5 /* 120.png in Resources */,
 				D5A6D0BE1806801400613DD5 /* 144.png in Resources */,
 			);

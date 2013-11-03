@@ -144,6 +144,9 @@
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_COLOR_ARRAY);
     
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    
     if(m_TexCoordsData != nil)
     {
         glEnable(GL_TEXTURE_2D);
