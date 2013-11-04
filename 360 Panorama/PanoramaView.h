@@ -14,11 +14,10 @@
 @property (nonatomic) float fieldOfView;  // 60-90 is average
 @property (nonatomic) BOOL pinchZoom;
 @property (nonatomic) BOOL orientToDevice;
-@property (nonatomic) float time;   // 0-24
 @property (nonatomic) GLKMatrix4 attitudeMatrix;
+@property BOOL celestialSphere;  // bonus: rotating stars
 
 -(void) execute;  // draw screen
 -(void) setTexture:(NSString*)fileName;
--(void) setCelestialTexture:(NSString*)fileName;
 
 @end

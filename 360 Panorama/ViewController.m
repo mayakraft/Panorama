@@ -11,8 +11,6 @@
 
 @interface ViewController (){
     PanoramaView *panoramaView;
-    NSArray *images;
-    NSInteger image;
 }
 @end
 
@@ -23,9 +21,9 @@
     panoramaView = [[PanoramaView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [panoramaView setTexture:@"equirectangular-projection-lines.png"];
 //    [panoramaView setTexture:@"park_2048.png"];
-    [panoramaView setCelestialTexture:@"Tycho_2048_city_reflection.png"];  // spinning stars background
-    [panoramaView setOrientToDevice:YES];   // initialize device orientation sensors
-    [panoramaView setPinchZoom:YES];   // activate touch gesture, alters field of view
+    [panoramaView setCelestialSphere:YES];  // spinning stars background
+    [panoramaView setOrientToDevice:YES];  // initialize device orientation sensors
+    [panoramaView setPinchZoom:YES];  // activate touch gesture, alters field of view
     [self setView:panoramaView];
 }
 

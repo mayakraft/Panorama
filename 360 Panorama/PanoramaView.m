@@ -16,7 +16,7 @@
 
 @interface PanoramaView (){
     Sphere *sphere;
-    Sphere *celestialSphere;
+    Sphere *celestial;
     CGFloat aspectRatio;
     CGFloat zoom;
     CMMotionManager *motionManager;
@@ -62,7 +62,7 @@
         aspectRatio = 1/aspectRatio;
 
     sphere = [[Sphere alloc] init:SLICES slices:SLICES radius:10.0 squash:1.0 textureFile:nil];
-    celestialSphere = [[Sphere alloc] init:SLICES slices:SLICES radius:20.0 squash:1.0 textureFile:nil];
+    celestial = [[Sphere alloc] init:SLICES slices:SLICES radius:20.0 squash:1.0 textureFile:@"Tycho_2048_city_reflection.png"];
 
     // init lighting
     glShadeModel(GL_SMOOTH);
@@ -95,10 +95,6 @@
 
 -(void) setTexture:(NSString*)fileName{
     [sphere swapTexture:fileName];
-}
-
--(void) setCelestialTexture:(NSString*)fileName{
-    [celestialSphere swapTexture:fileName];
 }
 
 -(void)setFieldOfView:(float)fieldOfView{
@@ -145,8 +141,9 @@
 }
 
 -(void)execute{
-    _time+=.01;
-    if(_time >= 24) _time = 0;
+    static float daytime;
+    daytime += .01;
+    if(daytime >= 24) daytime = 0;
 
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -155,17 +152,19 @@
     glMatrixMode(GL_MODELVIEW);
     glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, white);
     
-    glPushMatrix();
-        glMultMatrixf(_attitudeMatrix.m);
-        // made-up figures to fake a spinning planet
-        GLKMatrix4 latitude = GLKMatrix4MakeRotation(M_PI/180.0*45.0, 0, 0, 1);
-        glMultMatrixf(latitude.m);
-        GLKMatrix4 earthTilt = GLKMatrix4MakeRotation(M_PI/180.0*23.45, 1, 0, 0);
-        glMultMatrixf(earthTilt.m);
-        GLKMatrix4 daytime = GLKMatrix4MakeRotation(2*M_PI/24.0*_time, 0, 1, 0);
-        glMultMatrixf(daytime.m);
-        [self executeSphere:celestialSphere];
-    glPopMatrix();
+    if(_celestialSphere){
+        glPushMatrix();
+            glMultMatrixf(_attitudeMatrix.m);
+            // made-up figures to fake a spinning planet
+            GLKMatrix4 latitude = GLKMatrix4MakeRotation(M_PI/180.0*45.0, 0, 0, 1);
+            glMultMatrixf(latitude.m);
+            GLKMatrix4 earthTilt = GLKMatrix4MakeRotation(M_PI/180.0*23.45, 1, 0, 0);
+            glMultMatrixf(earthTilt.m);
+            GLKMatrix4 day = GLKMatrix4MakeRotation(2*M_PI/24.0*daytime, 0, 1, 0);
+            glMultMatrixf(day.m);
+            [self executeSphere:celestial];
+        glPopMatrix();
+    }
     
     glPushMatrix();
         glMultMatrixf(_attitudeMatrix.m);
