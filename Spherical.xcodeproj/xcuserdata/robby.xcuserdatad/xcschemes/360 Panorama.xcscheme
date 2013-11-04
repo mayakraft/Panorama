@@ -16,8 +16,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D5FAE07417C8956600AE6EC9"
                BuildableName = "360 Panorama.app"
-               BlueprintName = "360 Panorama"
-               ReferencedContainer = "container:360 Panorama.xcodeproj">
+               BlueprintName = "Spherical"
+               ReferencedContainer = "container:Spherical.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -34,8 +34,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D5FAE09817C8956600AE6EC9"
                BuildableName = "360 PanoramaTests.xctest"
-               BlueprintName = "360 PanoramaTests"
-               ReferencedContainer = "container:360 Panorama.xcodeproj">
+               BlueprintName = "SphericalTests"
+               ReferencedContainer = "container:Spherical.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -44,8 +44,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D5FAE07417C8956600AE6EC9"
             BuildableName = "360 Panorama.app"
-            BlueprintName = "360 Panorama"
-            ReferencedContainer = "container:360 Panorama.xcodeproj">
+            BlueprintName = "Spherical"
+            ReferencedContainer = "container:Spherical.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -63,8 +63,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D5FAE07417C8956600AE6EC9"
             BuildableName = "360 Panorama.app"
-            BlueprintName = "360 Panorama"
-            ReferencedContainer = "container:360 Panorama.xcodeproj">
+            BlueprintName = "Spherical"
+            ReferencedContainer = "container:Spherical.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -81,8 +81,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D5FAE07417C8956600AE6EC9"
             BuildableName = "360 Panorama.app"
-            BlueprintName = "360 Panorama"
-            ReferencedContainer = "container:360 Panorama.xcodeproj">
+            BlueprintName = "Spherical"
+            ReferencedContainer = "container:Spherical.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

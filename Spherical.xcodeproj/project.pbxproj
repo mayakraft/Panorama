@@ -13,6 +13,7 @@
 		D575729618265C1E0071B21E /* outside_transparent_2048.png in Resources */ = {isa = PBXBuildFile; fileRef = D575729418265C1E0071B21E /* outside_transparent_2048.png */; };
 		D575729718265C1E0071B21E /* outside__transparent_4096.png in Resources */ = {isa = PBXBuildFile; fileRef = D575729518265C1E0071B21E /* outside__transparent_4096.png */; };
 		D575729918265D8F0071B21E /* Tycho_2048_city_r.png in Resources */ = {isa = PBXBuildFile; fileRef = D575729818265D8F0071B21E /* Tycho_2048_city_r.png */; };
+		D575729D18278B760071B21E /* equirectangular-projection-alpha.png in Resources */ = {isa = PBXBuildFile; fileRef = D575729C18278B760071B21E /* equirectangular-projection-alpha.png */; };
 		D57DB55E18136FCE00BA5493 /* cave_4096.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D57DB55D18136FCE00BA5493 /* cave_4096.jpg */; };
 		D5A6D0B81806801400613DD5 /* 57.png in Resources */ = {isa = PBXBuildFile; fileRef = D5A6D0B01806801400613DD5 /* 57.png */; };
 		D5A6D0B91806801400613DD5 /* 60.png in Resources */ = {isa = PBXBuildFile; fileRef = D5A6D0B11806801400613DD5 /* 60.png */; };
@@ -61,6 +62,7 @@
 		D575729418265C1E0071B21E /* outside_transparent_2048.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = outside_transparent_2048.png; sourceTree = "<group>"; };
 		D575729518265C1E0071B21E /* outside__transparent_4096.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = outside__transparent_4096.png; sourceTree = "<group>"; };
 		D575729818265D8F0071B21E /* Tycho_2048_city_r.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tycho_2048_city_r.png; sourceTree = "<group>"; };
+		D575729C18278B760071B21E /* equirectangular-projection-alpha.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "equirectangular-projection-alpha.png"; sourceTree = "<group>"; };
 		D57DB55D18136FCE00BA5493 /* cave_4096.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cave_4096.jpg; sourceTree = "<group>"; };
 		D5A6D0B01806801400613DD5 /* 57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 57.png; path = icons/57.png; sourceTree = "<group>"; };
 		D5A6D0B11806801400613DD5 /* 60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 60.png; path = icons/60.png; sourceTree = "<group>"; };
@@ -70,23 +72,23 @@
 		D5A6D0B51806801400613DD5 /* 120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 120.png; path = icons/120.png; sourceTree = "<group>"; };
 		D5A6D0B61806801400613DD5 /* 144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 144.png; path = icons/144.png; sourceTree = "<group>"; };
 		D5A6D0B71806801400613DD5 /* 152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 152.png; path = icons/152.png; sourceTree = "<group>"; };
-		D5FAE07517C8956600AE6EC9 /* 360 Panorama.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "360 Panorama.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D5FAE07517C8956600AE6EC9 /* Spherical.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spherical.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5FAE07817C8956600AE6EC9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D5FAE07A17C8956600AE6EC9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		D5FAE07C17C8956600AE6EC9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		D5FAE08017C8956600AE6EC9 /* 360 Panorama-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "360 Panorama-Info.plist"; sourceTree = "<group>"; };
+		D5FAE08017C8956600AE6EC9 /* Spherical-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Spherical-Info.plist"; sourceTree = "<group>"; };
 		D5FAE08217C8956600AE6EC9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D5FAE08417C8956600AE6EC9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		D5FAE08617C8956600AE6EC9 /* 360 Panorama-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "360 Panorama-Prefix.pch"; sourceTree = "<group>"; };
+		D5FAE08617C8956600AE6EC9 /* Spherical-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Spherical-Prefix.pch"; sourceTree = "<group>"; };
 		D5FAE08717C8956600AE6EC9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D5FAE08817C8956600AE6EC9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		D5FAE08B17C8956600AE6EC9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
 		D5FAE08E17C8956600AE6EC9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		D5FAE09017C8956600AE6EC9 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		D5FAE09117C8956600AE6EC9 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		D5FAE09917C8956600AE6EC9 /* 360 PanoramaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "360 PanoramaTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D5FAE09917C8956600AE6EC9 /* SphericalTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SphericalTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5FAE09A17C8956600AE6EC9 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		D5FAE0A217C8956600AE6EC9 /* 360 PanoramaTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "360 PanoramaTests-Info.plist"; sourceTree = "<group>"; };
+		D5FAE0A217C8956600AE6EC9 /* SphericalTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SphericalTests-Info.plist"; sourceTree = "<group>"; };
 		D5FAE0A417C8956600AE6EC9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D5FAE0A617C8956600AE6EC9 /* _60_PanoramaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _60_PanoramaTests.m; sourceTree = "<group>"; };
 		D5FAE0B017C895AB00AE6EC9 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
@@ -134,6 +136,7 @@
 				D57DB55D18136FCE00BA5493 /* cave_4096.jpg */,
 				D575729418265C1E0071B21E /* outside_transparent_2048.png */,
 				D575729518265C1E0071B21E /* outside__transparent_4096.png */,
+				D575729C18278B760071B21E /* equirectangular-projection-alpha.png */,
 				D575729818265D8F0071B21E /* Tycho_2048_city_r.png */,
 				D51C8964181A6E5700F1C0B4 /* Tycho_4096_city_r.jpg */,
 				D522C72818192C79009EBD21 /* Tycho_4096_r.jpg */,
@@ -168,8 +171,8 @@
 		D5FAE06C17C8956500AE6EC9 = {
 			isa = PBXGroup;
 			children = (
-				D5FAE07E17C8956600AE6EC9 /* 360 Panorama */,
-				D5FAE0A017C8956600AE6EC9 /* 360 PanoramaTests */,
+				D5FAE07E17C8956600AE6EC9 /* Equirectangular */,
+				D5FAE0A017C8956600AE6EC9 /* EquirectangularTests */,
 				D5FAE07717C8956600AE6EC9 /* Frameworks */,
 				D5FAE07617C8956600AE6EC9 /* Products */,
 			);
@@ -178,8 +181,8 @@
 		D5FAE07617C8956600AE6EC9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D5FAE07517C8956600AE6EC9 /* 360 Panorama.app */,
-				D5FAE09917C8956600AE6EC9 /* 360 PanoramaTests.xctest */,
+				D5FAE07517C8956600AE6EC9 /* Spherical.app */,
+				D5FAE09917C8956600AE6EC9 /* SphericalTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -198,7 +201,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		D5FAE07E17C8956600AE6EC9 /* 360 Panorama */ = {
+		D5FAE07E17C8956600AE6EC9 /* Equirectangular */ = {
 			isa = PBXGroup;
 			children = (
 				D5FAE08717C8956600AE6EC9 /* AppDelegate.h */,
@@ -213,6 +216,7 @@
 				D51D4B0A17CCB23D008EC9B4 /* images */,
 				D5FAE07F17C8956600AE6EC9 /* Supporting Files */,
 			);
+			name = Equirectangular;
 			path = "360 Panorama";
 			sourceTree = "<group>";
 		};
@@ -220,27 +224,28 @@
 			isa = PBXGroup;
 			children = (
 				D557A8911805FC6F00EC6657 /* icons */,
-				D5FAE08017C8956600AE6EC9 /* 360 Panorama-Info.plist */,
+				D5FAE08017C8956600AE6EC9 /* Spherical-Info.plist */,
 				D5FAE08117C8956600AE6EC9 /* InfoPlist.strings */,
 				D5FAE08417C8956600AE6EC9 /* main.m */,
-				D5FAE08617C8956600AE6EC9 /* 360 Panorama-Prefix.pch */,
+				D5FAE08617C8956600AE6EC9 /* Spherical-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		D5FAE0A017C8956600AE6EC9 /* 360 PanoramaTests */ = {
+		D5FAE0A017C8956600AE6EC9 /* EquirectangularTests */ = {
 			isa = PBXGroup;
 			children = (
 				D5FAE0A617C8956600AE6EC9 /* _60_PanoramaTests.m */,
 				D5FAE0A117C8956600AE6EC9 /* Supporting Files */,
 			);
+			name = EquirectangularTests;
 			path = "360 PanoramaTests";
 			sourceTree = "<group>";
 		};
 		D5FAE0A117C8956600AE6EC9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				D5FAE0A217C8956600AE6EC9 /* 360 PanoramaTests-Info.plist */,
+				D5FAE0A217C8956600AE6EC9 /* SphericalTests-Info.plist */,
 				D5FAE0A317C8956600AE6EC9 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
@@ -249,9 +254,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D5FAE07417C8956600AE6EC9 /* 360 Panorama */ = {
+		D5FAE07417C8956600AE6EC9 /* Spherical */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D5FAE0AA17C8956600AE6EC9 /* Build configuration list for PBXNativeTarget "360 Panorama" */;
+			buildConfigurationList = D5FAE0AA17C8956600AE6EC9 /* Build configuration list for PBXNativeTarget "Spherical" */;
 			buildPhases = (
 				D5FAE07117C8956600AE6EC9 /* Sources */,
 				D5FAE07217C8956600AE6EC9 /* Frameworks */,
@@ -261,14 +266,14 @@
 			);
 			dependencies = (
 			);
-			name = "360 Panorama";
+			name = Spherical;
 			productName = "360 Panorama";
-			productReference = D5FAE07517C8956600AE6EC9 /* 360 Panorama.app */;
+			productReference = D5FAE07517C8956600AE6EC9 /* Spherical.app */;
 			productType = "com.apple.product-type.application";
 		};
-		D5FAE09817C8956600AE6EC9 /* 360 PanoramaTests */ = {
+		D5FAE09817C8956600AE6EC9 /* SphericalTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D5FAE0AD17C8956600AE6EC9 /* Build configuration list for PBXNativeTarget "360 PanoramaTests" */;
+			buildConfigurationList = D5FAE0AD17C8956600AE6EC9 /* Build configuration list for PBXNativeTarget "SphericalTests" */;
 			buildPhases = (
 				D5FAE09517C8956600AE6EC9 /* Sources */,
 				D5FAE09617C8956600AE6EC9 /* Frameworks */,
@@ -279,9 +284,9 @@
 			dependencies = (
 				D5FAE09F17C8956600AE6EC9 /* PBXTargetDependency */,
 			);
-			name = "360 PanoramaTests";
+			name = SphericalTests;
 			productName = "360 PanoramaTests";
-			productReference = D5FAE09917C8956600AE6EC9 /* 360 PanoramaTests.xctest */;
+			productReference = D5FAE09917C8956600AE6EC9 /* SphericalTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -298,7 +303,7 @@
 					};
 				};
 			};
-			buildConfigurationList = D5FAE07017C8956600AE6EC9 /* Build configuration list for PBXProject "360 Panorama" */;
+			buildConfigurationList = D5FAE07017C8956600AE6EC9 /* Build configuration list for PBXProject "Spherical" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -311,8 +316,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D5FAE07417C8956600AE6EC9 /* 360 Panorama */,
-				D5FAE09817C8956600AE6EC9 /* 360 PanoramaTests */,
+				D5FAE07417C8956600AE6EC9 /* Spherical */,
+				D5FAE09817C8956600AE6EC9 /* SphericalTests */,
 			);
 		};
 /* End PBXProject section */
@@ -330,6 +335,7 @@
 				D575729718265C1E0071B21E /* outside__transparent_4096.png in Resources */,
 				D5A6D0BB1806801400613DD5 /* 76.png in Resources */,
 				D5FAE0CA17C8970200AE6EC9 /* park_4096.jpg in Resources */,
+				D575729D18278B760071B21E /* equirectangular-projection-alpha.png in Resources */,
 				D51C8965181A6E5700F1C0B4 /* Tycho_4096_city_r.jpg in Resources */,
 				D557A87E1805D48300EC6657 /* park_2048.png in Resources */,
 				D5A6D0B91806801400613DD5 /* 60.png in Resources */,
@@ -380,7 +386,7 @@
 /* Begin PBXTargetDependency section */
 		D5FAE09F17C8956600AE6EC9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = D5FAE07417C8956600AE6EC9 /* 360 Panorama */;
+			target = D5FAE07417C8956600AE6EC9 /* Spherical */;
 			targetProxy = D5FAE09E17C8956600AE6EC9 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -496,10 +502,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "360 Panorama/360 Panorama-Prefix.pch";
-				INFOPLIST_FILE = "360 Panorama/360 Panorama-Info.plist";
+				GCC_PREFIX_HEADER = "360 Panorama/Spherical-Prefix.pch";
+				INFOPLIST_FILE = "360 Panorama/Spherical-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Spherical;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -509,10 +515,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "360 Panorama/360 Panorama-Prefix.pch";
-				INFOPLIST_FILE = "360 Panorama/360 Panorama-Info.plist";
+				GCC_PREFIX_HEADER = "360 Panorama/Spherical-Prefix.pch";
+				INFOPLIST_FILE = "360 Panorama/Spherical-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Spherical;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -532,8 +538,8 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "360 PanoramaTests/360 PanoramaTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "360 PanoramaTests/SphericalTests-Info.plist";
+				PRODUCT_NAME = SphericalTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -550,8 +556,8 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "360 Panorama/360 Panorama-Prefix.pch";
-				INFOPLIST_FILE = "360 PanoramaTests/360 PanoramaTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "360 PanoramaTests/SphericalTests-Info.plist";
+				PRODUCT_NAME = SphericalTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -560,7 +566,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D5FAE07017C8956600AE6EC9 /* Build configuration list for PBXProject "360 Panorama" */ = {
+		D5FAE07017C8956600AE6EC9 /* Build configuration list for PBXProject "Spherical" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D5FAE0A817C8956600AE6EC9 /* Debug */,
@@ -569,7 +575,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D5FAE0AA17C8956600AE6EC9 /* Build configuration list for PBXNativeTarget "360 Panorama" */ = {
+		D5FAE0AA17C8956600AE6EC9 /* Build configuration list for PBXNativeTarget "Spherical" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D5FAE0AB17C8956600AE6EC9 /* Debug */,
@@ -578,7 +584,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D5FAE0AD17C8956600AE6EC9 /* Build configuration list for PBXNativeTarget "360 PanoramaTests" */ = {
+		D5FAE0AD17C8956600AE6EC9 /* Build configuration list for PBXNativeTarget "SphericalTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D5FAE0AE17C8956600AE6EC9 /* Debug */,
