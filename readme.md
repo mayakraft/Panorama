@@ -1,19 +1,20 @@
 # Spherical Panorama
 ### 360° virtual reality window for iOS
-* reads an equirectangular projection
+* reads an equirectangular projection - the same format that panorama-stitch apps use
 * accelerometer-oriented
 * OpenGL acceleration
 
 example source data:
 ![like this](https://raw.github.com/robbykraft/SphericalPanorama/master/360%20Panorama/park_2048.png)
+acceptable sizes: (4096×2048), 2048×1024, 1024×512, 512×256, 256×128 ...
+
+* (devices after 2012)
 
 ## setup
 
-initialize PanoramaView:
-
 ```objective-c
 panoramaView = [[PanoramaView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-[panoramaView setTexture:@"forest.png"];
+[panoramaView setTexture:@"panorama.png"];
 [panoramaView setOrientToDevice:YES];   // initialize device orientation sensors
 [panoramaView setPinchZoom:YES];   // activate touch gesture, alters field of view
 [self setView:panoramaView];
@@ -34,10 +35,7 @@ redraw screen:
 @interface ViewController : GLKViewController
 ```
 
-* set UIDeviceOrientation to Portrait
-* texture size must be 2:1 Width:Height, and each dimension must be 2^n × (2^n)/2
-* texture size limited to 4096 × 2048 on newer hardware, older hardware (iPhone 4, 3G) is 2048 × 1024
-* include frameworks: OpenGLES, GLKit, CoreMotion
+* set UIDeviceOrientation to only-Portrait
 
 ## what's going on?
 
@@ -53,7 +51,7 @@ a.m13, a.m23, a.m33, 0.0f,  // z z z 0
 0.0f , 0.0f , 0.0f , 1.0f); // 0 0 0 1
 ```
 
-this gets multiplied by the following matrix, which amounts to a 90° rotation around the X axis
+for apple devices, to get the Y up, X across, and Z out, multiply the attitude matrix by the following matrix, a 90° rotation around the X axis
 
 ```
 1  0  0  0
@@ -62,11 +60,14 @@ this gets multiplied by the following matrix, which amounts to a 90° rotation a
 0  0  0  1
 ```
 
-which is an identity matrix with the following, affecting the Y and Z values
+it's pretty easy to recognize the formula for 2D rotation inside the 3D rotation
 
 ![wikipedia](http://upload.wikimedia.org/math/d/f/a/dfa9eccf5f8f2de1ac8ee1134ba88a86.png)
 
-now we have the attitude matrix. multiply it on the scene each time the scene is rendered
+* cos(90°) = 0
+* sin(90°) = 1
+
+now we have the device's orientation, multiply each time the scene is rendered
 
 ```c++
 glMultMatrixf(_attitudeMatrix.m);

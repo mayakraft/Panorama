@@ -1,6 +1,6 @@
 //
 //  ViewController.m
-//  360 Panorama
+//  Spherical
 //
 //  Created by Robby Kraft on 8/24/13.
 //  Copyright (c) 2013 Robby Kraft. All rights reserved.
@@ -21,10 +21,9 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     panoramaView = [[PanoramaView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-//    images = @[@"Tycho_4096_city_r.jpg", @"Tycho_4096_r.jpg", @"cave_4096.jpg",@"park_4096.jpg"];
-    images = @[@"Tycho_2048_city_r.png",@"Planck_CMB_red_2048_r.png"];
-    [panoramaView setPlanetaryTexture:@"outside_transparent_2048.png"];
-    [panoramaView setCelestialTexture:images[0]];
+    [panoramaView setTexture:@"equirectangular-projection-lines.png"];
+//    [panoramaView setTexture:@"park_2048.png"];
+    [panoramaView setCelestialTexture:@"Tycho_2048_city_reflection.png"];  // spinning stars background
     [panoramaView setOrientToDevice:YES];   // initialize device orientation sensors
     [panoramaView setPinchZoom:YES];   // activate touch gesture, alters field of view
     [self setView:panoramaView];
