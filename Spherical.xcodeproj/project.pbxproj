@@ -13,7 +13,6 @@
 		D55E8FC11828D2360076A9D7 /* PanoramaView.m in Sources */ = {isa = PBXBuildFile; fileRef = D55E8FA91828D2360076A9D7 /* PanoramaView.m */; };
 		D55E8FC21828D2360076A9D7 /* park_2048.png in Resources */ = {isa = PBXBuildFile; fileRef = D55E8FAA1828D2360076A9D7 /* park_2048.png */; };
 		D55E8FC31828D2360076A9D7 /* Sphere.m in Sources */ = {isa = PBXBuildFile; fileRef = D55E8FAC1828D2360076A9D7 /* Sphere.m */; };
-		D55E8FC51828D2360076A9D7 /* Tycho_2048_city_reflection.png in Resources */ = {isa = PBXBuildFile; fileRef = D55E8FAF1828D2360076A9D7 /* Tycho_2048_city_reflection.png */; };
 		D55E8FC61828D2360076A9D7 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D55E8FB11828D2360076A9D7 /* ViewController.m */; };
 		D55E8FCF1828D2510076A9D7 /* _60_PanoramaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D55E8FC81828D23C0076A9D7 /* _60_PanoramaTests.m */; };
 		D55E8FD01828D2620076A9D7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D55E8FC91828D23C0076A9D7 /* InfoPlist.strings */; };
@@ -62,7 +61,6 @@
 		D55E8FAC1828D2360076A9D7 /* Sphere.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Sphere.m; sourceTree = "<group>"; };
 		D55E8FAD1828D2360076A9D7 /* Spherical-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Spherical-Info.plist"; sourceTree = "<group>"; };
 		D55E8FAE1828D2360076A9D7 /* Spherical-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Spherical-Prefix.pch"; sourceTree = "<group>"; };
-		D55E8FAF1828D2360076A9D7 /* Tycho_2048_city_reflection.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tycho_2048_city_reflection.png; sourceTree = "<group>"; };
 		D55E8FB01828D2360076A9D7 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		D55E8FB11828D2360076A9D7 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		D55E8FC81828D23C0076A9D7 /* _60_PanoramaTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _60_PanoramaTests.m; sourceTree = "<group>"; };
@@ -149,7 +147,6 @@
 			children = (
 				D55E8FAA1828D2360076A9D7 /* park_2048.png */,
 				D55E8F9C1828D2360076A9D7 /* equirectangular-projection-lines.png */,
-				D55E8FAF1828D2360076A9D7 /* Tycho_2048_city_reflection.png */,
 			);
 			name = images;
 			sourceTree = "<group>";
@@ -295,7 +292,6 @@
 				D55E8FE41828D3F50076A9D7 /* 76.png in Resources */,
 				D55E8FDD1828D3F50076A9D7 /* 114.png in Resources */,
 				D55E8FE01828D3F50076A9D7 /* 152.png in Resources */,
-				D55E8FC51828D2360076A9D7 /* Tycho_2048_city_reflection.png in Resources */,
 				D55E8FDE1828D3F50076A9D7 /* 120.png in Resources */,
 				D55E8FDF1828D3F50076A9D7 /* 144.png in Resources */,
 				D55E8FE11828D3F50076A9D7 /* 57.png in Resources */,
