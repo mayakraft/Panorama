@@ -5,6 +5,7 @@
 * OpenGL acceleration
 
 example source data:
+
 ![like this](https://raw.github.com/robbykraft/Spherical/master/Spherical/park_small.png)
 acceptable sizes: (4096×2048), 2048×1024, 1024×512, 512×256, 256×128 ...
 
