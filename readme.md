@@ -5,7 +5,7 @@
 * OpenGL acceleration
 
 example source data:
-![like this](https://raw.github.com/robbykraft/SphericalPanorama/master/360%20Panorama/park_2048.png)
+![like this](https://raw.github.com/robbykraft/Spherical/master/Spherical/park_small.png)
 acceptable sizes: (4096×2048), 2048×1024, 1024×512, 512×256, 256×128 ...
 
 * (devices after 2012)
