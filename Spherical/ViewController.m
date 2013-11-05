@@ -19,9 +19,7 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     panoramaView = [[PanoramaView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    [panoramaView setTexture:@"equirectangular-projection-lines.png"];
-//    [panoramaView setTexture:@"park_2048.png"];
-    [panoramaView setCelestialSphere:YES];  // spinning stars background
+    [panoramaView setTexture:@"park_2048.png"];
     [panoramaView setOrientToDevice:YES];  // initialize device orientation sensors
     [panoramaView setPinchZoom:YES];  // activate touch gesture, alters field of view
     [self setView:panoramaView];

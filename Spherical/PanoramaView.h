@@ -15,7 +15,6 @@
 @property (nonatomic) BOOL pinchZoom;
 @property (nonatomic) BOOL orientToDevice;
 @property (nonatomic) GLKMatrix4 attitudeMatrix;
-@property BOOL celestialSphere;  // bonus: rotating stars
 
 -(void) execute;  // draw screen
 -(void) setTexture:(NSString*)fileName;

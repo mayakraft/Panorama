@@ -16,7 +16,6 @@
 
 @interface PanoramaView (){
     Sphere *sphere;
-    Sphere *celestial;
     CGFloat aspectRatio;
     CGFloat zoom;
     CMMotionManager *motionManager;
@@ -62,7 +61,6 @@
         aspectRatio = 1/aspectRatio;
 
     sphere = [[Sphere alloc] init:SLICES slices:SLICES radius:10.0 squash:1.0 textureFile:nil];
-    celestial = [[Sphere alloc] init:SLICES slices:SLICES radius:20.0 squash:1.0 textureFile:@"Tycho_2048_city_reflection.png"];
 
     // init lighting
     glShadeModel(GL_SMOOTH);
@@ -141,31 +139,11 @@
 }
 
 -(void)execute{
-    static float daytime;
-    daytime += .01;
-    if(daytime >= 24) daytime = 0;
-
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     GLfloat white[] = {1.0,1.0,1.0,1.0};
-    
     glMatrixMode(GL_MODELVIEW);
     glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, white);
-    
-    if(_celestialSphere){
-        glPushMatrix();
-            glMultMatrixf(_attitudeMatrix.m);
-            // made-up figures to fake a spinning planet
-            GLKMatrix4 latitude = GLKMatrix4MakeRotation(M_PI/180.0*45.0, 0, 0, 1);
-            glMultMatrixf(latitude.m);
-            GLKMatrix4 earthTilt = GLKMatrix4MakeRotation(M_PI/180.0*23.45, 1, 0, 0);
-            glMultMatrixf(earthTilt.m);
-            GLKMatrix4 day = GLKMatrix4MakeRotation(2*M_PI/24.0*daytime, 0, 1, 0);
-            glMultMatrixf(day.m);
-            [self executeSphere:celestial];
-        glPopMatrix();
-    }
-    
     glPushMatrix();
         glMultMatrixf(_attitudeMatrix.m);
         [self executeSphere:sphere];
