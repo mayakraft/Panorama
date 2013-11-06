@@ -10,17 +10,16 @@
 #import "PanoramaView.h"
 #import "Sphere.h"
 
-#define FOV_MAX 155
 #define FOV_MIN 1
-#define SLICES 48
+#define FOV_MAX 155
+#define SLICES 48  // curvature of projection sphere
+#define REFRESH 45.0f  // refresh rate, per second
 
 @interface PanoramaView (){
     Sphere *sphere;
-    CGFloat aspectRatio;
-    CGFloat zoom;
+    CGFloat aspectRatio, zoom;
     CMMotionManager *motionManager;
     UIPinchGestureRecognizer *pinchGesture;
-    NSInteger logCount;
 }
 @end
 
@@ -36,7 +35,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         motionManager = [[CMMotionManager alloc] init];
-        motionManager.deviceMotionUpdateInterval = 1.0/45.0; // this will exhaust the battery!
+        motionManager.deviceMotionUpdateInterval = 1/REFRESH;
         pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchHandler:)];
         [pinchGesture setEnabled:NO];
         [self addGestureRecognizer:pinchGesture];
@@ -55,8 +54,8 @@
     else
         _fieldOfView = 60;
     
-    _attitudeMatrix = GLKMatrix4MakeRotation(-M_PI_2, 1.0f, 0.0f, 0.0f);
     aspectRatio = (float)[[UIScreen mainScreen] bounds].size.width / (float)[[UIScreen mainScreen] bounds].size.height;
+    // correct for landscape orientation
     if([UIApplication sharedApplication].statusBarOrientation > 2)
         aspectRatio = 1/aspectRatio;
 
@@ -69,7 +68,7 @@
     glMatrixMode(GL_PROJECTION);    // the frustum affects the projection matrix
     glLoadIdentity();               // not the model matrix
     float zNear = 0.1;
-    float zFar = 1000;
+    float zFar = 10;
     GLfloat frustum = zNear * tanf(GLKMathDegreesToRadians(_fieldOfView) / 2.0);
     glFrustumf(-frustum, frustum, -frustum/aspectRatio, frustum/aspectRatio, zNear, zFar);
     glViewport(0, 0, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width);
@@ -83,7 +82,7 @@
     glPushMatrix();
     glLoadIdentity();
     float zNear = 0.1;
-    float zFar = 1000;
+    float zFar = 10;
     GLfloat frustum = zNear * tanf(GLKMathDegreesToRadians(_fieldOfView) / 2.0);
     glFrustumf(-frustum, frustum, -frustum/aspectRatio, frustum/aspectRatio, zNear, zFar);
     glMatrixMode(GL_MODELVIEW);
@@ -152,11 +151,9 @@
 
 -(void)executeSphere:(Sphere *)s{
     GLfloat posX, posY, posZ;
-    glPushMatrix();
     [s getPositionX:&posX Y:&posY Z:&posZ];
     glTranslatef(posX, posY, posZ);
     [s execute];
-    glPopMatrix();
 }
 
 @end
