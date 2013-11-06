@@ -1,18 +1,21 @@
-# Spherical Panorama
-### 360° virtual reality window for iOS
-* reads an equirectangular projection - the same format that panorama-stitch apps use
+# virtual reality window
+### for equirectangular projections
+* the same format that many panorama-stitch apps use
 * accelerometer-oriented
-* OpenGL acceleration
 
 example source data:
 
 ![like this](https://raw.github.com/robbykraft/Spherical/master/Spherical/park_small.png)
 
-acceptable sizes: (4096×2048), 2048×1024, 1024×512, 512×256, 256×128 ...
+acceptable image sizes: (4096×2048), 2048×1024, 1024×512, 512×256, 256×128 ...
 
 * (devices after 2012)
 
 ## setup
+
+from an empty project include `PanoramaView.h & .m` and `Sphere.h & .m` and an image file
+
+in your `ViewController.m`, typically in `viewDidLoad`:
 
 ```objective-c
 panoramaView = [[PanoramaView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -22,7 +25,7 @@ panoramaView = [[PanoramaView alloc] initWithFrame:[[UIScreen mainScreen] bounds
 [self setView:panoramaView];
 ```
 
-redraw screen:
+also add this to `ViewController.m`:
 
 ```objective-c
 -(void) glkView:(GLKView *)view drawInRect:(CGRect)rect{
@@ -31,18 +34,17 @@ redraw screen:
 ```
 
 ### make sure
-* to subclass:
+* to subclass ViewController:
 
 ```objective-c
 @interface ViewController : GLKViewController
 ```
 
-* set UIDeviceOrientation to only-Portrait
+* force device orientation to only-Portrait
 
 ## what's going on?
-
-CMMotionManager provides a matrix of three 3D vectors to describe the device orientation.
-* GL matrices uses column major, so vectors are stored vertically.
+CMMotionManager provides a matrix (of three 3D vectors) describing the device orientation.
+* OpenGL uses column major, so vectors are stored vertically.
 
 ```objective-c
 CMRotationMatrix a = deviceMotion.attitude.rotationMatrix;
@@ -53,7 +55,7 @@ a.m13, a.m23, a.m33, 0.0f,  // z z z 0
 0.0f , 0.0f , 0.0f , 1.0f); // 0 0 0 1
 ```
 
-for apple devices, to get the Y up, X across, and Z out, multiply the attitude matrix by the following matrix, a 90° rotation around the X axis
+for Apple devices, to get the Y up / X across / Z out, multiply the attitude matrix by a 90° rotation around the X axis
 
 ```
 1  0  0  0
@@ -66,8 +68,10 @@ it's pretty easy to recognize the formula for 2D rotation inside the 3D rotation
 
 ![wikipedia](http://upload.wikimedia.org/math/d/f/a/dfa9eccf5f8f2de1ac8ee1134ba88a86.png)
 
-* cos(90°) = 0
-* sin(90°) = 1
+```
+0 -1
+1  0
+```
 
 now we have the device's orientation, multiply each time the scene is rendered
 
