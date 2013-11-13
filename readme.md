@@ -1,7 +1,7 @@
-# virtual reality window
+# 360° virtual reality window
 ### for equirectangular projections
-* the same format that many panorama-stitch apps use
-* accelerometer-oriented
+* the same format most panorama stitch apps use
+* accelerometer-oriented look around
 
 example source data:
 
@@ -41,9 +41,12 @@ also add this to `ViewController.m`:
 ```
 
 * force device orientation to only-Portrait
+* image is sized properly (read above)
 
 ## what's going on?
-CMMotionManager provides a matrix (of three 3D vectors) describing the device orientation.
+It’s quite simple- equirectangular images mapped to the inside of a sphere come out looking like the original scene. Place the camera at the center.
+
+To map the orientation of the device to the orientation of the camera, CMMotionManager provides a matrix (of three 3D vectors) describing the device orientation.
 * OpenGL uses column major, so vectors are stored vertically.
 
 ```objective-c

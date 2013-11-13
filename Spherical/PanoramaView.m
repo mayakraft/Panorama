@@ -10,6 +10,8 @@
 #import "PanoramaView.h"
 #import "Sphere.h"
 
+#define Z_NEAR 0.1f
+#define Z_FAR 10.0f
 #define FOV_MIN 1
 #define FOV_MAX 155
 #define SLICES 48  // curvature of projection sphere
@@ -17,7 +19,8 @@
 
 @interface PanoramaView (){
     Sphere *sphere;
-    CGFloat aspectRatio, zoom;
+    CGFloat _aspectRatio;
+    GLKVector3 _eyeVector;  // forward direction
     CMMotionManager *motionManager;
     UIPinchGestureRecognizer *pinchGesture;
 }
@@ -34,14 +37,19 @@
 - (id)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
-        motionManager = [[CMMotionManager alloc] init];
-        motionManager.deviceMotionUpdateInterval = 1/REFRESH;
-        pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchHandler:)];
-        [pinchGesture setEnabled:NO];
-        [self addGestureRecognizer:pinchGesture];
+        [self initDevice];
         [self initGL];
+        sphere = [[Sphere alloc] init:SLICES slices:SLICES radius:1.0 squash:1.0 textureFile:nil];
     }
     return self;
+}
+
+-(void) initDevice{
+    motionManager = [[CMMotionManager alloc] init];
+    motionManager.deviceMotionUpdateInterval = 1.0/45.0;
+    pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchHandler:)];
+    [pinchGesture setEnabled:NO];
+    [self addGestureRecognizer:pinchGesture];
 }
 
 -(void)initGL{
@@ -49,54 +57,34 @@
     [EAGLContext setCurrentContext:context];
     self.context = context;
 
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-        _fieldOfView = 75;
-    else
-        _fieldOfView = 60;
-    
-    aspectRatio = (float)[[UIScreen mainScreen] bounds].size.width / (float)[[UIScreen mainScreen] bounds].size.height;
-    // correct for landscape orientation
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) _fieldOfView = 75;
+    else _fieldOfView = 60;
+    _aspectRatio = (float)[[UIScreen mainScreen] bounds].size.width / (float)[[UIScreen mainScreen] bounds].size.height;
+    // correct if in landscape orientation
     if([UIApplication sharedApplication].statusBarOrientation > 2)
-        aspectRatio = 1/aspectRatio;
-
-    sphere = [[Sphere alloc] init:SLICES slices:SLICES radius:10.0 squash:1.0 textureFile:nil];
-
+        _aspectRatio = 1/_aspectRatio;
+ 
     // init lighting
     glShadeModel(GL_SMOOTH);
     glLightModelf(GL_LIGHT_MODEL_TWO_SIDE,0.0);
     glEnable(GL_LIGHTING);
-    glMatrixMode(GL_PROJECTION);    // the frustum affects the projection matrix
-    glLoadIdentity();               // not the model matrix
-    float zNear = 0.1;
-    float zFar = 10;
-    GLfloat frustum = zNear * tanf(GLKMathDegreesToRadians(_fieldOfView) / 2.0);
-    glFrustumf(-frustum, frustum, -frustum/aspectRatio, frustum/aspectRatio, zNear, zFar);
     glViewport(0, 0, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width);
+    [self setFieldOfView:_fieldOfView];
     glEnable(GL_DEPTH_TEST);
-    glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-}
-
--(void) updateFieldOfView{
-    glMatrixMode(GL_PROJECTION);
-    glPushMatrix();
-    glLoadIdentity();
-    float zNear = 0.1;
-    float zFar = 10;
-    GLfloat frustum = zNear * tanf(GLKMathDegreesToRadians(_fieldOfView) / 2.0);
-    glFrustumf(-frustum, frustum, -frustum/aspectRatio, frustum/aspectRatio, zNear, zFar);
-    glMatrixMode(GL_MODELVIEW);
-    glEnable(GL_DEPTH_TEST);
-    glPopMatrix();
-}
-
--(void) setTexture:(NSString*)fileName{
-    [sphere swapTexture:fileName];
 }
 
 -(void)setFieldOfView:(float)fieldOfView{
     _fieldOfView = fieldOfView;
-    [self updateFieldOfView];
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    GLfloat frustum = Z_NEAR * tanf(GLKMathDegreesToRadians(_fieldOfView) / 2.0);
+    glFrustumf(-frustum, frustum, -frustum/_aspectRatio, frustum/_aspectRatio, Z_NEAR, Z_FAR);
+    glMatrixMode(GL_MODELVIEW);
+}
+
+-(void) setTexture:(NSString*)fileName{
+    [sphere swapTexture:fileName];
 }
 
 -(void) setPinchZoom:(BOOL)pinchZoom{
@@ -108,6 +96,7 @@
 }
 
 -(void)pinchHandler:(UIPinchGestureRecognizer*)sender{
+    static float zoom;
     if([sender state] == 1)
         zoom = _fieldOfView;
     if([sender state] == 2){
@@ -129,6 +118,9 @@
                                a.m13, a.m23, a.m33, 0.0f,
                                -a.m12,-a.m22,-a.m32,0.0f,
                                0.0f , 0.0f , 0.0f , 1.0f);
+                _eyeVector = GLKVector3Make(_attitudeMatrix.m02,
+                                            _attitudeMatrix.m12,
+                                            _attitudeMatrix.m22);
             }];
         }
     }
@@ -145,15 +137,8 @@
     glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, white);
     glPushMatrix();
         glMultMatrixf(_attitudeMatrix.m);
-        [self executeSphere:sphere];
+        [sphere execute];
     glPopMatrix();
-}
-
--(void)executeSphere:(Sphere *)s{
-    GLfloat posX, posY, posZ;
-    [s getPositionX:&posX Y:&posY Z:&posZ];
-    glTranslatef(posX, posY, posZ);
-    [s execute];
 }
 
 @end
