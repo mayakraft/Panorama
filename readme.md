@@ -1,7 +1,9 @@
 # 360° virtual reality window
 ### for equirectangular projections
-* the same format most panorama stitch apps use
-* accelerometer-oriented look around
+simple device-oriented panoramic image view for iOS devices
+
+* equirectangular is the format most panorama stitch apps use
+* calibrated for Apple devices’ orientation matrix (accelerometer + gyro)
 
 example source data:
 
@@ -13,7 +15,7 @@ acceptable image sizes: (4096×2048), 2048×1024, 1024×512, 512×256, 256×128 
 
 ## setup
 
-from an empty project include `PanoramaView.h & .m` and `Sphere.h & .m` and an image file
+from an empty project include `PanoramaView.h & .m` and `Sphere.h & .m` and an image file (image is mirrored, flip image horizontally)
 
 in your `ViewController.m`, typically in `viewDidLoad`:
 
@@ -44,10 +46,10 @@ also add this to `ViewController.m`:
 * image is sized properly (read above)
 
 ## what's going on?
-It’s quite simple- equirectangular images mapped to the inside of a sphere come out looking like the original scene. Place the camera at the center.
+Equirectangular images mapped to the inside of a sphere come out looking like the original scene. Camera should be at the exact center
 
-To map the orientation of the device to the orientation of the camera, CMMotionManager provides a matrix (of three 3D vectors) describing the device orientation.
-* OpenGL uses column major, so vectors are stored vertically.
+CMMotionManager provides a matrix of three 3D vectors which describes the device orientation.
+* OpenGL = column major, vectors are stored vertically.
 
 ```objective-c
 CMRotationMatrix a = deviceMotion.attitude.rotationMatrix;
@@ -58,25 +60,9 @@ a.m13, a.m23, a.m33, 0.0f,  // z z z 0
 0.0f , 0.0f , 0.0f , 1.0f); // 0 0 0 1
 ```
 
-for Apple devices, to get the Y up / X across / Z out, multiply the attitude matrix by a 90° rotation around the X axis
+for Apple devices, to get the Y up / X across / Z out, multiply by a 90° rotation around the X axis.
 
-```
-1  0  0  0
-0  0 -1  0
-0  1  0  0
-0  0  0  1
-```
-
-it's pretty easy to recognize the formula for 2D rotation inside the 3D rotation
-
-![wikipedia](http://upload.wikimedia.org/math/d/f/a/dfa9eccf5f8f2de1ac8ee1134ba88a86.png)
-
-```
-0 -1
-1  0
-```
-
-now we have the device's orientation, multiply each time the scene is rendered
+now we have the device's orientation, multiply this matrix onto the scene with:
 
 ```c++
 glMultMatrixf(_attitudeMatrix.m);
