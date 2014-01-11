@@ -13,7 +13,7 @@
 		D55E8FC11828D2360076A9D7 /* PanoramaView.m in Sources */ = {isa = PBXBuildFile; fileRef = D55E8FA91828D2360076A9D7 /* PanoramaView.m */; };
 		D55E8FC31828D2360076A9D7 /* Sphere.m in Sources */ = {isa = PBXBuildFile; fileRef = D55E8FAC1828D2360076A9D7 /* Sphere.m */; };
 		D55E8FC61828D2360076A9D7 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D55E8FB11828D2360076A9D7 /* ViewController.m */; };
-		D55E8FCF1828D2510076A9D7 /* _60_PanoramaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D55E8FC81828D23C0076A9D7 /* _60_PanoramaTests.m */; };
+		D55E8FCF1828D2510076A9D7 /* PanoramaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D55E8FC81828D23C0076A9D7 /* PanoramaTests.m */; };
 		D55E8FD01828D2620076A9D7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D55E8FC91828D23C0076A9D7 /* InfoPlist.strings */; };
 		D55E8FDD1828D3F50076A9D7 /* 114.png in Resources */ = {isa = PBXBuildFile; fileRef = D55E8FD41828D3F50076A9D7 /* 114.png */; };
 		D55E8FDE1828D3F50076A9D7 /* 120.png in Resources */ = {isa = PBXBuildFile; fileRef = D55E8FD51828D3F50076A9D7 /* 120.png */; };
@@ -58,13 +58,13 @@
 		D55E8FA91828D2360076A9D7 /* PanoramaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PanoramaView.m; sourceTree = "<group>"; };
 		D55E8FAB1828D2360076A9D7 /* Sphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sphere.h; sourceTree = "<group>"; };
 		D55E8FAC1828D2360076A9D7 /* Sphere.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Sphere.m; sourceTree = "<group>"; };
-		D55E8FAD1828D2360076A9D7 /* Spherical-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Spherical-Info.plist"; sourceTree = "<group>"; };
-		D55E8FAE1828D2360076A9D7 /* Spherical-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Spherical-Prefix.pch"; sourceTree = "<group>"; };
+		D55E8FAD1828D2360076A9D7 /* Panorama-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Panorama-Info.plist"; sourceTree = "<group>"; };
+		D55E8FAE1828D2360076A9D7 /* Panorama-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Panorama-Prefix.pch"; sourceTree = "<group>"; };
 		D55E8FB01828D2360076A9D7 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		D55E8FB11828D2360076A9D7 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		D55E8FC81828D23C0076A9D7 /* _60_PanoramaTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _60_PanoramaTests.m; sourceTree = "<group>"; };
+		D55E8FC81828D23C0076A9D7 /* PanoramaTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PanoramaTests.m; sourceTree = "<group>"; };
 		D55E8FCA1828D23C0076A9D7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		D55E8FCB1828D23D0076A9D7 /* SphericalTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "SphericalTests-Info.plist"; sourceTree = "<group>"; };
+		D55E8FCB1828D23D0076A9D7 /* PanoramaTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "PanoramaTests-Info.plist"; sourceTree = "<group>"; };
 		D55E8FD41828D3F50076A9D7 /* 114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 114.png; sourceTree = "<group>"; };
 		D55E8FD51828D3F50076A9D7 /* 120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 120.png; sourceTree = "<group>"; };
 		D55E8FD61828D3F50076A9D7 /* 144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 144.png; sourceTree = "<group>"; };
@@ -75,11 +75,11 @@
 		D55E8FDB1828D3F50076A9D7 /* 76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 76.png; sourceTree = "<group>"; };
 		D55E8FDC1828D3F50076A9D7 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		D5EC7AB8183AFBC400F62609 /* park_2048.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = park_2048.jpg; sourceTree = "<group>"; };
-		D5FAE07517C8956600AE6EC9 /* Spherical.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spherical.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D5FAE07517C8956600AE6EC9 /* Panorama.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Panorama.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5FAE07817C8956600AE6EC9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D5FAE07A17C8956600AE6EC9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		D5FAE07C17C8956600AE6EC9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		D5FAE09917C8956600AE6EC9 /* SphericalTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SphericalTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D5FAE09917C8956600AE6EC9 /* PanoramaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PanoramaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5FAE09A17C8956600AE6EC9 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		D5FAE0B017C895AB00AE6EC9 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		D5FAE0B217C895B200AE6EC9 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
@@ -113,7 +113,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		D55E8F931828D2360076A9D7 /* Spherical */ = {
+		D55E8F931828D2360076A9D7 /* Panorama */ = {
 			isa = PBXGroup;
 			children = (
 				D55E8F941828D2360076A9D7 /* AppDelegate.h */,
@@ -129,17 +129,17 @@
 				D55E8FD11828D3400076A9D7 /* images */,
 				D55E8FD21828D3790076A9D7 /* Supporting Files */,
 			);
-			path = Spherical;
+			path = Panorama;
 			sourceTree = "<group>";
 		};
-		D55E8FC71828D23C0076A9D7 /* SphericalTests */ = {
+		D55E8FC71828D23C0076A9D7 /* PanoramaTests */ = {
 			isa = PBXGroup;
 			children = (
-				D55E8FC81828D23C0076A9D7 /* _60_PanoramaTests.m */,
+				D55E8FC81828D23C0076A9D7 /* PanoramaTests.m */,
 				D55E8FC91828D23C0076A9D7 /* InfoPlist.strings */,
-				D55E8FCB1828D23D0076A9D7 /* SphericalTests-Info.plist */,
+				D55E8FCB1828D23D0076A9D7 /* PanoramaTests-Info.plist */,
 			);
-			path = SphericalTests;
+			path = PanoramaTests;
 			sourceTree = "<group>";
 		};
 		D55E8FD11828D3400076A9D7 /* images */ = {
@@ -156,9 +156,9 @@
 			children = (
 				D55E8FD31828D3F50076A9D7 /* icons */,
 				D55E8FA71828D2360076A9D7 /* main.m */,
-				D55E8FAD1828D2360076A9D7 /* Spherical-Info.plist */,
+				D55E8FAD1828D2360076A9D7 /* Panorama-Info.plist */,
 				D55E8F9A1828D2360076A9D7 /* InfoPlist.strings */,
-				D55E8FAE1828D2360076A9D7 /* Spherical-Prefix.pch */,
+				D55E8FAE1828D2360076A9D7 /* Panorama-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -182,8 +182,8 @@
 		D5FAE06C17C8956500AE6EC9 = {
 			isa = PBXGroup;
 			children = (
-				D55E8F931828D2360076A9D7 /* Spherical */,
-				D55E8FC71828D23C0076A9D7 /* SphericalTests */,
+				D55E8F931828D2360076A9D7 /* Panorama */,
+				D55E8FC71828D23C0076A9D7 /* PanoramaTests */,
 				D5FAE07717C8956600AE6EC9 /* Frameworks */,
 				D5FAE07617C8956600AE6EC9 /* Products */,
 			);
@@ -192,8 +192,8 @@
 		D5FAE07617C8956600AE6EC9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D5FAE07517C8956600AE6EC9 /* Spherical.app */,
-				D5FAE09917C8956600AE6EC9 /* SphericalTests.xctest */,
+				D5FAE07517C8956600AE6EC9 /* Panorama.app */,
+				D5FAE09917C8956600AE6EC9 /* PanoramaTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -215,9 +215,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D5FAE07417C8956600AE6EC9 /* Spherical */ = {
+		D5FAE07417C8956600AE6EC9 /* Panorama */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D5FAE0AA17C8956600AE6EC9 /* Build configuration list for PBXNativeTarget "Spherical" */;
+			buildConfigurationList = D5FAE0AA17C8956600AE6EC9 /* Build configuration list for PBXNativeTarget "Panorama" */;
 			buildPhases = (
 				D5FAE07117C8956600AE6EC9 /* Sources */,
 				D5FAE07217C8956600AE6EC9 /* Frameworks */,
@@ -227,14 +227,14 @@
 			);
 			dependencies = (
 			);
-			name = Spherical;
+			name = Panorama;
 			productName = "360 Panorama";
-			productReference = D5FAE07517C8956600AE6EC9 /* Spherical.app */;
+			productReference = D5FAE07517C8956600AE6EC9 /* Panorama.app */;
 			productType = "com.apple.product-type.application";
 		};
-		D5FAE09817C8956600AE6EC9 /* SphericalTests */ = {
+		D5FAE09817C8956600AE6EC9 /* PanoramaTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D5FAE0AD17C8956600AE6EC9 /* Build configuration list for PBXNativeTarget "SphericalTests" */;
+			buildConfigurationList = D5FAE0AD17C8956600AE6EC9 /* Build configuration list for PBXNativeTarget "PanoramaTests" */;
 			buildPhases = (
 				D5FAE09517C8956600AE6EC9 /* Sources */,
 				D5FAE09617C8956600AE6EC9 /* Frameworks */,
@@ -245,9 +245,9 @@
 			dependencies = (
 				D5FAE09F17C8956600AE6EC9 /* PBXTargetDependency */,
 			);
-			name = SphericalTests;
+			name = PanoramaTests;
 			productName = "360 PanoramaTests";
-			productReference = D5FAE09917C8956600AE6EC9 /* SphericalTests.xctest */;
+			productReference = D5FAE09917C8956600AE6EC9 /* PanoramaTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -264,7 +264,7 @@
 					};
 				};
 			};
-			buildConfigurationList = D5FAE07017C8956600AE6EC9 /* Build configuration list for PBXProject "Spherical" */;
+			buildConfigurationList = D5FAE07017C8956600AE6EC9 /* Build configuration list for PBXProject "Panorama" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -277,8 +277,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D5FAE07417C8956600AE6EC9 /* Spherical */,
-				D5FAE09817C8956600AE6EC9 /* SphericalTests */,
+				D5FAE07417C8956600AE6EC9 /* Panorama */,
+				D5FAE09817C8956600AE6EC9 /* PanoramaTests */,
 			);
 		};
 /* End PBXProject section */
@@ -329,7 +329,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D55E8FCF1828D2510076A9D7 /* _60_PanoramaTests.m in Sources */,
+				D55E8FCF1828D2510076A9D7 /* PanoramaTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -338,7 +338,7 @@
 /* Begin PBXTargetDependency section */
 		D5FAE09F17C8956600AE6EC9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = D5FAE07417C8956600AE6EC9 /* Spherical */;
+			target = D5FAE07417C8956600AE6EC9 /* Panorama */;
 			targetProxy = D5FAE09E17C8956600AE6EC9 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -454,10 +454,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Spherical/Spherical-Prefix.pch";
-				INFOPLIST_FILE = "Spherical/Spherical-Info.plist";
+				GCC_PREFIX_HEADER = "Panorama/Panorama-Prefix.pch";
+				INFOPLIST_FILE = "Panorama/Panorama-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				PRODUCT_NAME = Spherical;
+				PRODUCT_NAME = Panorama;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -467,10 +467,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Spherical/Spherical-Prefix.pch";
-				INFOPLIST_FILE = "Spherical/Spherical-Info.plist";
+				GCC_PREFIX_HEADER = "Panorama/Panorama-Prefix.pch";
+				INFOPLIST_FILE = "Panorama/Panorama-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				PRODUCT_NAME = Spherical;
+				PRODUCT_NAME = Panorama;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -478,7 +478,7 @@
 		D5FAE0AE17C8956600AE6EC9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/360 Panorama.app/360 Panorama";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Panorama.app/Panorama";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -490,8 +490,8 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "360 PanoramaTests/SphericalTests-Info.plist";
-				PRODUCT_NAME = SphericalTests;
+				INFOPLIST_FILE = "PanoramaTests/PanoramaTests-Info.plist";
+				PRODUCT_NAME = PanoramaTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -500,7 +500,7 @@
 		D5FAE0AF17C8956600AE6EC9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/360 Panorama.app/360 Panorama";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Panorama.app/Panorama";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -508,8 +508,8 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "360 Panorama/360 Panorama-Prefix.pch";
-				INFOPLIST_FILE = "360 PanoramaTests/SphericalTests-Info.plist";
-				PRODUCT_NAME = SphericalTests;
+				INFOPLIST_FILE = "PanoramaTests/PanoramaTests-Info.plist";
+				PRODUCT_NAME = PanoramaTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -518,7 +518,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D5FAE07017C8956600AE6EC9 /* Build configuration list for PBXProject "Spherical" */ = {
+		D5FAE07017C8956600AE6EC9 /* Build configuration list for PBXProject "Panorama" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D5FAE0A817C8956600AE6EC9 /* Debug */,
@@ -527,7 +527,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D5FAE0AA17C8956600AE6EC9 /* Build configuration list for PBXNativeTarget "Spherical" */ = {
+		D5FAE0AA17C8956600AE6EC9 /* Build configuration list for PBXNativeTarget "Panorama" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D5FAE0AB17C8956600AE6EC9 /* Debug */,
@@ -536,7 +536,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D5FAE0AD17C8956600AE6EC9 /* Build configuration list for PBXNativeTarget "SphericalTests" */ = {
+		D5FAE0AD17C8956600AE6EC9 /* Build configuration list for PBXNativeTarget "PanoramaTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D5FAE0AE17C8956600AE6EC9 /* Debug */,
