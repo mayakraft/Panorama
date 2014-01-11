@@ -7,7 +7,7 @@ simple device-oriented panoramic image view for iOS devices
 
 example source data:
 
-![like this](https://raw.github.com/robbykraft/Spherical/master/Spherical/park_small.jpg)
+![sample](https://raw.github.com/robbykraft/Panorama/master/Panorama/park_small.jpg)
 
 acceptable image sizes: (4096×2048), 2048×1024, 1024×512, 512×256, 256×128 ...
 
@@ -46,24 +46,26 @@ also add this to `ViewController.m`:
 * image is sized properly (read above)
 
 ## what's going on?
-Equirectangular images mapped to the inside of a sphere come out looking like the original scene. Camera should be at the exact center
+Equirectangular images mapped to the inside of a sphere come out looking like the original scene. Camera should be at the exact center.
 
-CMMotionManager provides a matrix of three 3D vectors which describes the device orientation.
-* OpenGL = column major, vectors are stored vertically.
+Orientation is set by setting the device orientation matrix. It can be set:
+
+* automatically from the device orientation (CMMotionManager)
+* manually as such:
 
 ```objective-c
-CMRotationMatrix a = deviceMotion.attitude.rotationMatrix;
 GLKMatrix4Make(
-a.m11, a.m21, a.m31, 0.0f,  // x x x 0
-a.m12, a.m22, a.m32, 0.0f,  // y y y 0
-a.m13, a.m23, a.m33, 0.0f,  // z z z 0
-0.0f , 0.0f , 0.0f , 1.0f); // 0 0 0 1
+a.m11, a.m21, a.m31, 0.0f,  // x1 x2 x3 0
+a.m12, a.m22, a.m32, 0.0f,  // y1 y2 y3 0
+a.m13, a.m23, a.m33, 0.0f,  // z1 z2 z3 0
+0.0f , 0.0f , 0.0f , 1.0f); // 0  0  0  1
 ```
+* in OpenGL, matrices are column major, vectors are stored vertically.
 
-for Apple devices, to get the Y up / X across / Z out, multiply by a 90° rotation around the X axis.
+## Orientation
 
-now we have the device's orientation, multiply this matrix onto the scene with:
+Class also provides read only __Azimuth__ and __Altitude__
 
-```c++
-glMultMatrixf(_attitudeMatrix.m);
-```
+![coordinates](http://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Azimuth-Altitude_schematic.svg/500px-Azimuth-Altitude_schematic.svg.png)
+
+Azimuth 0° is based on the beginning orientation of the phone at the time of program start. It’s possible for CMMotionManager to activate the magnometer and align north to Earth’s magnetic north pole.
