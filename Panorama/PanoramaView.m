@@ -112,12 +112,13 @@
         if(motionManager.isDeviceMotionAvailable){
             [motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue] withHandler:^(CMDeviceMotion *deviceMotion, NSError *error) {
                 CMRotationMatrix a = deviceMotion.attitude.rotationMatrix;
+                // matrix has a built-in 90 rotation, and reflection across the X to correct the inverted texture
                 _attitudeMatrix =
-                GLKMatrix4Make(a.m11, a.m21, a.m31, 0.0f,
-                               a.m13, a.m23, a.m33, 0.0f,
-                               -a.m12,-a.m22,-a.m32,0.0f,
-                               0.0f , 0.0f , 0.0f , 1.0f);
-                _lookVector = GLKVector3Make(-_attitudeMatrix.m02,
+                GLKMatrix4Make(-a.m11,-a.m21,-a.m31, 0.0f,
+                                a.m13, a.m23, a.m33, 0.0f,
+                               -a.m12,-a.m22,-a.m32, 0.0f,
+                                0.0f , 0.0f , 0.0f , 1.0f);
+                _lookVector = GLKVector3Make(_attitudeMatrix.m02, // if not for texture correction, this would be negative
                                              -_attitudeMatrix.m12,
                                              -_attitudeMatrix.m22);
                 _lookAzimuth = atan2f(_lookVector.z, _lookVector.x);
@@ -131,7 +132,7 @@
 }
 
 -(void)execute{
-    //    [self logOrientation];
+    [self logOrientation];
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     GLfloat white[] = {1.0,1.0,1.0,1.0};
@@ -146,7 +147,7 @@
 -(void)logOrientation{
     static int timeIndex;
     timeIndex++;
-    if(timeIndex % 60 == 0)
+    if(timeIndex % 10 == 0)
         NSLog(@"\n[ %.3f, %.3f, %.3f ]\n[ %.3f, %.3f, %.3f ]\n[ %.3f, %.3f, %.3f ]\n--(%.3f, %.3f, %.3f)--\n--(AZ:%.3f  ALT:%.3f)--",
               _attitudeMatrix.m00, _attitudeMatrix.m01, _attitudeMatrix.m02,
               _attitudeMatrix.m10, _attitudeMatrix.m11, _attitudeMatrix.m12,

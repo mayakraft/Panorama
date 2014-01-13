@@ -75,7 +75,6 @@
                 
                 vPtr += 2*3;
                 nPtr += 2*3;
-                
                 if(tPtr != nil) tPtr += 2*2;
             }
             
@@ -100,14 +99,8 @@
 
 -(bool) execute
 {
-    glEnable(GL_CULL_FACE);
-    glCullFace(GL_FRONT);
-    glFrontFace(GL_CW);
     glEnableClientState(GL_NORMAL_ARRAY);
     glEnableClientState(GL_VERTEX_ARRAY);
-    //    glEnable(GL_BLEND);
-    //    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    
     if(m_TexCoordsData != nil){
         glEnable(GL_TEXTURE_2D);
         glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -120,9 +113,8 @@
     
     glDrawArrays(GL_TRIANGLE_STRIP, 0, (m_Slices +1) * 2 * (m_Stacks-1)+2);
     
-    //    glDisable(GL_BLEND);
-    glDisable(GL_TEXTURE_2D);
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    glDisable(GL_TEXTURE_2D);
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_NORMAL_ARRAY);
     return true;
@@ -135,7 +127,6 @@
     NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], GLKTextureLoaderOriginBottomLeft, nil];
     NSString *path = [[NSBundle mainBundle] pathForResource:filename ofType:NULL];
     info=[GLKTextureLoader textureWithContentsOfFile:path options:options error:&error];
-    
     glBindTexture(GL_TEXTURE_2D, info.name);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);

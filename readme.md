@@ -1,17 +1,25 @@
 # 360° virtual reality window
 ### for equirectangular projections
-simple device-oriented panoramic image view for iOS devices
+device-oriented panorama image viewer for iOS devices
 
-* equirectangular is the format most panorama stitch apps use
-* calibrated for Apple devices’ orientation matrix (accelerometer + gyro)
+* equirectangular: the format used by many panorama stitch apps
+* calibrated to Apple’s devices’ accelerometer and gyroscope
 
-example source data:
+example image data:
 
 ![sample](https://raw.github.com/robbykraft/Panorama/master/Panorama/park_small.jpg)
 
 acceptable image sizes: (4096×2048), 2048×1024, 1024×512, 512×256, 256×128 ...
 
 * (devices after 2012)
+
+## orientation
+
+class also provides the look direction as a read-only __vector__ (Vec3) and also __Azimuth__ and __Altitude__
+
+![coordinates](http://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Azimuth-Altitude_schematic.svg/500px-Azimuth-Altitude_schematic.svg.png)
+
+Azimuth 0° is based on the beginning orientation of the phone at the time of program start. It’s possible for CMMotionManager to activate the magnometer and align north to Earth’s magnetic north pole.
 
 ## setup
 
@@ -42,8 +50,7 @@ also add this to `ViewController.m`:
 @interface ViewController : GLKViewController
 ```
 
-* force device orientation to only-Portrait
-* image is sized properly (read above)
+* prevent auto-rotation, constrain the device orientation to one direction
 
 ## what's going on?
 Equirectangular images mapped to the inside of a sphere come out looking like the original scene. Camera should be at the exact center.
@@ -51,7 +58,7 @@ Equirectangular images mapped to the inside of a sphere come out looking like th
 Orientation is set by setting the device orientation matrix. It can be set:
 
 * automatically from the device orientation (CMMotionManager)
-* manually as such:
+* manually:
 
 ```objective-c
 GLKMatrix4Make(
@@ -61,11 +68,3 @@ a.m13, a.m23, a.m33, 0.0f,  // z1 z2 z3 0
 0.0f , 0.0f , 0.0f , 1.0f); // 0  0  0  1
 ```
 * in OpenGL, matrices are column major, vectors are stored vertically.
-
-## Orientation
-
-Class also provides read only __Azimuth__ and __Altitude__
-
-![coordinates](http://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Azimuth-Altitude_schematic.svg/500px-Azimuth-Altitude_schematic.svg.png)
-
-Azimuth 0° is based on the beginning orientation of the phone at the time of program start. It’s possible for CMMotionManager to activate the magnometer and align north to Earth’s magnetic north pole.
