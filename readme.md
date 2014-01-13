@@ -1,4 +1,4 @@
-# 360° virtual reality window
+# 360° panorama view
 ### for equirectangular projections
 device-oriented panorama image viewer for iOS devices
 
@@ -11,11 +11,11 @@ example image data:
 
 acceptable image sizes: (4096×2048), 2048×1024, 1024×512, 512×256, 256×128 ...
 
-* (devices after 2012)
+* (4096 supported on iPhone 4s and iPad2 onward)
 
 ## orientation
 
-class also provides the look direction as a read-only __vector__ (Vec3) and also __Azimuth__ and __Altitude__
+class also provides the orientation (look) direction as a read-only __vector__ (Vec3) and also __Azimuth__ and __Altitude__
 
 ![coordinates](http://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Azimuth-Altitude_schematic.svg/500px-Azimuth-Altitude_schematic.svg.png)
 
@@ -23,15 +23,15 @@ Azimuth 0° is based on the beginning orientation of the phone at the time of pr
 
 ## setup
 
-from an empty project include `PanoramaView.h & .m` and `Sphere.h & .m` and an image file (image is mirrored, flip image horizontally)
+from an empty project include `PanoramaView.h & .m` and `Sphere.h & .m` and an image file
 
 in your `ViewController.m`, typically in `viewDidLoad`:
 
 ```objective-c
 panoramaView = [[PanoramaView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 [panoramaView setTexture:@"panorama.png"];
-[panoramaView setOrientToDevice:YES];   // initialize device orientation sensors
-[panoramaView setPinchZoom:YES];   // activate touch gesture, alters field of view
+[panoramaView setOrientToDevice:YES];  // YES: use accel/gyro. NO: use touch pan gesture
+[panoramaView setPinchZoom:YES];  // pinch to change field of view
 [self setView:panoramaView];
 ```
 
@@ -43,14 +43,14 @@ also add this to `ViewController.m`:
 }
 ```
 
-### make sure
-* to subclass ViewController:
+subclass ViewController:
 
 ```objective-c
 @interface ViewController : GLKViewController
 ```
 
-* prevent auto-rotation, constrain the device orientation to one direction
+### make sure
+* prevent landscape/portrait auto-rotation, constrain the device orientation to only one
 
 ## what's going on?
 Equirectangular images mapped to the inside of a sphere come out looking like the original scene. Camera should be at the exact center.

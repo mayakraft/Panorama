@@ -22,6 +22,8 @@
     float _aspectRatio;
     CMMotionManager *motionManager;
     UIPinchGestureRecognizer *pinchGesture;
+    UIPanGestureRecognizer *panGesture;
+    float panX, panY;
 }
 @end
 
@@ -49,6 +51,9 @@
     pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchHandler:)];
     [pinchGesture setEnabled:NO];
     [self addGestureRecognizer:pinchGesture];
+    panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panHandler:)];
+    [panGesture setEnabled:NO];
+    [self addGestureRecognizer:panGesture];
 }
 
 -(void)initGL{
@@ -106,9 +111,22 @@
     }
 }
 
+-(void) panHandler:(UIPanGestureRecognizer*)sender{
+    static float startX, startY;
+    if([sender state] == 1){
+        startX = panX;
+        startY = panY;
+    }
+    else if([sender state] == 2){
+        panX = startX + [sender translationInView:sender.view].x;
+        panY = startY + [sender translationInView:sender.view].y;
+    }
+}
+
 -(void) setOrientToDevice:(BOOL)orientToDevice{
     _orientToDevice = orientToDevice;
     if(_orientToDevice){
+        [panGesture setEnabled:NO];  // disable panning if using accelerometer/gyro
         if(motionManager.isDeviceMotionAvailable){
             [motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue] withHandler:^(CMDeviceMotion *deviceMotion, NSError *error) {
                 CMRotationMatrix a = deviceMotion.attitude.rotationMatrix;
@@ -128,23 +146,31 @@
     }
     else {
         [motionManager stopDeviceMotionUpdates];
+        [panGesture setEnabled:YES];
+        panX = panY = 0.0f;
     }
 }
 
 -(void)execute{
-    [self logOrientation];
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     GLfloat white[] = {1.0,1.0,1.0,1.0};
     glMatrixMode(GL_MODELVIEW);
     glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, white);
     glPushMatrix();
-    glMultMatrixf(_attitudeMatrix.m);
+    if(_orientToDevice)
+        glMultMatrixf(_attitudeMatrix.m);
+    else{
+        glRotatef(panY/5., -1, 0, 0);
+        glRotatef(panX/5., 0, -1, 0);
+    }
     [sphere execute];
     glPopMatrix();
+    
+//    [self logSensorOrientation];
 }
 
--(void)logOrientation{
+-(void)logSensorOrientation{
     static int timeIndex;
     timeIndex++;
     if(timeIndex % 10 == 0)
