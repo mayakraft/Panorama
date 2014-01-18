@@ -23,6 +23,7 @@
 -(bool) execute;
 -(id) init:(GLint)stacks slices:(GLint)slices radius:(GLfloat)radius textureFile:(NSString *)textureFile;
 -(GLKTextureInfo *) loadTexture:(NSString *) filename;
+-(GLKTextureInfo *) loadTextureOfPath:(NSString *) path;
 -(void) swapTexture:(NSString*)textureFile;
 
 @end
