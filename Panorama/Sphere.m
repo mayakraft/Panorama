@@ -134,10 +134,28 @@
     return info;
 }
 
+-(GLKTextureInfo *) loadTextureOfPath:(NSString *) path
+{
+    NSError *error;
+    GLKTextureInfo *info;
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], GLKTextureLoaderOriginBottomLeft, nil];
+    info=[GLKTextureLoader textureWithContentsOfFile:path options:options error:&error];
+    glBindTexture(GL_TEXTURE_2D, info.name);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);//GL_NEAREST);   // texture aliasing
+    return info;
+}
+
 -(void)swapTexture:(NSString*)textureFile{
     GLuint name = m_TextureInfo.name;
     glDeleteTextures(1, &name);
-    m_TextureInfo = [self loadTexture:textureFile];
+    BOOL exist = [[NSFileManager defaultManager] fileExistsAtPath:textureFile];
+    if (exist) {
+        m_TextureInfo = [self loadTextureOfPath:textureFile];
+    } else {
+        m_TextureInfo = [self loadTexture:textureFile];
+    }
 }
 
 @end
