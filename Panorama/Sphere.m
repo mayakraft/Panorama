@@ -5,6 +5,11 @@
 //  Created by Robby Kraft on 8/24/13.
 //  Copyright (c) 2013 Robby Kraft. All rights reserved.
 //
+//  adapted from Pro OpenGL ES for iOS
+//  by Mike Smithwick
+//  ISBN: 9781430238409 Jan 2011
+//  pg. 78
+//
 
 #import "Sphere.h"
 
@@ -12,7 +17,7 @@
 
 -(id) init:(GLint)stacks slices:(GLint)slices radius:(GLfloat)radius textureFile:(NSString *)textureFile
 {
-    if(textureFile != nil) m_TextureInfo = [self loadTexture:textureFile];
+    if(textureFile != nil) m_TextureInfo = [self loadTextureFromBundle:textureFile];
     m_Scale = radius;
     
     if((self = [super init])){
@@ -120,21 +125,13 @@
     return true;
 }
 
--(GLKTextureInfo *) loadTexture:(NSString *) filename
+-(GLKTextureInfo *) loadTextureFromBundle:(NSString *) filename
 {
-    NSError *error;
-    GLKTextureInfo *info;
-    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], GLKTextureLoaderOriginBottomLeft, nil];
     NSString *path = [[NSBundle mainBundle] pathForResource:filename ofType:NULL];
-    info=[GLKTextureLoader textureWithContentsOfFile:path options:options error:&error];
-    glBindTexture(GL_TEXTURE_2D, info.name);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);//GL_NEAREST);   // texture aliasing
-    return info;
+    return [self loadTextureFromPath:path];
 }
 
--(GLKTextureInfo *) loadTextureOfPath:(NSString *) path
+-(GLKTextureInfo *) loadTextureFromPath:(NSString *) path
 {
     NSError *error;
     GLKTextureInfo *info;
@@ -150,11 +147,11 @@
 -(void)swapTexture:(NSString*)textureFile{
     GLuint name = m_TextureInfo.name;
     glDeleteTextures(1, &name);
-    BOOL exist = [[NSFileManager defaultManager] fileExistsAtPath:textureFile];
-    if (exist) {
-        m_TextureInfo = [self loadTextureOfPath:textureFile];
-    } else {
-        m_TextureInfo = [self loadTexture:textureFile];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:textureFile]) {
+        m_TextureInfo = [self loadTextureFromPath:textureFile];
+    }
+    else {
+        m_TextureInfo = [self loadTextureFromBundle:textureFile];
     }
 }
 

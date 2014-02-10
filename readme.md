@@ -15,7 +15,11 @@ acceptable image sizes: (4096×2048), 2048×1024, 1024×512, 512×256, 256×128 
 
 ## orientation
 
-class also provides the orientation (look) direction as a read-only __vector__ (Vec3) and also __Azimuth__ and __Altitude__
+the class exposes the device orientation and offers it expressed as:
+
+* __rotation matrix__
+* __look direction__, a unit vector pointing forward into the scene through the center of the screen
+* __azimuth__ and __altitude__
 
 ![coordinates](http://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Azimuth-Altitude_schematic.svg/500px-Azimuth-Altitude_schematic.svg.png)
 

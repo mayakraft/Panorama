@@ -24,10 +24,9 @@
 		D55E8FE31828D3F50076A9D7 /* 72.png in Resources */ = {isa = PBXBuildFile; fileRef = D55E8FDA1828D3F50076A9D7 /* 72.png */; };
 		D55E8FE41828D3F50076A9D7 /* 76.png in Resources */ = {isa = PBXBuildFile; fileRef = D55E8FDB1828D3F50076A9D7 /* 76.png */; };
 		D55E8FE51828D3F50076A9D7 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D55E8FDC1828D3F50076A9D7 /* icon.png */; };
+		D5C8B44C18A8E58700051A88 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D5C8B44B18A8E58700051A88 /* Default-568h@2x.png */; };
 		D5EC7AB9183AFBC400F62609 /* park_2048.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D5EC7AB8183AFBC400F62609 /* park_2048.jpg */; };
 		D5FAE07917C8956600AE6EC9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5FAE07817C8956600AE6EC9 /* Foundation.framework */; };
-		D5FAE07B17C8956600AE6EC9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5FAE07A17C8956600AE6EC9 /* CoreGraphics.framework */; };
-		D5FAE07D17C8956600AE6EC9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5FAE07C17C8956600AE6EC9 /* UIKit.framework */; };
 		D5FAE09B17C8956600AE6EC9 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5FAE09A17C8956600AE6EC9 /* XCTest.framework */; };
 		D5FAE09C17C8956600AE6EC9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5FAE07817C8956600AE6EC9 /* Foundation.framework */; };
 		D5FAE09D17C8956600AE6EC9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5FAE07C17C8956600AE6EC9 /* UIKit.framework */; };
@@ -49,8 +48,6 @@
 /* Begin PBXFileReference section */
 		D55E8F941828D2360076A9D7 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D55E8F951828D2360076A9D7 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		D55E8F971828D2360076A9D7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
-		D55E8F991828D2360076A9D7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
 		D55E8F9B1828D2360076A9D7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D55E8F9C1828D2360076A9D7 /* equirectangular-projection-lines.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "equirectangular-projection-lines.png"; sourceTree = "<group>"; };
 		D55E8FA71828D2360076A9D7 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -74,6 +71,7 @@
 		D55E8FDA1828D3F50076A9D7 /* 72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 72.png; sourceTree = "<group>"; };
 		D55E8FDB1828D3F50076A9D7 /* 76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 76.png; sourceTree = "<group>"; };
 		D55E8FDC1828D3F50076A9D7 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		D5C8B44B18A8E58700051A88 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		D5EC7AB8183AFBC400F62609 /* park_2048.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = park_2048.jpg; sourceTree = "<group>"; };
 		D5FAE07517C8956600AE6EC9 /* Panorama.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Panorama.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5FAE07817C8956600AE6EC9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -94,8 +92,6 @@
 				D5FAE0B517C895BE00AE6EC9 /* OpenGLES.framework in Frameworks */,
 				D5FAE0B317C895B200AE6EC9 /* GLKit.framework in Frameworks */,
 				D5FAE0B117C895AB00AE6EC9 /* CoreMotion.framework in Frameworks */,
-				D5FAE07B17C8956600AE6EC9 /* CoreGraphics.framework in Frameworks */,
-				D5FAE07D17C8956600AE6EC9 /* UIKit.framework in Frameworks */,
 				D5FAE07917C8956600AE6EC9 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -118,8 +114,6 @@
 			children = (
 				D55E8F941828D2360076A9D7 /* AppDelegate.h */,
 				D55E8F951828D2360076A9D7 /* AppDelegate.m */,
-				D55E8F961828D2360076A9D7 /* Main_iPad.storyboard */,
-				D55E8F981828D2360076A9D7 /* Main_iPhone.storyboard */,
 				D55E8FB01828D2360076A9D7 /* ViewController.h */,
 				D55E8FB11828D2360076A9D7 /* ViewController.m */,
 				D55E8FA81828D2360076A9D7 /* PanoramaView.h */,
@@ -159,6 +153,7 @@
 				D55E8FAD1828D2360076A9D7 /* Panorama-Info.plist */,
 				D55E8F9A1828D2360076A9D7 /* InfoPlist.strings */,
 				D55E8FAE1828D2360076A9D7 /* Panorama-Prefix.pch */,
+				D5C8B44B18A8E58700051A88 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -297,6 +292,7 @@
 				D55E8FE11828D3F50076A9D7 /* 57.png in Resources */,
 				D55E8FE51828D3F50076A9D7 /* icon.png in Resources */,
 				D5EC7AB9183AFBC400F62609 /* park_2048.jpg in Resources */,
+				D5C8B44C18A8E58700051A88 /* Default-568h@2x.png in Resources */,
 				D55E8FE21828D3F50076A9D7 /* 60.png in Resources */,
 				D55E8FB61828D2360076A9D7 /* equirectangular-projection-lines.png in Resources */,
 			);
@@ -344,22 +340,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		D55E8F961828D2360076A9D7 /* Main_iPad.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D55E8F971828D2360076A9D7 /* Base */,
-			);
-			name = Main_iPad.storyboard;
-			sourceTree = "<group>";
-		};
-		D55E8F981828D2360076A9D7 /* Main_iPhone.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D55E8F991828D2360076A9D7 /* Base */,
-			);
-			name = Main_iPhone.storyboard;
-			sourceTree = "<group>";
-		};
 		D55E8F9A1828D2360076A9D7 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -456,7 +436,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Panorama/Panorama-Prefix.pch";
 				INFOPLIST_FILE = "Panorama/Panorama-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = Panorama;
 				WRAPPER_EXTENSION = app;
 			};
@@ -469,7 +449,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Panorama/Panorama-Prefix.pch";
 				INFOPLIST_FILE = "Panorama/Panorama-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = Panorama;
 				WRAPPER_EXTENSION = app;
 			};
@@ -485,7 +465,7 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "360 Panorama/360 Panorama-Prefix.pch";
+				GCC_PREFIX_HEADER = "Panorama/Panorama-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -507,7 +487,7 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "360 Panorama/360 Panorama-Prefix.pch";
+				GCC_PREFIX_HEADER = "Panorama/Panorama-Prefix.pch";
 				INFOPLIST_FILE = "PanoramaTests/PanoramaTests-Info.plist";
 				PRODUCT_NAME = PanoramaTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";

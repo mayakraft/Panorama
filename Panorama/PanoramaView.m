@@ -15,7 +15,7 @@
 #define FOV_MIN 1
 #define FOV_MAX 155
 #define SLICES 48  // curvature of projection sphere
-#define REFRESH 45.0f  // refresh rate, per second
+#define REFRESH 45.0f  // sensor updates per second
 
 @interface PanoramaView (){
     Sphere *sphere;
@@ -39,7 +39,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self initDevice];
-        [self initGL];
+        [self initOpenGL];
         sphere = [[Sphere alloc] init:SLICES slices:SLICES radius:1.0 textureFile:nil];
     }
     return self;
@@ -47,7 +47,7 @@
 
 -(void) initDevice{
     motionManager = [[CMMotionManager alloc] init];
-    motionManager.deviceMotionUpdateInterval = 1.0/45.0;
+    motionManager.deviceMotionUpdateInterval = 1.0/REFRESH;
     pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchHandler:)];
     [pinchGesture setEnabled:NO];
     [self addGestureRecognizer:pinchGesture];
@@ -56,7 +56,7 @@
     [self addGestureRecognizer:panGesture];
 }
 
--(void)initGL{
+-(void)initOpenGL{
     EAGLContext *context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
     [EAGLContext setCurrentContext:context];
     self.context = context;
@@ -74,7 +74,6 @@
     glEnable(GL_LIGHTING);
     glViewport(0, 0, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width);
     [self setFieldOfView:_fieldOfView];
-    glEnable(GL_DEPTH_TEST);
     glLoadIdentity();
 }
 
@@ -153,7 +152,7 @@
 
 -(void)execute{
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT );
     GLfloat white[] = {1.0,1.0,1.0,1.0};
     glMatrixMode(GL_MODELVIEW);
     glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, white);
