@@ -155,4 +155,13 @@
     }
 }
 
+-(CGPoint)getTextureSize{
+    if(m_TextureInfo){
+        return CGPointMake(m_TextureInfo.width, m_TextureInfo.height);
+    }
+    else{
+        return CGPointZero;
+    }
+}
+
 @end

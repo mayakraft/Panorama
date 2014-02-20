@@ -22,5 +22,6 @@
 
 -(void) execute;  // draw screen
 -(void) setTexture:(NSString*)fileName;
+-(CGPoint) getLookPixel;
 
 @end

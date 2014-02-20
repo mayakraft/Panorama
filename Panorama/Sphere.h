@@ -30,5 +30,6 @@
 -(GLKTextureInfo *) loadTextureFromBundle:(NSString *) filename;
 -(GLKTextureInfo *) loadTextureFromPath:(NSString *) path;
 -(void) swapTexture:(NSString*)textureFile;
+-(CGPoint) getTextureSize;
 
 @end

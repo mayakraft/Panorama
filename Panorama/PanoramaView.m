@@ -57,6 +57,9 @@
 }
 
 -(void)initOpenGL{
+    CAEAGLLayer *eaglLayer = (CAEAGLLayer*) self.layer;
+    eaglLayer.opaque = YES;
+
     EAGLContext *context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
     [EAGLContext setCurrentContext:context];
     self.context = context;
@@ -129,16 +132,15 @@
         if(motionManager.isDeviceMotionAvailable){
             [motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue] withHandler:^(CMDeviceMotion *deviceMotion, NSError *error) {
                 CMRotationMatrix a = deviceMotion.attitude.rotationMatrix;
-                // matrix has a built-in 90 rotation, and reflection across the Z to correct the inverted texture
-                _attitudeMatrix =
-                GLKMatrix4Make( a.m11, a.m21, a.m31, 0.0f,
-                                a.m13, a.m23, a.m33, 0.0f,
-                                a.m12, a.m22, a.m32, 0.0f,
-                                0.0f , 0.0f , 0.0f , 1.0f);
+                // matrix has 2 built-in 90 rotations, and reflection across the Z to correct the inverted texture
+                _attitudeMatrix = GLKMatrix4Make(-a.m12,-a.m22,-a.m32,0.0f,
+                                                 a.m13, a.m23, a.m33, 0.0f,
+                                                 a.m11, a.m21, a.m31, 0.0f,
+                                                 0.0f , 0.0f , 0.0f , 1.0f);
                 _lookVector = GLKVector3Make(-_attitudeMatrix.m02,
                                              -_attitudeMatrix.m12,
                                              -_attitudeMatrix.m22);
-                _lookAzimuth = atan2f(_lookVector.x, _lookVector.z);
+                _lookAzimuth = -atan2f(-_lookVector.z, -_lookVector.x);
                 _lookAltitude = asinf(_lookVector.y);
             }];
         }
@@ -167,19 +169,29 @@
     [sphere execute];
     glPopMatrix();
     
-//    [self logSensorOrientation];
+    [self logSensorOrientation];
+}
+
+-(CGPoint) getLookPixel{
+    CGPoint pixel = [sphere getTextureSize];
+    pixel.x *= (M_PI+_lookAzimuth)/(2*M_PI);
+    pixel.y *= 1-(M_PI*.5+_lookAltitude)/M_PI;
+    return pixel;
 }
 
 -(void)logSensorOrientation{
     static int timeIndex;
     timeIndex++;
-    if(timeIndex % 10 == 0)
-        NSLog(@"\n[ %.3f, %.3f, %.3f ]\n[ %.3f, %.3f, %.3f ]\n[ %.3f, %.3f, %.3f ]\n--(%.3f, %.3f, %.3f)--\n--(AZ:%.3f  ALT:%.3f)--",
+    if(timeIndex % 10 == 0){  // slow log interval
+        CGPoint pixel = [self getLookPixel];
+        NSLog(@"\n  [ %.3f, %.3f, %.3f ]\n  [ %.3f, %.3f, %.3f ]\n  [ %.3f, %.3f, %.3f ]\nZ VECTOR (%.3f, %.3f, %.3f)\nAZIMUTH:%.3f  ALTITUDE:%.3f\nPIXEL: (%d, %d)",
               _attitudeMatrix.m00, _attitudeMatrix.m01, _attitudeMatrix.m02,
               _attitudeMatrix.m10, _attitudeMatrix.m11, _attitudeMatrix.m12,
               _attitudeMatrix.m20, _attitudeMatrix.m21, _attitudeMatrix.m22,
               _lookVector.x, _lookVector.y, _lookVector.z,
-              _lookAzimuth, _lookAltitude);
+              _lookAzimuth, _lookAltitude,
+              (int)pixel.x, (int)pixel.y);
+    }
 }
 
 @end

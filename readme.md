@@ -7,7 +7,7 @@ device-oriented panorama image viewer for iOS devices
 
 example image data:
 
-![sample](https://raw.github.com/robbykraft/Panorama/master/Panorama/park_small.jpg)
+![sample](https://raw.github.com/robbykraft/Panorama/master/readme/park_small.jpg)
 
 acceptable image sizes: (4096×2048), 2048×1024, 1024×512, 512×256, 256×128 ...
 
@@ -23,11 +23,19 @@ the class exposes the device orientation and offers it expressed as:
 
 ![coordinates](http://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Azimuth-Altitude_schematic.svg/500px-Azimuth-Altitude_schematic.svg.png)
 
-Azimuth 0° is based on the beginning orientation of the phone at the time of program start. It’s possible for CMMotionManager to activate the magnometer and align north to Earth’s magnetic north pole.
+Azimuth 0° is based on the beginning orientation of the phone at the time of program start. (It’s possible for CMMotionManager to activate the magnometer and align north to Earth’s magnetic north pole)
+
+![sample](https://raw.github.com/robbykraft/Panorama/master/readme/azimuth-altitude-pixels.png)
+
+The device begins facing the center azimuth of the panorama image. Since azimuth and altitude directly correlate to pixels, it’s easy to grab which precise pixel is directly ahead:
+
+```objective-c
+-(CGPoint) getLookPixel
+```
 
 ## setup
 
-from an empty project include `PanoramaView.h & .m` and `Sphere.h & .m` and an image file
+include `PanoramaView.h & .m` and `Sphere.h & .m` and an image file
 
 in your `ViewController.m`, typically in `viewDidLoad`:
 
