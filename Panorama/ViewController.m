@@ -25,9 +25,8 @@
     [self setView:panoramaView];
 }
 
-// OpenGL redraw screen
 -(void) glkView:(GLKView *)view drawInRect:(CGRect)rect{
-    [panoramaView execute];
+    [panoramaView draw];
 }
 
 @end

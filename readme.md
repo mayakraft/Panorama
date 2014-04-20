@@ -1,53 +1,36 @@
 # 360° panorama view
-### for equirectangular projections
-device-oriented panorama image viewer for iOS devices
+## equirectangular projections
 
-* equirectangular: the format used by many panorama stitch apps
-* calibrated to Apple’s devices’ accelerometer and gyroscope
+OpenGL, device-oriented, with hotspot detection
 
-example image data:
+equirectangular image sample:
 
 ![sample](https://raw.github.com/robbykraft/Panorama/master/readme/park_small.jpg)
 
-acceptable image sizes: (4096×2048), 2048×1024, 1024×512, 512×256, 256×128 ...
+acceptable image sizes (OpenGL): (4096×2048), 2048×1024, 1024×512, 512×256, 256×128 ...
 
 * (4096 supported on iPhone 4s and iPad2 onward)
 
-## orientation
+## methods
 
-the class exposes the device orientation and offers it expressed as:
-
-* __rotation matrix__
-* __look direction__, a unit vector pointing forward into the scene through the center of the screen
-* __azimuth__ and __altitude__
-
-![coordinates](http://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Azimuth-Altitude_schematic.svg/500px-Azimuth-Altitude_schematic.svg.png)
-
-Azimuth 0° is based on the beginning orientation of the phone at the time of program start. (It’s possible for CMMotionManager to activate the magnometer and align north to Earth’s magnetic north pole)
-
-![sample](https://raw.github.com/robbykraft/Panorama/master/readme/azimuth-altitude-pixels.png)
-
-The device begins facing the center azimuth of the panorama image. Since azimuth and altitude directly correlate to pixels, it’s easy to grab which precise pixel is directly ahead:
+make  `ViewController` a subclass of `GLKViewController`
 
 ```objective-c
--(CGPoint) getLookPixel
-```
-
-## setup
-
-include `PanoramaView.h & .m` and `Sphere.h & .m` and an image file
-
-in your `ViewController.m`, typically in `viewDidLoad`:
-
-```objective-c
+// init, set texture, add to screen
 panoramaView = [[PanoramaView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 [panoramaView setTexture:@"panorama.png"];
-[panoramaView setOrientToDevice:YES];  // YES: use accel/gyro. NO: use touch pan gesture
-[panoramaView setPinchZoom:YES];  // pinch to change field of view
 [self setView:panoramaView];
 ```
 
-also add this to `ViewController.m`:
+```objective-c
+// initialize device orientation
+[panoramaView setOrientToDevice:YES];
+
+// pinch to change field of view
+[panoramaView setPinchZoom:YES];
+```
+
+include this in `ViewController.m`:
 
 ```objective-c
 -(void) glkView:(GLKView *)view drawInRect:(CGRect)rect{
@@ -55,14 +38,27 @@ also add this to `ViewController.m`:
 }
 ```
 
-subclass ViewController:
-
 ```objective-c
-@interface ViewController : GLKViewController
+// get (image) point from touch
+-(GLKVector3) screenToVector:(CGPoint)screenTouch;
+-(CGPoint) getPixel:(GLKVector3)vector;
 ```
 
 ### make sure
 * prevent landscape/portrait auto-rotation, constrain the device orientation to only one
+
+## orientation
+
+* __rotation matrix__
+* __look direction__, the Z vector pointing through the center of the screen
+* __azimuth__ and __altitude__
+* which __pixel (X,Y)__ is directly ahead
+
+![coordinates](http://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Azimuth-Altitude_schematic.svg/500px-Azimuth-Altitude_schematic.svg.png)
+
+The program begins by facing the center column of the image, or azimuth 0°.
+
+![sample](https://raw.github.com/robbykraft/Panorama/master/readme/azimuth-altitude-pixels.png)
 
 ## what's going on?
 Equirectangular images mapped to the inside of a sphere come out looking like the original scene. Camera should be at the exact center.
