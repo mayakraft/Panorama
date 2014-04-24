@@ -2,10 +2,7 @@
 //  Sphere.h
 //  Panorama
 //
-//  Created by Robby Kraft on 8/24/13.
-//  Copyright (c) 2013 Robby Kraft. All rights reserved.
-//
-//  adapted from Pro OpenGL ES for iOS
+//  Adapted from Pro OpenGL ES for iOS
 //  by Mike Smithwick
 //  ISBN: 9781430238409 Jan 2011
 //  pg. 78

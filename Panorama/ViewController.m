@@ -4,6 +4,7 @@
 //
 //  Created by Robby Kraft on 8/24/13.
 //  Copyright (c) 2013 Robby Kraft. All rights reserved.
+//  MIT license
 //
 
 #import "ViewController.h"
@@ -22,6 +23,7 @@
     [panoramaView setTexture:@"park_2048.jpg"];
     [panoramaView setOrientToDevice:YES];  // YES: use accel/gyro. NO: use touch pan gesture
     [panoramaView setPinchZoom:YES];  // pinch to change field of view
+    [panoramaView setShowTouches:YES];
     [self setView:panoramaView];
 }
 
