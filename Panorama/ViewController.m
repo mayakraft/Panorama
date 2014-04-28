@@ -20,9 +20,9 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     panoramaView = [[PanoramaView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    [panoramaView setTexture:@"park_2048.jpg"];
+    [panoramaView setImage:@"park_2048.jpg"];
     [panoramaView setOrientToDevice:YES];  // YES: use accel/gyro. NO: use touch pan gesture
-    [panoramaView setPinchZoom:YES];  // pinch to change field of view
+    [panoramaView setPinchToZoom:YES];  // pinch to change field of view
     [panoramaView setShowTouches:YES];
     [self setView:panoramaView];
 }

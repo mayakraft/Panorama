@@ -13,17 +13,19 @@
 @interface PanoramaView : GLKView
 
 -(void) draw;
--(void) setTexture:(NSString*)fileName;
--(CGPoint) imagePixelFromScreenLocation:(CGPoint)point;  // Panorama pixel from screen point
 
-@property (nonatomic) BOOL orientToDevice;  // activate motion sensors
+-(void) setImage:(NSString*)fileName;  // path or bundle. will check at both
 
-@property (nonatomic) BOOL pinchZoom;
+-(CGPoint) imagePixelFromScreenLocation:(CGPoint)point;  // which pixel did you touch?
+
+@property (nonatomic) BOOL orientToDevice;  // activate/deactivate motion sensors, polling occurs in draw function
+
+@property (nonatomic) BOOL pinchToZoom;
 @property (nonatomic) float fieldOfView;
 
-@property (nonatomic) NSSet *touches;
-@property (nonatomic) NSInteger numberOfTouches;
-@property (nonatomic) BOOL showTouches;  // Lat Long lines for touch -> 3D conversion
+@property (nonatomic) BOOL showTouches;  // overlay latitude longitude lines
+@property (nonatomic, readonly) NSSet *touches;
+@property (nonatomic, readonly) NSInteger numberOfTouches;
 
 @property (nonatomic, readonly) GLKVector3 lookVector; // forward vector
 @property (nonatomic, readonly) float lookAzimuth;    //  -π to π

@@ -15,12 +15,10 @@
 #define FOV_MAX 155
 #define Z_NEAR 0.1f
 #define Z_FAR 100.0f
-#define REFRESH 60.0f  // sensor updates per second. consider lowering + LERP to save battery
 
 @interface PanoramaView (){
     Sphere *sphere;
-    GLKMatrix4 _attitudeMatrix;
-    GLKMatrix4 _projectionMatrix;
+    GLKMatrix4 _attitudeMatrix, _projectionMatrix;
     float _aspectRatio;
     CMMotionManager *motionManager;
     UIPinchGestureRecognizer *pinchGesture;
@@ -50,16 +48,24 @@
     }
     return self;
 }
+-(void) initDevice{
+    motionManager = [[CMMotionManager alloc] init];
+    pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchHandler:)];
+    [pinchGesture setEnabled:NO];
+    [self addGestureRecognizer:pinchGesture];
+//    panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panHandler:)];
+//    [self addGestureRecognizer:panGesture];
+}
 -(void)setFieldOfView:(float)fieldOfView{
     _fieldOfView = fieldOfView;
     [self rebuildProjectionMatrix];
 }
--(void) setTexture:(NSString*)fileName{
+-(void) setImage:(NSString*)fileName{
     [sphere swapTexture:fileName];
 }
--(void) setPinchZoom:(BOOL)pinchZoom{
-    _pinchZoom = pinchZoom;
-    if(_pinchZoom)
+-(void) setPinchToZoom:(BOOL)pinchToZoom{
+    _pinchToZoom = pinchToZoom;
+    if(_pinchToZoom)
         [pinchGesture setEnabled:YES];
     else
         [pinchGesture setEnabled:NO];
@@ -67,37 +73,16 @@
 -(void) setOrientToDevice:(BOOL)orientToDevice{
     _orientToDevice = orientToDevice;
     if(_orientToDevice){
+        if(motionManager.isDeviceMotionAvailable)
+            [motionManager startDeviceMotionUpdates];
 //        [panGesture setEnabled:NO];  // disable panning if using accelerometer/gyro
-        if(motionManager.isDeviceMotionAvailable){
-            [motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue] withHandler:^(CMDeviceMotion *deviceMotion, NSError *error) {
-                CMRotationMatrix a = deviceMotion.attitude.rotationMatrix;
-                // matrix has 2 built-in 90 rotations, and reflection across the Z to inverted texture
-                _attitudeMatrix = GLKMatrix4Make(-a.m12,-a.m22,-a.m32,0.0f,
-                                                 a.m13, a.m23, a.m33, 0.0f,
-                                                 a.m11, a.m21, a.m31, 0.0f,
-                                                 0.0f , 0.0f , 0.0f , 1.0f);
-                _lookVector = GLKVector3Make(-_attitudeMatrix.m02,
-                                             -_attitudeMatrix.m12,
-                                             -_attitudeMatrix.m22);
-                _lookAzimuth = -atan2f(-_lookVector.z, -_lookVector.x);
-                _lookAltitude = asinf(_lookVector.y);
-            }];
-        }
     }
     else {
-        [motionManager stopDeviceMotionUpdates];
+        if(motionManager.isDeviceMotionAvailable)
+            [motionManager stopDeviceMotionUpdates];
 //        [panGesture setEnabled:YES];
 //        panX = panY = 0.0f;
     }
-}
--(void) initDevice{
-    motionManager = [[CMMotionManager alloc] init];
-    motionManager.deviceMotionUpdateInterval = 1.0f/REFRESH;
-    pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchHandler:)];
-    [pinchGesture setEnabled:NO];
-    [self addGestureRecognizer:pinchGesture];
-//    panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panHandler:)];
-//    [self addGestureRecognizer:panGesture];
 }
 #pragma mark- OPENGL
 -(void)initOpenGL:(EAGLContext*)context{
@@ -143,13 +128,18 @@
     glClear(GL_COLOR_BUFFER_BIT);
     glPushMatrix(); // begin device orientation
     
-        if(_orientToDevice)
+        if(_orientToDevice){
+            _attitudeMatrix = [self getDeviceOrientationMatrix];
             glMultMatrixf(_attitudeMatrix.m);
+        }
         else{
             glScalef(1, 1, -1);
+//            _attitudeMatrix = [self buildOrientationMatrixAz:panY Alt:panX];
 //            glRotatef(panY/5., 1, 0, 0);
 //            glRotatef(panX/5., 0, 1, 0);
         }
+        [self updateLook];
+    
         glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, whiteColor);  // panorama display at full color
         [sphere execute];
         glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, clearColor);
@@ -162,7 +152,7 @@
         // hotspot lines
         if(_showTouches && _numberOfTouches){
             glColor4f(1.0f, 1.0f, 1.0f, 0.75f);
-            for(int i = 0; i < [_touches allObjects].count; i++){
+            for(int i = 0; i < [[_touches allObjects] count]; i++){
                 glPushMatrix();
                     CGPoint touchPoint = CGPointMake([(UITouch*)[[_touches allObjects] objectAtIndex:i] locationInView:self].x,
                                                      [(UITouch*)[[_touches allObjects] objectAtIndex:i] locationInView:self].y);
@@ -174,7 +164,24 @@
     
     glPopMatrix(); // end device orientation
 }
-#pragma mark- CONVERSION
+#pragma mark- ORIENTATION
+-(GLKMatrix4) getDeviceOrientationMatrix{
+    if([motionManager isDeviceMotionActive]){
+        CMRotationMatrix a = [[[motionManager deviceMotion] attitude] rotationMatrix];
+        return GLKMatrix4Make(-a.m12,-a.m22,-a.m32,0.0f,  // two built-in 90 rotations
+                              a.m13, a.m23, a.m33, 0.0f,  // and reflection across
+                              a.m11, a.m21, a.m31, 0.0f,  // z axis to invert texture
+                              0.0f , 0.0f , 0.0f , 1.0f);
+    }
+    else return GLKMatrix4Identity;
+}
+-(void) updateLook{
+    _lookVector = GLKVector3Make(-_attitudeMatrix.m02,
+                                 -_attitudeMatrix.m12,
+                                 -_attitudeMatrix.m22);
+    _lookAzimuth = -atan2f(-_lookVector.z, -_lookVector.x);
+    _lookAltitude = asinf(_lookVector.y);
+}
 -(CGPoint) imagePixelFromScreenLocation:(CGPoint)point{
     return [self imagePixelFromVector:[self vectorFromScreenLocation:point]];
 }

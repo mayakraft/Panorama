@@ -12,18 +12,19 @@ acceptable image sizes (OpenGL): (4096×2048), 2048×1024, 1024×512, 512×256, 
 # methods
 
 ```objective-c
--(void) setTexture:(NSString*)fileName;
+-(void) draw;  // updates orientation, redraws frame
+
+-(void) setImage:(NSString*)fileName;  // path or bundle. will check at both
+
+-(CGPoint) imagePixelFromScreenLocation:(CGPoint)point;  // which pixel did you touch?
 
 @property (nonatomic) BOOL orientToDevice; // activate/deactivate motion sensors
 
-@property (nonatomic) BOOL pinchZoom;
+@property (nonatomic) BOOL pinchToZoom;
 
 @property (nonatomic) float fieldOfView;
 
-@property (nonatomic) BOOL showTouches; // overlay Lat Long lines
-
--(CGPoint) imagePixelFromScreenLocation:(CGPoint)point;
-
+@property (nonatomic) BOOL showTouches; // overlay latitude longitude lines
 ```
 
 # usage
@@ -40,7 +41,7 @@ include this in `ViewController.m`:
 
 ```objective-c
 -(void) glkView:(GLKView *)view drawInRect:(CGRect)rect{
-    [panoramaView execute];
+    [panoramaView draw];
 }
 ```
 
@@ -61,7 +62,7 @@ The program begins by facing the center column of the image, or azimuth 0°
 
 # about equirectangular
 
-Equirectangular images mapped to the inside of a celestial sphere come out looking like the original scene, and the math relatively simple [http://en.wikipedia.org/wiki/Equirectangular_projection](http://en.wikipedia.org/wiki/Equirectangular_projection)
+equirectangular images mapped to the inside of a celestial sphere come out looking like the original scene, and the math is relatively simple [http://en.wikipedia.org/wiki/Equirectangular_projection](http://en.wikipedia.org/wiki/Equirectangular_projection)
 
 # license
 
