@@ -1,7 +1,4 @@
 //
-//  Sphere.h
-//  Panorama
-//
 //  Adapted from Pro OpenGL ES for iOS
 //  by Mike Smithwick
 //  ISBN: 9781430238409 Jan 2011

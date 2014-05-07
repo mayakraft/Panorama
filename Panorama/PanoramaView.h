@@ -18,9 +18,9 @@
 
 -(CGPoint) imagePixelFromScreenLocation:(CGPoint)point;  // which pixel did you touch?
 
-@property (nonatomic) BOOL orientToDevice;  // activate/deactivate motion sensors, polling occurs in draw function
+@property (nonatomic) BOOL orientToDevice;  // YES: activate accel/gyro. NO: use touch pan gesture
 
-@property (nonatomic) BOOL pinchToZoom;
+@property (nonatomic) BOOL pinchToZoom;  // pinch to change field of view
 @property (nonatomic) float fieldOfView;
 
 @property (nonatomic) BOOL showTouches;  // overlay latitude longitude lines

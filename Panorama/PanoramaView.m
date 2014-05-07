@@ -22,8 +22,9 @@
     float _aspectRatio;
     CMMotionManager *motionManager;
     UIPinchGestureRecognizer *pinchGesture;
-//    UIPanGestureRecognizer *panGesture;
-//    float panX, panY;  // for manual panning
+    UIPanGestureRecognizer *panGesture;
+    float panAzimuth, panAltitude;  // for manual panning
+    GLKVector3 panVector;
     GLfloat circlePoints[64*3];  // hotspot lines
 }
 @end
@@ -53,8 +54,8 @@
     pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchHandler:)];
     [pinchGesture setEnabled:NO];
     [self addGestureRecognizer:pinchGesture];
-//    panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panHandler:)];
-//    [self addGestureRecognizer:panGesture];
+    panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panHandler:)];
+    [self addGestureRecognizer:panGesture];
 }
 -(void)setFieldOfView:(float)fieldOfView{
     _fieldOfView = fieldOfView;
@@ -75,13 +76,12 @@
     if(_orientToDevice){
         if(motionManager.isDeviceMotionAvailable)
             [motionManager startDeviceMotionUpdates];
-//        [panGesture setEnabled:NO];  // disable panning if using accelerometer/gyro
+        [panGesture setEnabled:NO];  // disable panning if using accelerometer/gyro
     }
     else {
         if(motionManager.isDeviceMotionAvailable)
             [motionManager stopDeviceMotionUpdates];
-//        [panGesture setEnabled:YES];
-//        panX = panY = 0.0f;
+        [panGesture setEnabled:YES];
     }
 }
 #pragma mark- OPENGL
@@ -130,17 +130,14 @@
     
         if(_orientToDevice){
             _attitudeMatrix = [self getDeviceOrientationMatrix];
-            glMultMatrixf(_attitudeMatrix.m);
-        }
-        else{
-            glScalef(1, 1, -1);
-//            _attitudeMatrix = [self buildOrientationMatrixAz:panY Alt:panX];
-//            glRotatef(panY/5., 1, 0, 0);
-//            glRotatef(panX/5., 0, 1, 0);
+        } else{
+            _attitudeMatrix = [self buildOrientationMatrixAz:panAzimuth Alt:panAltitude];
         }
         [self updateLook];
     
-        glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, whiteColor);  // panorama display at full color
+        glMultMatrixf(_attitudeMatrix.m);
+    
+        glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, whiteColor);  // panorama at full color
         [sphere execute];
         glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, clearColor);
 
@@ -173,8 +170,26 @@
                               a.m11, a.m21, a.m31, 0.0f,  // z axis to invert texture
                               0.0f , 0.0f , 0.0f , 1.0f);
     }
-    else return GLKMatrix4Identity;
+    else
+        return GLKMatrix4Identity;
 }
+-(GLKMatrix4) buildOrientationMatrixAz:(float)azimuth Alt:(float)altitude{
+    GLKMatrix4 r = GLKMatrix4Identity;
+//    r = GLKMatrix4Rotate(r, 180, panVector.x, panVector.y, panVector.z);
+//    r = GLKMatrix4MakeLookAt(0.0f, 0.0f, 0.0f, panVector.x, panVector.y, panVector.z, 0.0f, 1.0f, 0.0f);
+    r = GLKMatrix4Scale(r, 1, 1, -1);
+
+
+    r = GLKMatrix4Rotate(r, altitude, 1, 0, 0);
+    r = GLKMatrix4Rotate(r, azimuth, 0, 1, 0);
+    r = GLKMatrix4Rotate(r, M_PI*.5, 0, 1, 0);  // always a 90 y-axis to align the beginning to the center of image
+    
+//    GLKMatrix4MultiplyVector3(r, panVector);
+//    r = GLKMatrix4Rotate(r, altitude/180., 1, 0, 0);
+//    r = GLKMatrix4Rotate(r, azimuth/180., 0, 1, 0);
+    return r;
+}
+
 -(void) updateLook{
     _lookVector = GLKVector3Make(-_attitudeMatrix.m02,
                                  -_attitudeMatrix.m12,
@@ -231,20 +246,48 @@
         _numberOfTouches = 0;
     }
 }
-//-(void) panHandler:(UIPanGestureRecognizer*)sender{
-//    static float startX, startY;
-//    if([sender state] == 1){
-//        startX = panX;
-//        startY = panY;
-//    }
-//    else if([sender state] == 2){
-//        panX = startX + [sender translationInView:sender.view].x;
-//        panY = startY + [sender translationInView:sender.view].y;
-//    }
-//    else{
-//        numberOfTouches = 0;
-//    }
-//}
+-(void) panHandler:(UIPanGestureRecognizer*)sender{
+    static float startAz, startAlt, nowAz, nowAlt, lastAz, lastAlt, totalAz, totalAlt;
+    static GLKVector3 nowVector, lastVector;
+    
+    if([sender state] == 1){
+        startAz = -atan2f(-_lookVector.z, -_lookVector.x); // must keep track of starting orientation
+        startAlt = asinf(_lookVector.y);
+        lastVector = [self vectorFromScreenLocation:[sender locationInView:sender.view]];
+        lastAz = -atan2f(-lastVector.z, -lastVector.x);
+        lastAlt = asinf(lastVector.y);
+        NSLog(@"START ORIENTATION: AZ:%.3f  ALT:%.3f",startAz, startAlt);
+        totalAz = totalAlt = 0.0;
+    }
+    
+    else if([sender state] == 2){
+        nowVector = [self vectorFromScreenLocation:[sender locationInView:sender.view]];
+        nowAz = -atan2f(-nowVector.z, -nowVector.x);
+        nowAlt = asinf(nowVector.y);
+
+        // since last polling, nowVector will be different from lastVector
+        // precisely by the amount which will be called STEP
+        float stepAz = nowAz - lastAz;
+        float stepAlt = nowAlt - lastAlt;
+        
+        totalAz += stepAz;
+        totalAlt += stepAlt;
+        
+        panAzimuth =  startAz + totalAz;
+        panAltitude = -(startAlt + totalAlt);
+        
+        lastAz = nowAz - stepAz;
+        lastAlt = nowAlt - stepAlt;
+
+        NSLog(@"NOW:   AZ:%.3f  ALT:%.3f",nowAz, nowAlt);
+        NSLog(@"STEP:  AZ:%.3f  ALT:%.3f",stepAz, stepAlt);
+        NSLog(@"   =   AZ:%.3f  ALT:%.3f", panAzimuth, panAltitude);
+        
+    }
+    else{
+        _numberOfTouches = 0;
+    }
+}
 #pragma mark- HOTSPOT
 -(void) initCirclePoints{
     for(int i = 0; i < 64; i++){
