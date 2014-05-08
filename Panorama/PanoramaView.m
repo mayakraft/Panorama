@@ -56,6 +56,7 @@
     [self addGestureRecognizer:pinchGesture];
     panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panHandler:)];
     [self addGestureRecognizer:panGesture];
+    _attitudeMatrix = [self buildOrientationMatrixAz:0 Alt:0];
 }
 -(void)setFieldOfView:(float)fieldOfView{
     _fieldOfView = fieldOfView;
@@ -82,6 +83,8 @@
         if(motionManager.isDeviceMotionAvailable)
             [motionManager stopDeviceMotionUpdates];
         [panGesture setEnabled:YES];
+        panAzimuth = _lookAzimuth;
+        panAltitude = _lookAltitude;
     }
 }
 #pragma mark- OPENGL
@@ -130,9 +133,9 @@
     
         if(_orientToDevice){
             _attitudeMatrix = [self getDeviceOrientationMatrix];
-        } else{
-            _attitudeMatrix = [self buildOrientationMatrixAz:panAzimuth Alt:panAltitude];
         }
+        //else, _attitudeMatrix should get updates in a gesture handler
+
         [self updateLook];
     
         glMultMatrixf(_attitudeMatrix.m);
@@ -176,12 +179,11 @@
 -(GLKMatrix4) buildOrientationMatrixAz:(float)azimuth Alt:(float)altitude{
     GLKMatrix4 r = GLKMatrix4Identity;
 //    r = GLKMatrix4Rotate(r, 180, panVector.x, panVector.y, panVector.z);
-//    r = GLKMatrix4MakeLookAt(0.0f, 0.0f, 0.0f, panVector.x, panVector.y, panVector.z, 0.0f, 1.0f, 0.0f);
+
     r = GLKMatrix4Scale(r, 1, 1, -1);
 
-
-    r = GLKMatrix4Rotate(r, altitude, 1, 0, 0);
-    r = GLKMatrix4Rotate(r, azimuth, 0, 1, 0);
+    r = GLKMatrix4Rotate(r, -altitude, 1, 0, 0);
+    r = GLKMatrix4Rotate(r, azimuth, 0, 1, 0);   // would be negative but we reflected across the z axis
     r = GLKMatrix4Rotate(r, M_PI*.5, 0, 1, 0);  // always a 90 y-axis to align the beginning to the center of image
     
 //    GLKMatrix4MultiplyVector3(r, panVector);
@@ -246,47 +248,39 @@
         _numberOfTouches = 0;
     }
 }
+// basically re-programming our own PanGesture at this point
 -(void) panHandler:(UIPanGestureRecognizer*)sender{
-    static float startAz, startAlt, nowAz, nowAlt, lastAz, lastAlt, totalAz, totalAlt;
-    static GLKVector3 nowVector, lastVector;
-    
+    static float startAz, startAlt, touchAz, touchAlt;
+    static float translationAz, translationAlt;  // translationInView
     if([sender state] == 1){
-        startAz = -atan2f(-_lookVector.z, -_lookVector.x); // must keep track of starting orientation
-        startAlt = asinf(_lookVector.y);
-        lastVector = [self vectorFromScreenLocation:[sender locationInView:sender.view]];
-        lastAz = -atan2f(-lastVector.z, -lastVector.x);
-        lastAlt = asinf(lastVector.y);
-        NSLog(@"START ORIENTATION: AZ:%.3f  ALT:%.3f",startAz, startAlt);
-        totalAz = totalAlt = 0.0;
+        startAz = panAzimuth;
+        startAlt = panAltitude;
+        // this will never change since the world will be moving with the finger
+        GLKVector3 touchVector = [self vectorFromScreenLocation:[sender locationInView:sender.view]];
+        touchAz = -atan2f(-touchVector.z, -touchVector.x);
+        touchAlt = asinf(touchVector.y);
+        translationAz = translationAlt = 0.0;
     }
-    
     else if([sender state] == 2){
-        nowVector = [self vectorFromScreenLocation:[sender locationInView:sender.view]];
-        nowAz = -atan2f(-nowVector.z, -nowVector.x);
-        nowAlt = asinf(nowVector.y);
-
-        // since last polling, nowVector will be different from lastVector
-        // precisely by the amount which will be called STEP
-        float stepAz = nowAz - lastAz;
-        float stepAlt = nowAlt - lastAlt;
+        GLKVector3 nowVector = [self vectorFromScreenLocation:[sender locationInView:sender.view]];
+        float nowAz = -atan2f(-nowVector.z, -nowVector.x);
+        float nowAlt = asinf(nowVector.y);
+        // nowVector should be ahead of touchVector by a tiny bit
+        float stepAz = nowAz - touchAz;
+        float stepAlt = nowAlt - touchAlt;
         
-        totalAz += stepAz;
-        totalAlt += stepAlt;
-        
-        panAzimuth =  startAz + totalAz;
-        panAltitude = -(startAlt + totalAlt);
-        
-        lastAz = nowAz - stepAz;
-        lastAlt = nowAlt - stepAlt;
-
-        NSLog(@"NOW:   AZ:%.3f  ALT:%.3f",nowAz, nowAlt);
-        NSLog(@"STEP:  AZ:%.3f  ALT:%.3f",stepAz, stepAlt);
-        NSLog(@"   =   AZ:%.3f  ALT:%.3f", panAzimuth, panAltitude);
-        
+        translationAz += stepAz;
+        translationAlt += stepAlt;
+        panAzimuth  =  startAz + translationAz;
+        panAltitude = startAlt + translationAlt;
+//        NSLog(@"NOW:   AZ:%.3f  ALT:%.3f", nowAz, nowAlt);
+//        NSLog(@"STEP:  AZ:%.3f  ALT:%.3f", stepAz, stepAlt);
+//        NSLog(@"    =  AZ:%.3f  ALT:%.3f", panAzimuth, panAltitude);
     }
     else{
         _numberOfTouches = 0;
     }
+    _attitudeMatrix = [self buildOrientationMatrixAz:panAzimuth Alt:panAltitude];
 }
 #pragma mark- HOTSPOT
 -(void) initCirclePoints{

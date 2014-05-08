@@ -21,7 +21,7 @@
     [super viewDidLoad];
     panoramaView = [[PanoramaView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [panoramaView setImage:@"park_2048.jpg"];
-    [panoramaView setOrientToDevice:NO];
+    [panoramaView setOrientToDevice:YES];
     [panoramaView setPinchToZoom:YES];
     [panoramaView setShowTouches:YES];
     [self setView:panoramaView];
