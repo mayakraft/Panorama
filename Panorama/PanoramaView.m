@@ -26,6 +26,7 @@
     float panAzimuth, panAltitude;  // for manual panning
     GLKVector3 panVector;
     GLfloat circlePoints[64*3];  // hotspot lines
+    bool _deviceLandscape;
 }
 @end
 
@@ -42,6 +43,7 @@
 }
 -(id) initWithFrame:(CGRect)frame context:(EAGLContext *)context{
     self = [super initWithFrame:frame];
+    NSLog(@"FRAME: %d x %d", (int)frame.size.width, (int)frame.size.height);
     if (self) {
         [self initDevice];
         [self initOpenGL:context];
@@ -56,6 +58,9 @@
     [self addGestureRecognizer:pinchGesture];
     panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panHandler:)];
     [self addGestureRecognizer:panGesture];
+    panVector.x = -1;
+    panVector.y = 0;
+    panVector.z = 0;
     _attitudeMatrix = [self buildOrientationMatrixAz:0 Alt:0];
 }
 -(void)setFieldOfView:(float)fieldOfView{
@@ -85,6 +90,9 @@
         [panGesture setEnabled:YES];
         panAzimuth = _lookAzimuth;
         panAltitude = _lookAltitude;
+        panVector.x = -1;
+        panVector.y = 0;
+        panVector.z = 0;
     }
 }
 #pragma mark- OPENGL
@@ -92,14 +100,17 @@
     [(CAEAGLLayer*)self.layer setOpaque:YES];
     float width, height;
     if([UIApplication sharedApplication].statusBarOrientation > 2){
-        width = [[UIScreen mainScreen] bounds].size.height;
-        height = [[UIScreen mainScreen] bounds].size.width;
+        width = self.frame.size.height;
+        height = self.frame.size.width;
+        _deviceLandscape = true;
     } else{
-        width = [[UIScreen mainScreen] bounds].size.width;
-        height = [[UIScreen mainScreen] bounds].size.height;
+        width = self.frame.size.width;
+        height = self.frame.size.height;
     }
-    _aspectRatio = width/height;
+    _aspectRatio = self.frame.size.width/self.frame.size.height;
     _fieldOfView = 60;
+    NSLog(@"Again: %d x %d", (int)self.frame.size.width, (int)self.frame.size.height);
+    NSLog(@"ASPECT:  %f", _aspectRatio);
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) _fieldOfView = 75;
     [self rebuildProjectionMatrix];
     [self customGL];
@@ -113,7 +124,7 @@
     GLfloat frustum = Z_NEAR * tanf(_fieldOfView*0.00872664625997);  // pi/180/2
     _projectionMatrix = GLKMatrix4MakeFrustum(-frustum, frustum, -frustum/_aspectRatio, frustum/_aspectRatio, Z_NEAR, Z_FAR);
     glMultMatrixf(_projectionMatrix.m);
-    glViewport(0, 0, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width);
+    glViewport(0, 0, self.frame.size.width, self.frame.size.height);
     glMatrixMode(GL_MODELVIEW);
 }
 -(void) customGL{
@@ -168,10 +179,16 @@
 -(GLKMatrix4) getDeviceOrientationMatrix{
     if([motionManager isDeviceMotionActive]){
         CMRotationMatrix a = [[[motionManager deviceMotion] attitude] rotationMatrix];
-        return GLKMatrix4Make(-a.m12,-a.m22,-a.m32,0.0f,  // two built-in 90 rotations
-                              a.m13, a.m23, a.m33, 0.0f,  // and reflection across
-                              a.m11, a.m21, a.m31, 0.0f,  // z axis to invert texture
-                              0.0f , 0.0f , 0.0f , 1.0f);
+        if(_deviceLandscape){
+            return GLKMatrix4Make(-a.m22,  a.m12, -a.m32, 0.0f,  // two built-in 90 rotations
+                                  a.m23, -a.m13, a.m33, 0.0f,  // and reflection across
+                                  a.m21, -a.m11, a.m31, 0.0f,  // z axis to invert texture
+                                  0.0f , 0.0f , 0.0f , 1.0f);
+        }
+        return GLKMatrix4Make(-a.m12,-a.m22,-a.m32, 0.0f,  // two built-in 90 rotations
+                               a.m13, a.m23, a.m33, 0.0f,  // and reflection across
+                               a.m11, a.m21, a.m31, 0.0f,  // z axis to invert texture
+                               0.0f , 0.0f , 0.0f , 1.0f);
     }
     else
         return GLKMatrix4Identity;
@@ -180,11 +197,13 @@
     GLKMatrix4 r = GLKMatrix4Identity;
 //    r = GLKMatrix4Rotate(r, 180, panVector.x, panVector.y, panVector.z);
 
-    r = GLKMatrix4Scale(r, 1, 1, -1);
+    GLKMatrix4 r2 = GLKMatrix4MakeLookAt(0, 0, 0, panVector.x, panVector.y, panVector.z, 0, 1, 0);
+    
+    r = GLKMatrix4Scale(r2, 1, 1, -1);
 
-    r = GLKMatrix4Rotate(r, -altitude, 1, 0, 0);
-    r = GLKMatrix4Rotate(r, azimuth, 0, 1, 0);   // would be negative but we reflected across the z axis
-    r = GLKMatrix4Rotate(r, M_PI*.5, 0, 1, 0);  // always a 90 y-axis to align the beginning to the center of image
+//    r = GLKMatrix4Rotate(r, -altitude, 1, 0, 0);
+//    r = GLKMatrix4Rotate(r, azimuth, 0, 1, 0);   // would be negative but we reflected across the z axis
+//    r = GLKMatrix4Rotate(r, M_PI*.5, 0, 1, 0);  // always a 90 y-axis to align the beginning to the center of image
     
 //    GLKMatrix4MultiplyVector3(r, panVector);
 //    r = GLKMatrix4Rotate(r, altitude/180., 1, 0, 0);
@@ -204,8 +223,8 @@
 }
 -(GLKVector3) vectorFromScreenLocation:(CGPoint)screenTouch{
     GLKMatrix4 inverse = GLKMatrix4Invert(GLKMatrix4Multiply(_projectionMatrix, _attitudeMatrix), nil);
-    GLKVector4 screen = GLKVector4Make(2.0*(screenTouch.x/[[UIScreen mainScreen] bounds].size.width-.5),
-                                       2.0*(.5-screenTouch.y/[[UIScreen mainScreen] bounds].size.height),
+    GLKVector4 screen = GLKVector4Make(2.0*(screenTouch.x/self.frame.size.width-.5),
+                                       2.0*(.5-screenTouch.y/self.frame.size.height),
                                        1.0, 1.0);
     GLKVector4 vec = GLKMatrix4MultiplyVector4(inverse, screen);
     return GLKVector3Normalize(GLKVector3Make(vec.x, vec.y, vec.z));
@@ -263,6 +282,7 @@
     }
     else if([sender state] == 2){
         GLKVector3 nowVector = [self vectorFromScreenLocation:[sender locationInView:sender.view]];
+        panVector = nowVector;
         float nowAz = -atan2f(-nowVector.z, -nowVector.x);
         float nowAlt = asinf(nowVector.y);
         // nowVector should be ahead of touchVector by a tiny bit
