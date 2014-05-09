@@ -12,6 +12,10 @@
 
 @interface PanoramaView : GLKView
 
+-(id) init;     // auto full-screen. if landscape, corrects aspect-ratio. recommended.
+-(id) initWithFrame:(CGRect)frame;
+-(id) initWithFrame:(CGRect)frame context:(EAGLContext *)context;
+
 -(void) draw;
 
 -(void) setImage:(NSString*)fileName;  // path or bundle. will check at both

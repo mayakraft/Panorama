@@ -5,7 +5,7 @@ OpenGL, device-oriented, with hotspot detection
 
 ![sample](https://raw.github.com/robbykraft/Panorama/master/readme/park_small.jpg)
 
-acceptable image sizes (OpenGL): (4096×2048), 2048×1024, 1024×512, 512×256, 256×128 ...
+acceptable image sizes (due to OpenGL): (4096×2048), 2048×1024, 1024×512, 512×256, 256×128 ...
 
 * (4096 supported on iPhone 4s and iPad2 onward)
 
@@ -33,7 +33,7 @@ make `ViewController` a subclass of `GLKViewController`
 
 ```objective-c
 // init and add to screen
-panoramaView = [[PanoramaView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+panoramaView = [[PanoramaView alloc] init];
 [self setView:panoramaView];
 ```
 

@@ -26,14 +26,19 @@
     float panAzimuth, panAltitude;  // for manual panning
     GLKVector3 panVector;
     GLfloat circlePoints[64*3];  // hotspot lines
-    bool _deviceLandscape;
+    bool _deviceLandscape;  //TODO: expand. presently only works for device orientation Portrait and Landscape Left
 }
 @end
 
 @implementation PanoramaView
 
 -(id) init{
-    return [self initWithFrame:[[UIScreen mainScreen] bounds]];
+    CGRect frame = [[UIScreen mainScreen] bounds];
+    if([[UIApplication sharedApplication] statusBarOrientation] > 2){
+        return [self initWithFrame:CGRectMake(frame.origin.x, frame.origin.y, frame.size.height, frame.size.width)];
+    } else{
+        return [self initWithFrame:CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height)];
+    }
 }
 - (id)initWithFrame:(CGRect)frame{
     EAGLContext *context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
@@ -43,7 +48,6 @@
 }
 -(id) initWithFrame:(CGRect)frame context:(EAGLContext *)context{
     self = [super initWithFrame:frame];
-    NSLog(@"FRAME: %d x %d", (int)frame.size.width, (int)frame.size.height);
     if (self) {
         [self initDevice];
         [self initOpenGL:context];
@@ -98,19 +102,14 @@
 #pragma mark- OPENGL
 -(void)initOpenGL:(EAGLContext*)context{
     [(CAEAGLLayer*)self.layer setOpaque:YES];
-    float width, height;
-    if([UIApplication sharedApplication].statusBarOrientation > 2){
-        width = self.frame.size.height;
-        height = self.frame.size.width;
+    if([[UIApplication sharedApplication] statusBarOrientation] > 2){
         _deviceLandscape = true;
+        _fieldOfView = 105;
     } else{
-        width = self.frame.size.width;
-        height = self.frame.size.height;
+        _deviceLandscape = false;
+        _fieldOfView = 60;
     }
     _aspectRatio = self.frame.size.width/self.frame.size.height;
-    _fieldOfView = 60;
-    NSLog(@"Again: %d x %d", (int)self.frame.size.width, (int)self.frame.size.height);
-    NSLog(@"ASPECT:  %f", _aspectRatio);
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) _fieldOfView = 75;
     [self rebuildProjectionMatrix];
     [self customGL];
@@ -162,7 +161,7 @@
     
         // hotspot lines
         if(_showTouches && _numberOfTouches){
-            glColor4f(1.0f, 1.0f, 1.0f, 0.75f);
+            glColor4f(1.0f, 1.0f, 1.0f, 0.5f);
             for(int i = 0; i < [[_touches allObjects] count]; i++){
                 glPushMatrix();
                     CGPoint touchPoint = CGPointMake([(UITouch*)[[_touches allObjects] objectAtIndex:i] locationInView:self].x,
@@ -180,10 +179,10 @@
     if([motionManager isDeviceMotionActive]){
         CMRotationMatrix a = [[[motionManager deviceMotion] attitude] rotationMatrix];
         if(_deviceLandscape){
-            return GLKMatrix4Make(-a.m22,  a.m12, -a.m32, 0.0f,  // two built-in 90 rotations
-                                  a.m23, -a.m13, a.m33, 0.0f,  // and reflection across
-                                  a.m21, -a.m11, a.m31, 0.0f,  // z axis to invert texture
-                                  0.0f , 0.0f , 0.0f , 1.0f);
+            return GLKMatrix4Make(-a.m22, a.m12,-a.m32, 0.0f,
+                                   a.m23,-a.m13, a.m33, 0.0f,
+                                   a.m21,-a.m11, a.m31, 0.0f,
+                                   0.0f , 0.0f , 0.0f , 1.0f);
         }
         return GLKMatrix4Make(-a.m12,-a.m22,-a.m32, 0.0f,  // two built-in 90 rotations
                                a.m13, a.m23, a.m33, 0.0f,  // and reflection across
@@ -226,6 +225,9 @@
     GLKVector4 screen = GLKVector4Make(2.0*(screenTouch.x/self.frame.size.width-.5),
                                        2.0*(.5-screenTouch.y/self.frame.size.height),
                                        1.0, 1.0);
+    if (_deviceLandscape) screen = GLKVector4Make(2.0*(screenTouch.x/self.frame.size.height-.5),
+                                                  2.0*(.5-screenTouch.y/self.frame.size.width),
+                                                  1.0, 1.0);
     GLKVector4 vec = GLKMatrix4MultiplyVector4(inverse, screen);
     return GLKVector3Normalize(GLKVector3Make(vec.x, vec.y, vec.z));
 }
