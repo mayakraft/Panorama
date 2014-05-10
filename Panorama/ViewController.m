@@ -3,8 +3,7 @@
 //  Panorama
 //
 //  Created by Robby Kraft on 8/24/13.
-//  Copyright (c) 2013 Robby Kraft. All rights reserved.
-//  MIT license
+//  Copyright (c) 2013 Robby Kraft. All Rights Reserved.
 //
 
 #import "ViewController.h"
@@ -23,7 +22,7 @@
     [panoramaView setImage:@"park_2048.jpg"];
     [panoramaView setOrientToDevice:YES];
     [panoramaView setPinchToZoom:YES];
-    [panoramaView setShowTouches:YES];
+    [panoramaView setShowTouches:NO];
     [self setView:panoramaView];
 }
 

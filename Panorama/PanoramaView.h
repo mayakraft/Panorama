@@ -3,24 +3,21 @@
 //  Panorama
 //
 //  Created by Robby Kraft on 8/24/13.
-//  Copyright (c) 2013 Robby Kraft. All rights reserved.
-//  MIT license
+//  Copyright (c) 2013 Robby Kraft. All Rights Reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import <GLKit/GLKit.h>
 
 @interface PanoramaView : GLKView
 
--(id) init;     // auto full-screen. if landscape, corrects aspect-ratio. recommended.
--(id) initWithFrame:(CGRect)frame;
--(id) initWithFrame:(CGRect)frame context:(EAGLContext *)context;
+-(id) init;  // recommended init method. if landscape, corrects aspect-ratio. auto full-screen.
 
 -(void) draw;
 
 -(void) setImage:(NSString*)fileName;  // path or bundle. will check at both
 
 -(CGPoint) imagePixelFromScreenLocation:(CGPoint)point;  // which pixel did you touch?
+-(bool) touchInRect:(CGRect)rect;  // rect defined by image pixel coordinates
 
 @property (nonatomic) BOOL orientToDevice;  // YES: activate accel/gyro. NO: use touch pan gesture
 

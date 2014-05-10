@@ -17,8 +17,9 @@ acceptable image sizes (due to OpenGL): (4096×2048), 2048×1024, 1024×512, 512
 -(void) setImage:(NSString*)fileName;  // path or bundle. will check at both
 
 -(CGPoint) imagePixelFromScreenLocation:(CGPoint)point;  // which pixel did you touch?
+-(bool) touchInRect:(CGRect)rect;  // hotspot defined by image pixel coordinates
 
-@property (nonatomic) BOOL orientToDevice; // activate/deactivate motion sensors
+@property (nonatomic) BOOL orientToDevice; // activate motion sensors -or- manual touch pan
 
 @property (nonatomic) BOOL pinchToZoom;
 
