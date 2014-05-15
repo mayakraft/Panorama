@@ -14,15 +14,14 @@
 #define FOV_MAX 155
 #define Z_NEAR 0.1f
 #define Z_FAR 100.0f
-#define SENSOR_ORIENTATION [[UIApplication sharedApplication] statusBarOrientation] //enum  1(NORTH)  2(SOUTH)  3(EAST)  4(WEST)
 #define IMAGE_SCALING GL_LINEAR  // GL_NEAREST, GL_LINEAR
+// this appears to be the best way to grab orientation. if this becomes formalized, just make sure the orientations match
+#define SENSOR_ORIENTATION [[UIApplication sharedApplication] statusBarOrientation] //enum  1(NORTH)  2(SOUTH)  3(EAST)  4(WEST)
 
 @interface Sphere : NSObject
 
 -(bool) execute;
 -(id) init:(GLint)stacks slices:(GLint)slices radius:(GLfloat)radius textureFile:(NSString *)textureFile;
--(GLKTextureInfo *) loadTextureFromBundle:(NSString *) filename;
--(GLKTextureInfo *) loadTextureFromPath:(NSString *) path;
 -(void) swapTexture:(NSString*)textureFile;
 -(CGPoint) getTextureSize;
 
@@ -33,7 +32,7 @@
     CMMotionManager *motionManager;
     UIPinchGestureRecognizer *pinchGesture;
     UIPanGestureRecognizer *panGesture;
-    GLKMatrix4 _attitudeMatrix, _projectionMatrix;
+    GLKMatrix4 _projectionMatrix, _attitudeMatrix, _panOffsetMatrix;
     float _aspectRatio;
     GLfloat circlePoints[64*3];  // touch lines
 }
@@ -66,13 +65,15 @@
 }
 -(void) initDevice{
     motionManager = [[CMMotionManager alloc] init];
+    // pinch disabled by default
     pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchHandler:)];
     [pinchGesture setEnabled:NO];
     [self addGestureRecognizer:pinchGesture];
+    // pan enabled by default
     panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panHandler:)];
     [panGesture setMaximumNumberOfTouches:1];
     [self addGestureRecognizer:panGesture];
-    [self setOrientationWithVector:GLKVector3Make(-1, 0, 0)];  // azimuth 0
+    _touchToPan = YES;
 }
 -(void)setFieldOfView:(float)fieldOfView{
     _fieldOfView = fieldOfView;
@@ -81,24 +82,21 @@
 -(void) setImage:(NSString*)fileName{
     [sphere swapTexture:fileName];
 }
+-(void) setTouchToPan:(BOOL)touchToPan{
+    _touchToPan = touchToPan;
+    [panGesture setEnabled:_touchToPan];
+}
 -(void) setPinchToZoom:(BOOL)pinchToZoom{
     _pinchToZoom = pinchToZoom;
-    if(_pinchToZoom)
-        [pinchGesture setEnabled:YES];
-    else
-        [pinchGesture setEnabled:NO];
+    [pinchGesture setEnabled:_pinchToZoom];
 }
 -(void) setOrientToDevice:(BOOL)orientToDevice{
     _orientToDevice = orientToDevice;
-    if(_orientToDevice){
-        if(motionManager.isDeviceMotionAvailable)
+    if(motionManager.isDeviceMotionAvailable){
+        if(_orientToDevice)
             [motionManager startDeviceMotionUpdates];
-        [panGesture setEnabled:NO];  // disable panning if using accelerometer/gyro
-    }
-    else {
-        if(motionManager.isDeviceMotionAvailable)
+        else
             [motionManager stopDeviceMotionUpdates];
-        [panGesture setEnabled:YES];
     }
 }
 #pragma mark- OPENGL
@@ -107,6 +105,8 @@
     _aspectRatio = self.frame.size.width/self.frame.size.height;
     _fieldOfView = 45 + 45 * atanf(_aspectRatio); // hell ya
     [self rebuildProjectionMatrix];
+    _attitudeMatrix = GLKMatrix4Identity;
+    _panOffsetMatrix = GLKMatrix4Identity;
     [self customGL];
     [self makeLatitudeLines];
 }
@@ -121,8 +121,8 @@
 }
 -(void) customGL{
     glMatrixMode(GL_MODELVIEW);
-    glEnable(GL_CULL_FACE);
-    glCullFace(GL_FRONT);
+//    glEnable(GL_CULL_FACE);
+//    glCullFace(GL_FRONT);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -134,10 +134,14 @@
     glClear(GL_COLOR_BUFFER_BIT);
     glPushMatrix(); // begin device orientation
     
-        if(_orientToDevice){
-            _attitudeMatrix = [self getDeviceOrientationMatrix];
-            [self updateLook];
-        }
+    // this order need to become:
+    //    get device orientation
+    //   add on top of that any offset due to panning (figure out the math of this)
+    //   then [self updateLook]
+    //  multmatrixf(_attitude)
+    
+        _attitudeMatrix = GLKMatrix4Multiply(_panOffsetMatrix, [self getDeviceOrientationMatrix]);
+        [self updateLook];
     
         glMultMatrixf(_attitudeMatrix.m);
     
@@ -164,54 +168,65 @@
         }
     
     glPopMatrix(); // end device orientation
+    static int count = 0;
+    count++;
+    if(count % 5 == 0){
+        GLKQuaternion q = GLKQuaternionMakeWithMatrix4(_attitudeMatrix);
+        NSLog(@"  ");
+        NSLog(@"QQQQ: %.3f, %.3f, %.3f, %.3f",q.q[0], q.q[1], q.q[2], q.q[3]);
+        NSLog(@"QS, QV: %f, (%.3f, %.3f, %.3f)",q.s, q.v.x, q.v.y, q.v.z);
+        GLKVector3 v = GLKQuaternionAxis(q);
+        NSLog(@"Angle:%.3f Axis:(%.3f, %.3f, %.3f)", GLKQuaternionAngle(q),v.x, v.y, v.z);
+        NSLog(@"AZ:%.3f  ALT:%.3f LOOK:(%.3f, %.3f, %.3f)",_lookAzimuth, _lookAltitude, _lookVector.x, _lookVector.y, _lookVector.z);
+    }
 }
 #pragma mark- ORIENTATION
 -(GLKMatrix4) getDeviceOrientationMatrix{
-    if([motionManager isDeviceMotionActive]){
+    if(_orientToDevice && [motionManager isDeviceMotionActive]){
         CMRotationMatrix a = [[[motionManager deviceMotion] attitude] rotationMatrix];
         // arrangements of mappings of sensor axis to virtual axis (columns)
         // and combinations of 90 degree rotations (rows)
-        // and a reflection to correct image invert
         if(SENSOR_ORIENTATION == 4){
-            return GLKMatrix4Make(-a.m22, a.m12,-a.m32, 0.0f,
+            return GLKMatrix4Make( a.m21,-a.m11, a.m31, 0.0f,
                                    a.m23,-a.m13, a.m33, 0.0f,
-                                   a.m21,-a.m11, a.m31, 0.0f,
+                                  -a.m22, a.m12,-a.m32, 0.0f,
                                    0.0f , 0.0f , 0.0f , 1.0f);
         }
         if(SENSOR_ORIENTATION == 3){
-            return GLKMatrix4Make( a.m22,-a.m12,-a.m32, 0.0f,
+            return GLKMatrix4Make(-a.m21, a.m11, a.m31, 0.0f,
                                   -a.m23, a.m13, a.m33, 0.0f,
-                                  -a.m21, a.m11, a.m31, 0.0f,
+                                   a.m22,-a.m12,-a.m32, 0.0f,
                                    0.0f , 0.0f , 0.0f , 1.0f);
         }
         if(SENSOR_ORIENTATION == 2){
-            return GLKMatrix4Make( a.m12, a.m22,-a.m32, 0.0f,
+            return GLKMatrix4Make(-a.m11,-a.m21, a.m31, 0.0f,
                                   -a.m13,-a.m23, a.m33, 0.0f,
-                                  -a.m11,-a.m21, a.m31, 0.0f,
+                                   a.m12, a.m22,-a.m32, 0.0f,
                                    0.0f , 0.0f , 0.0f , 1.0f);
         }
-        return GLKMatrix4Make(-a.m12,-a.m22,-a.m32, 0.0f,
-                               a.m13, a.m23, a.m33, 0.0f,
-                               a.m11, a.m21, a.m31, 0.0f,
-                               0.0f , 0.0f , 0.0f , 1.0f);
+        return GLKMatrix4Make(a.m11, a.m21, a.m31, 0.0f,
+                              a.m13, a.m23, a.m33, 0.0f,
+                             -a.m12,-a.m22,-a.m32, 0.0f,
+                              0.0f , 0.0f , 0.0f , 1.0f);
     }
     else
         return GLKMatrix4Identity;
 }
--(void) setOrientationWithVector:(GLKVector3)v{
-    // incorporates the z reflection to correct the inverted image
-    GLKMatrix4 m = GLKMatrix4MakeLookAt(0, 0, 0, v.x, v.y, -v.z,  0, 1, 0);
-    _attitudeMatrix = GLKMatrix4Scale(m, 1, 1, -1);
-    [self updateLook];
-}
+//-(void) orientToVector:(GLKVector3)v{
+//    _attitudeMatrix = GLKMatrix4MakeLookAt(0, 0, 0, v.x, v.y, v.z,  0, 1, 0);
+//    [self updateLook];
+//}
+//-(void) orientToAzimuth:(float)azimuth Altitude:(float)altitude{
+//    [self orientToVector:GLKVector3Make(-cosf(azimuth), sinf(altitude), sinf(azimuth))];
+//}
 -(void) updateLook{
     _lookVector = GLKVector3Make(-_attitudeMatrix.m02,
                                  -_attitudeMatrix.m12,
                                  -_attitudeMatrix.m22);
-    _lookAzimuth = -atan2f(-_lookVector.z, -_lookVector.x);
+    _lookAzimuth = atan2f(_lookVector.x, -_lookVector.z);
     _lookAltitude = asinf(_lookVector.y);
 }
--(CGPoint) imagePixelFromScreenLocation:(CGPoint)point{
+-(CGPoint) imagePixelAtScreenLocation:(CGPoint)point{
     return [self imagePixelFromVector:[self vectorFromScreenLocation:point]];
 }
 -(GLKVector3) vectorFromScreenLocation:(CGPoint)screenTouch{
@@ -255,7 +270,7 @@
         for(int i = 0; i < [[_touches allObjects] count]; i++){
             CGPoint touchPoint = CGPointMake([(UITouch*)[[_touches allObjects] objectAtIndex:i] locationInView:self].x,
                                              [(UITouch*)[[_touches allObjects] objectAtIndex:i] locationInView:self].y);
-            found |= CGRectContainsPoint(rect, [self imagePixelFromScreenLocation:touchPoint]);
+            found |= CGRectContainsPoint(rect, [self imagePixelAtScreenLocation:touchPoint]);
         }
         return found;
     }
@@ -277,15 +292,33 @@
     }
 }
 -(void) panHandler:(UIPanGestureRecognizer*)sender{
+    static GLKMatrix4 _startMatrix;
     static GLKVector3 touchVector;
+    static float touchAzimuth, touchAltitude;
     if([sender state] == 1){
+        _startMatrix = _panOffsetMatrix;
         touchVector = [self vectorFromScreenLocation:[sender locationInView:sender.view]];
+        touchAzimuth =  -atan2f(-touchVector.z, -touchVector.x);
+        touchAltitude = asinf(touchVector.y);
+        NSLog(@"\n(%.3f, %.3f, %.3f)\n(%.3f, %.3f, %.3f)\n(%.3f, %.3f, %.3f)",
+              _startMatrix.m00,_startMatrix.m01,_startMatrix.m02,
+              _startMatrix.m10,_startMatrix.m11,_startMatrix.m12,
+              _startMatrix.m20,_startMatrix.m21,_startMatrix.m22);
+        NSLog(@"(%.3f, %.3f, %.3f)",touchVector.x, touchVector.y, touchVector.z);
     }
     else if([sender state] == 2){
         GLKVector3 nowVector = [self vectorFromScreenLocation:[sender locationInView:sender.view]];
         GLKVector3 diffVector = GLKVector3Subtract(touchVector, nowVector);
         GLKVector3 newLook = GLKVector3Add(_lookVector, diffVector);
-        [self setOrientationWithVector:newLook];
+//        [self orientToVector:newLook];
+        GLKMatrix4 newPanMatrix = GLKMatrix4MakeLookAt(0, 0, 0, newLook.x, newLook.y, newLook.z,  0, 1, 0);
+        GLKVector3 lv = GLKVector3Make(-newPanMatrix.m02,
+                                       -newPanMatrix.m12,
+                                       -newPanMatrix.m22);
+        float rAz = atan2f(lv.x, -lv.z);
+        float rAlt = asinf(lv.y);
+        _panOffsetMatrix = _startMatrix;
+ //       _panOffsetMatrix = GLKMatrix4RotateY(<#GLKMatrix4 matrix#>, <#float radians#>)
     }
     else{
         _numberOfTouches = 0;
@@ -326,9 +359,8 @@
 
 @interface Sphere (){
 //  from Touch Fighter by Apple
-//  found in Pro OpenGL ES for iOS
+//  also in Pro OpenGL ES for iOS
 //  by Mike Smithwick Jan 2011 pg. 78
-
     GLKTextureInfo *m_TextureInfo;
     GLfloat *m_TexCoordsData;
     GLfloat *m_VertexData;
@@ -336,9 +368,14 @@
     GLint m_Stacks, m_Slices;
     GLfloat m_Scale;
 }
+-(GLKTextureInfo *) loadTextureFromBundle:(NSString *) filename;
+-(GLKTextureInfo *) loadTextureFromPath:(NSString *) path;
 @end
 @implementation Sphere
 -(id) init:(GLint)stacks slices:(GLint)slices radius:(GLfloat)radius textureFile:(NSString *)textureFile{
+    // modifications:
+    //   flipped(inverted) texture coords across the Z
+    //   vertices rotated 90deg
     if(textureFile != nil) m_TextureInfo = [self loadTextureFromBundle:textureFile];
     m_Scale = radius;
     if((self = [super init])){
@@ -368,8 +405,8 @@
             //longitude
             for(thetaIdx = 0; thetaIdx < m_Slices; thetaIdx++){
                 float theta = -2.0*M_PI * ((float)thetaIdx) * (1.0/(float)(m_Slices - 1));
-                cosTheta = cos(theta);
-                sinTheta = sin(theta);
+                cosTheta = cos(theta+M_PI*.5);
+                sinTheta = sin(theta+M_PI*.5);
                 //get x-y-x of the first vertex of stack
                 vPtr[0] = m_Scale*cosPhi0 * cosTheta;
                 vPtr[1] = m_Scale*sinPhi0;
@@ -386,9 +423,9 @@
                 nPtr[5] = cosPhi1 * sinTheta;
                 if(tPtr!=nil){
                     GLfloat texX = (float)thetaIdx * (1.0f/(float)(m_Slices-1));
-                    tPtr[0] = texX;
+                    tPtr[0] = 1.0-texX;
                     tPtr[1] = (float)(phiIdx + 0) * (1.0f/(float)(m_Stacks));
-                    tPtr[2] = texX;
+                    tPtr[2] = 1.0-texX;
                     tPtr[3] = (float)(phiIdx + 1) * (1.0f/(float)(m_Stacks));
                 }
                 vPtr += 2*3;
