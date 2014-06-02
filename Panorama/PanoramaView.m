@@ -130,7 +130,17 @@
 -(void)draw{
     static GLfloat whiteColor[] = {1.0f, 1.0f, 1.0f, 1.0f};
     static GLfloat clearColor[] = {0.0f, 0.0f, 0.0f, 0.0f};
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    
+    //real clear color (transparan background for using image equirectangular-projection-lines.png) @masbog
+    CAEAGLLayer *eaglLayer = (CAEAGLLayer *)self.layer;
+    eaglLayer.opaque = NO;
+    
+    CGColorSpaceRef rgb = CGColorSpaceCreateDeviceRGB();
+    const CGFloat myColor[] = {0.0, 0.0, 0.0, 0.0};
+    eaglLayer.backgroundColor = CGColorCreate(rgb, myColor);
+    CGColorSpaceRelease(rgb);
+    
+    //glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     glPushMatrix(); // begin device orientation
     
