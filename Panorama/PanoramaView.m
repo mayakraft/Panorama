@@ -29,7 +29,7 @@
 @end
 
 @interface PanoramaView (){
-    Sphere *sphere;
+    Sphere *sphere, *meridians;
     CMMotionManager *motionManager;
     UIPinchGestureRecognizer *pinchGesture;
     UIPanGestureRecognizer *panGesture;
@@ -61,6 +61,7 @@
         [self initDevice];
         [self initOpenGL:context];
         sphere = [[Sphere alloc] init:48 slices:48 radius:10.0 textureFile:nil];
+        meridians = [[Sphere alloc] init:48 slices:48 radius:8.0 textureFile:@"equirectangular-projection-lines.png"];
     }
     return self;
 }
@@ -130,7 +131,7 @@
 -(void)draw{
     static GLfloat whiteColor[] = {1.0f, 1.0f, 1.0f, 1.0f};
     static GLfloat clearColor[] = {0.0f, 0.0f, 0.0f, 0.0f};
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     glPushMatrix(); // begin device orientation
     
@@ -144,6 +145,7 @@
         glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, whiteColor);  // panorama at full color
         [sphere execute];
         glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, clearColor);
+//        [meridians execute];  // semi-transparent texture overlay (15° meridian lines)
 
 //TODO: add objects here to make them a part of the virtual reality
 //        glPushMatrix();
