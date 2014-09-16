@@ -21,9 +21,9 @@
     panoramaView = [[PanoramaView alloc] init];
     [panoramaView setImage:@"park_2048.jpg"];
     [panoramaView setOrientToDevice:YES];
-//    [panoramaView setTouchToPan:YES];
+    [panoramaView setTouchToPan:NO];
     [panoramaView setPinchToZoom:YES];
-    [panoramaView setShowTouches:YES];
+    [panoramaView setShowTouches:NO];
     [self setView:panoramaView];
 }
 

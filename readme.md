@@ -1,45 +1,60 @@
 # 360° panorama view
 ### equirectangular projections
 
-OpenGL, device-oriented, with hotspot detection
+OpenGL, device-oriented, touch-interactive
 
 ![sample](https://raw.github.com/robbykraft/Panorama/master/readme/park_small.jpg)
 
-acceptable image sizes (due to OpenGL): (4096×2048), 2048×1024, 1024×512, 512×256, 256×128 ...
+acceptable image sizes: (4096×2048), 2048×1024, 1024×512, 512×256, 256×128 ...
 
 * (4096 supported on iPhone 4s and iPad2 onward)
 
-# methods
+#methods
+
+### image
 
 ```objective-c
--(void) draw;  // updates orientation, redraws frame
-
 -(void) setImage:(NSString*)fileName;  // path or bundle. will check at both
+```
 
--(CGPoint) imagePixelFromScreenLocation:(CGPoint)point;  // which pixel did you touch?
+### orientation
 
--(bool) touchInRect:(CGRect)rect;  // hotspot defined by image pixel coordinates
+```objective-c
+ // auto-update (usually only one of these at a time is recommended)
+-(void) setOrientToDevice:(BOOL)   // activate motion sensors
+-(void) setTouchToPan:(BOOL)       // activate UIPanGesture
 
-@property (nonatomic) BOOL orientToDevice; // activate motion sensors -or- manual pan
+ // aligns z-axis (into screen)
+-(void) orientToVector:(GLKVector3)
+-(void) orientToAzimuth:(float) Altitude:(float)
+```
 
-@property (nonatomic) BOOL pinchToZoom;
+### field of view
 
-@property (nonatomic) float fieldOfView;
+```objective-c
+-(void) setFieldOfView:(float)     // in degrees
+-(void) setPinchToZoom:(BOOL)      // activate UIPinchGesture
+```
 
-@property (nonatomic) BOOL showTouches; // overlay latitude longitude lines
+### touches
+
+```objective-c
+-(void) setShowTouches:(BOOL)      // overlay latitude longitude intersects
+-(CGPoint) imagePixelFromScreenLocation:(CGPoint)   // which pixel did you touch?
+-(BOOL) touchInRect:(CGRect)       // hotspot detection in world coordinates
 ```
 
 # usage
 
-make `ViewController` a subclass of `GLKViewController`
+make your `ViewController` a subclass of `GLKViewController`
 
 ```objective-c
-// init and add to screen
 panoramaView = [[PanoramaView alloc] init];
+ // load image and any other customization
 [self setView:panoramaView];
 ```
 
-include this in `ViewController.m`:
+also in your `GLKViewController`:
 
 ```objective-c
 -(void) glkView:(GLKView *)view drawInRect:(CGRect)rect{

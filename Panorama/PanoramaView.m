@@ -7,16 +7,29 @@
 //
 
 #import <CoreMotion/CoreMotion.h>
+#import <OpenGLES/ES1/gl.h>
 #import <GLKit/GLKit.h>
 #import "PanoramaView.h"
 
+#define FPS 60
 #define FOV_MIN 1
 #define FOV_MAX 155
 #define Z_NEAR 0.1f
 #define Z_FAR 100.0f
+
+// LINEAR for smoothing, NEAREST for pixelized
 #define IMAGE_SCALING GL_LINEAR  // GL_NEAREST, GL_LINEAR
+
 // this appears to be the best way to grab orientation. if this becomes formalized, just make sure the orientations match
 #define SENSOR_ORIENTATION [[UIApplication sharedApplication] statusBarOrientation] //enum  1(NORTH)  2(SOUTH)  3(EAST)  4(WEST)
+
+// this really should be included in GLKit
+GLKQuaternion GLKQuaternionFromTwoVectors(GLKVector3 u, GLKVector3 v){
+    GLKVector3 w = GLKVector3CrossProduct(u, v);
+    GLKQuaternion q = GLKQuaternionMake(w.x, w.y, w.z, GLKVector3DotProduct(u, v));
+    q.w += GLKQuaternionLength(q);
+    return GLKQuaternionNormalize(q);
+}
 
 @interface Sphere : NSObject
 
@@ -32,9 +45,9 @@
     CMMotionManager *motionManager;
     UIPinchGestureRecognizer *pinchGesture;
     UIPanGestureRecognizer *panGesture;
-    GLKMatrix4 _projectionMatrix, _attitudeMatrix, _panOffsetMatrix;
+    GLKMatrix4 _projectionMatrix, _attitudeMatrix, _offsetMatrix;
     float _aspectRatio;
-    GLfloat circlePoints[64*3];  // touch lines
+    GLfloat circlePoints[64*3];  // meridian lines
 }
 @end
 
@@ -63,17 +76,27 @@
     }
     return self;
 }
+-(void) didMoveToSuperview{
+// this breaks MVC, but useful for setting GLKViewController's frame rate
+    UIResponder *responder = self;
+    while (![responder isKindOfClass:[GLKViewController class]]) {
+        responder = [responder nextResponder];
+        if (responder == nil){
+            break;
+        }
+    }
+    if([responder respondsToSelector:@selector(setPreferredFramesPerSecond:)])
+        [(GLKViewController*)[self.window rootViewController] setPreferredFramesPerSecond:FPS];
+}
 -(void) initDevice{
     motionManager = [[CMMotionManager alloc] init];
-    // pinch disabled by default
     pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchHandler:)];
     [pinchGesture setEnabled:NO];
     [self addGestureRecognizer:pinchGesture];
-    // pan enabled by default
     panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panHandler:)];
     [panGesture setMaximumNumberOfTouches:1];
+    [panGesture setEnabled:NO];
     [self addGestureRecognizer:panGesture];
-    _touchToPan = YES;
 }
 -(void)setFieldOfView:(float)fieldOfView{
     _fieldOfView = fieldOfView;
@@ -106,7 +129,7 @@
     _fieldOfView = 45 + 45 * atanf(_aspectRatio); // hell ya
     [self rebuildProjectionMatrix];
     _attitudeMatrix = GLKMatrix4Identity;
-    _panOffsetMatrix = GLKMatrix4Identity;
+    _offsetMatrix = GLKMatrix4Identity;
     [self customGL];
     [self makeLatitudeLines];
 }
@@ -123,7 +146,7 @@
     glMatrixMode(GL_MODELVIEW);
 //    glEnable(GL_CULL_FACE);
 //    glCullFace(GL_FRONT);
-    glEnable(GL_DEPTH_TEST);
+//    glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
@@ -133,14 +156,8 @@
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     glPushMatrix(); // begin device orientation
-    
-    // this order need to become:
-    //    get device orientation
-    //   add on top of that any offset due to panning (figure out the math of this)
-    //   then [self updateLook]
-    //  multmatrixf(_attitude)
-    
-        _attitudeMatrix = GLKMatrix4Multiply(_panOffsetMatrix, [self getDeviceOrientationMatrix]);
+
+        _attitudeMatrix = GLKMatrix4Multiply([self getDeviceOrientationMatrix], _offsetMatrix);
         [self updateLook];
     
         glMultMatrixf(_attitudeMatrix.m);
@@ -149,7 +166,7 @@
         [sphere execute];
         glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, clearColor);
 
-//TODO: add objects here to make them a part of the virtual reality
+//TODO: add any objects here to make them a part of the virtual reality
 //        glPushMatrix();
 //        // object code
 //        glPopMatrix();
@@ -161,24 +178,13 @@
                 glPushMatrix();
                     CGPoint touchPoint = CGPointMake([(UITouch*)[[_touches allObjects] objectAtIndex:i] locationInView:self].x,
                                                      [(UITouch*)[[_touches allObjects] objectAtIndex:i] locationInView:self].y);
-                    [self drawHotspotLines:[self vectorFromScreenLocation:touchPoint]];
+                    [self drawHotspotLines:[self vectorFromScreenLocation:touchPoint inAttitude:_attitudeMatrix]];
                 glPopMatrix();
             }
             glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
         }
     
     glPopMatrix(); // end device orientation
-    static int count = 0;
-    count++;
-    if(count % 5 == 0){
-        GLKQuaternion q = GLKQuaternionMakeWithMatrix4(_attitudeMatrix);
-        NSLog(@"  ");
-        NSLog(@"QQQQ: %.3f, %.3f, %.3f, %.3f",q.q[0], q.q[1], q.q[2], q.q[3]);
-        NSLog(@"QS, QV: %f, (%.3f, %.3f, %.3f)",q.s, q.v.x, q.v.y, q.v.z);
-        GLKVector3 v = GLKQuaternionAxis(q);
-        NSLog(@"Angle:%.3f Axis:(%.3f, %.3f, %.3f)", GLKQuaternionAngle(q),v.x, v.y, v.z);
-        NSLog(@"AZ:%.3f  ALT:%.3f LOOK:(%.3f, %.3f, %.3f)",_lookAzimuth, _lookAltitude, _lookVector.x, _lookVector.y, _lookVector.z);
-    }
 }
 #pragma mark- ORIENTATION
 -(GLKMatrix4) getDeviceOrientationMatrix{
@@ -212,13 +218,13 @@
     else
         return GLKMatrix4Identity;
 }
-//-(void) orientToVector:(GLKVector3)v{
-//    _attitudeMatrix = GLKMatrix4MakeLookAt(0, 0, 0, v.x, v.y, v.z,  0, 1, 0);
-//    [self updateLook];
-//}
-//-(void) orientToAzimuth:(float)azimuth Altitude:(float)altitude{
-//    [self orientToVector:GLKVector3Make(-cosf(azimuth), sinf(altitude), sinf(azimuth))];
-//}
+-(void) orientToVector:(GLKVector3)v{
+    _attitudeMatrix = GLKMatrix4MakeLookAt(0, 0, 0, v.x, v.y, v.z,  0, 1, 0);
+    [self updateLook];
+}
+-(void) orientToAzimuth:(float)azimuth Altitude:(float)altitude{
+    [self orientToVector:GLKVector3Make(-cosf(azimuth), sinf(altitude), sinf(azimuth))];
+}
 -(void) updateLook{
     _lookVector = GLKVector3Make(-_attitudeMatrix.m02,
                                  -_attitudeMatrix.m12,
@@ -227,10 +233,10 @@
     _lookAltitude = asinf(_lookVector.y);
 }
 -(CGPoint) imagePixelAtScreenLocation:(CGPoint)point{
-    return [self imagePixelFromVector:[self vectorFromScreenLocation:point]];
+    return [self imagePixelFromVector:[self vectorFromScreenLocation:point inAttitude:_attitudeMatrix]];
 }
--(GLKVector3) vectorFromScreenLocation:(CGPoint)screenTouch{
-    GLKMatrix4 inverse = GLKMatrix4Invert(GLKMatrix4Multiply(_projectionMatrix, _attitudeMatrix), nil);
+-(GLKVector3) vectorFromScreenLocation:(CGPoint)screenTouch inAttitude:(GLKMatrix4)matrix{
+    GLKMatrix4 inverse = GLKMatrix4Invert(GLKMatrix4Multiply(_projectionMatrix, matrix), nil);
     GLKVector4 screen = GLKVector4Make(2.0*(screenTouch.x/self.frame.size.width-.5),
                                        2.0*(.5-screenTouch.y/self.frame.size.height),
                                        1.0, 1.0);
@@ -264,7 +270,7 @@
     _touches = event.allTouches;
     _numberOfTouches = 0;
 }
--(bool)touchInRect:(CGRect)rect{
+-(BOOL)touchInRect:(CGRect)rect{
     if(_numberOfTouches){
         bool found = false;
         for(int i = 0; i < [[_touches allObjects] count]; i++){
@@ -292,39 +298,23 @@
     }
 }
 -(void) panHandler:(UIPanGestureRecognizer*)sender{
-    static GLKMatrix4 _startMatrix;
     static GLKVector3 touchVector;
-    static float touchAzimuth, touchAltitude;
     if([sender state] == 1){
-        _startMatrix = _panOffsetMatrix;
-        touchVector = [self vectorFromScreenLocation:[sender locationInView:sender.view]];
-        touchAzimuth =  -atan2f(-touchVector.z, -touchVector.x);
-        touchAltitude = asinf(touchVector.y);
-        NSLog(@"\n(%.3f, %.3f, %.3f)\n(%.3f, %.3f, %.3f)\n(%.3f, %.3f, %.3f)",
-              _startMatrix.m00,_startMatrix.m01,_startMatrix.m02,
-              _startMatrix.m10,_startMatrix.m11,_startMatrix.m12,
-              _startMatrix.m20,_startMatrix.m21,_startMatrix.m22);
-        NSLog(@"(%.3f, %.3f, %.3f)",touchVector.x, touchVector.y, touchVector.z);
+        touchVector = [self vectorFromScreenLocation:[sender locationInView:sender.view] inAttitude:_offsetMatrix];
     }
     else if([sender state] == 2){
-        GLKVector3 nowVector = [self vectorFromScreenLocation:[sender locationInView:sender.view]];
-        GLKVector3 diffVector = GLKVector3Subtract(touchVector, nowVector);
-        GLKVector3 newLook = GLKVector3Add(_lookVector, diffVector);
-//        [self orientToVector:newLook];
-        GLKMatrix4 newPanMatrix = GLKMatrix4MakeLookAt(0, 0, 0, newLook.x, newLook.y, newLook.z,  0, 1, 0);
-        GLKVector3 lv = GLKVector3Make(-newPanMatrix.m02,
-                                       -newPanMatrix.m12,
-                                       -newPanMatrix.m22);
-        float rAz = atan2f(lv.x, -lv.z);
-        float rAlt = asinf(lv.y);
-        _panOffsetMatrix = _startMatrix;
- //       _panOffsetMatrix = GLKMatrix4RotateY(<#GLKMatrix4 matrix#>, <#float radians#>)
+        GLKVector3 nowVector = [self vectorFromScreenLocation:[sender locationInView:sender.view] inAttitude:_offsetMatrix];
+        GLKQuaternion q = GLKQuaternionFromTwoVectors(touchVector, nowVector);
+        _offsetMatrix = GLKMatrix4Multiply(_offsetMatrix, GLKMatrix4MakeWithQuaternion(q));
+        // in progress for preventHeadTilt
+//        GLKMatrix4 mat = GLKMatrix4Multiply(_offsetMatrix, GLKMatrix4MakeWithQuaternion(q));
+//        _offsetMatrix = GLKMatrix4MakeLookAt(0, 0, 0, -mat.m02, -mat.m12, -mat.m22,  0, 1, 0);
     }
     else{
         _numberOfTouches = 0;
     }
 }
-#pragma mark- HOTSPOT
+#pragma mark- MERIDIANS
 -(void) makeLatitudeLines{
     for(int i = 0; i < 64; i++){
         circlePoints[i*3+0] = -sinf(M_PI*2/64.0f*i);
@@ -359,7 +349,7 @@
 
 @interface Sphere (){
 //  from Touch Fighter by Apple
-//  also in Pro OpenGL ES for iOS
+//  in Pro OpenGL ES for iOS
 //  by Mike Smithwick Jan 2011 pg. 78
     GLKTextureInfo *m_TextureInfo;
     GLfloat *m_TexCoordsData;
