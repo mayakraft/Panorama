@@ -87,7 +87,7 @@ GLKQuaternion GLKQuaternionFromTwoVectors(GLKVector3 u, GLKVector3 v){
         }
     }
     if([responder respondsToSelector:@selector(setPreferredFramesPerSecond:)])
-        [(GLKViewController*)[self.window rootViewController] setPreferredFramesPerSecond:FPS];
+        [(GLKViewController*)responder setPreferredFramesPerSecond:FPS];
 }
 -(void) initDevice{
     motionManager = [[CMMotionManager alloc] init];
