@@ -125,7 +125,7 @@ GLKQuaternion GLKQuaternionFromTwoVectors(GLKVector3 u, GLKVector3 v){
 }
 #pragma mark- OPENGL
 -(void)initOpenGL:(EAGLContext*)context{
-    [(CAEAGLLayer*)self.layer setOpaque:YES];
+    [(CAEAGLLayer*)self.layer setOpaque:NO];
     _aspectRatio = self.frame.size.width/self.frame.size.height;
     _fieldOfView = 45 + 45 * atanf(_aspectRatio); // hell ya
     [self rebuildProjectionMatrix];
