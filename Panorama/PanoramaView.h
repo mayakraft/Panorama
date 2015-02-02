@@ -79,12 +79,20 @@
 @property (nonatomic) BOOL showTouches;
 
 /**
- * Convert a 3D world-coordinate (specified by a vector distance from origin) to a 2D on-screen coordinate
+ * Convert a 3D world-coordinate (specified by a vector from the origin) to a 2D on-screen coordinate
  *
  * @param GLKVector3 coordinate location from origin. Use with CGRectContainsPoint( [[UIScreen mainScreen] bounds], screenPoint )
  * @return a screen pixel coordinate representation of a 3D world coordinate
  */
--(CGPoint)screenLocationFromVector:(GLKVector3)vector;
+-(CGPoint) screenLocationFromVector:(GLKVector3)vector;
+
+/**
+ * Converts a 2D on-screen coordinate to a vector in 3D space pointing out from the origin
+ *
+ * @param CGPoint screen coordinate
+ * @return GLKVector3 vector pointing outward from origin
+ */
+-(GLKVector3) vectorFromScreenLocation:(CGPoint)point;
 
 /**
  * Converts a 2D on-screen coordinate to a pixel (x,y) of the loaded panorama image

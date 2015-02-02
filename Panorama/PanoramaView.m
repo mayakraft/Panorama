@@ -54,12 +54,14 @@ GLKQuaternion GLKQuaternionFromTwoVectors(GLKVector3 u, GLKVector3 v){
 @implementation PanoramaView
 
 -(id) init{
-    CGRect frame = [[UIScreen mainScreen] bounds];
-    if(SENSOR_ORIENTATION == 3 || SENSOR_ORIENTATION == 4){
-        return [self initWithFrame:CGRectMake(frame.origin.x, frame.origin.y, frame.size.height, frame.size.width)];
-    } else{
-        return [self initWithFrame:CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height)];
-    }
+// it appears that iOS already automatically does this switch, stored in UIScreen mainscreen bounds
+//    CGRect frame = [[UIScreen mainScreen] bounds];
+//    if(SENSOR_ORIENTATION == 3 || SENSOR_ORIENTATION == 4){
+//        return [self initWithFrame:CGRectMake(frame.origin.x, frame.origin.y, frame.size.height, frame.size.width)];
+//    } else{
+//        return [self initWithFrame:CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height)];
+//    }
+    return [self initWithFrame:[[UIScreen mainScreen] bounds]];
 }
 - (id)initWithFrame:(CGRect)frame{
     EAGLContext *context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
@@ -237,25 +239,39 @@ GLKQuaternion GLKQuaternionFromTwoVectors(GLKVector3 u, GLKVector3 v){
 -(CGPoint) imagePixelAtScreenLocation:(CGPoint)point{
     return [self imagePixelFromVector:[self vectorFromScreenLocation:point inAttitude:_attitudeMatrix]];
 }
--(GLKVector3) vectorFromScreenLocation:(CGPoint)screenTouch inAttitude:(GLKMatrix4)matrix{
+-(CGPoint) imagePixelFromVector:(GLKVector3)vector{
+    CGPoint pxl = CGPointMake((M_PI-atan2f(-vector.z, -vector.x))/(2*M_PI), acosf(vector.y)/M_PI);
+    CGPoint tex = [sphere getTextureSize];
+    // if no texture exists, returns between 0.0 - 1.0
+    if(!(tex.x == 0.0f && tex.y == 0.0f)){
+        pxl.x *= tex.x;
+        pxl.y *= tex.y;
+    }
+    return pxl;
+}
+-(GLKVector3) vectorFromScreenLocation:(CGPoint)point{
+    return [self vectorFromScreenLocation:point inAttitude:_attitudeMatrix];
+}
+-(GLKVector3) vectorFromScreenLocation:(CGPoint)point inAttitude:(GLKMatrix4)matrix{
     GLKMatrix4 inverse = GLKMatrix4Invert(GLKMatrix4Multiply(_projectionMatrix, matrix), nil);
-    GLKVector4 screen = GLKVector4Make(2.0*(screenTouch.x/self.frame.size.width-.5),
-                                       2.0*(.5-screenTouch.y/self.frame.size.height),
+    GLKVector4 screen = GLKVector4Make(2.0*(point.x/self.frame.size.width-.5),
+                                       2.0*(.5-point.y/self.frame.size.height),
                                        1.0, 1.0);
-    if (SENSOR_ORIENTATION == 3 || SENSOR_ORIENTATION == 4)
-        screen = GLKVector4Make(2.0*(screenTouch.x/self.frame.size.height-.5),
-                                2.0*(.5-screenTouch.y/self.frame.size.width),
-                                1.0, 1.0);
+//    if (SENSOR_ORIENTATION == 3 || SENSOR_ORIENTATION == 4)
+//        screen = GLKVector4Make(2.0*(screenTouch.x/self.frame.size.height-.5),
+//                                2.0*(.5-screenTouch.y/self.frame.size.width),
+//                                1.0, 1.0);
     GLKVector4 vec = GLKMatrix4MultiplyVector4(inverse, screen);
     return GLKVector3Normalize(GLKVector3Make(vec.x, vec.y, vec.z));
 }
--(CGPoint)screenLocationFromVector:(GLKVector3)vector{
+-(CGPoint) screenLocationFromVector:(GLKVector3)vector{
     GLKMatrix4 matrix = GLKMatrix4Multiply(_projectionMatrix, _attitudeMatrix);
     GLKVector3 screenVector = GLKMatrix4MultiplyVector3(matrix, vector);
     return CGPointMake( (screenVector.x/screenVector.z/2.0 + 0.5) * self.frame.size.width,
                        (0.5-screenVector.y/screenVector.z/2) * self.frame.size.height );
 }
--(BOOL)computeScreenLocation:(CGPoint*)location fromVector:(GLKVector3)vector inAttitude:(GLKMatrix4)matrix{
+-(BOOL) computeScreenLocation:(CGPoint*)location fromVector:(GLKVector3)vector inAttitude:(GLKMatrix4)matrix{
+//This method returns whether the point is before or behind the screen.
     GLKVector4 screenVector;
     GLKVector4 vector4;
     if(location == NULL)
@@ -266,16 +282,6 @@ GLKQuaternion GLKQuaternionFromTwoVectors(GLKVector3 u, GLKVector3 v){
     location->x = (screenVector.x/screenVector.w/2.0 + 0.5) * self.frame.size.width;
     location->y = (0.5-screenVector.y/screenVector.w/2) * self.frame.size.height;
     return (screenVector.z >= 0);
-}
--(CGPoint) imagePixelFromVector:(GLKVector3)vector{
-    CGPoint pxl = CGPointMake((M_PI-atan2f(-vector.z, -vector.x))/(2*M_PI), acosf(vector.y)/M_PI);
-    CGPoint tex = [sphere getTextureSize];
-    // if no texture exists, returns between 0.0 - 1.0
-    if(!(tex.x == 0.0f && tex.y == 0.0f)){
-        pxl.x *= tex.x;
-        pxl.y *= tex.y;
-    }
-    return pxl;
 }
 #pragma mark- TOUCHES
 -(void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
@@ -477,10 +483,12 @@ GLKQuaternion GLKQuaternionFromTwoVectors(GLKVector3 u, GLKVector3 v){
     return true;
 }
 -(GLKTextureInfo *) loadTextureFromBundle:(NSString *) filename{
+    if(!filename) return nil;
     NSString *path = [[NSBundle mainBundle] pathForResource:filename ofType:NULL];
     return [self loadTextureFromPath:path];
 }
 -(GLKTextureInfo *) loadTextureFromPath:(NSString *) path{
+    if(!path) return nil;
     NSError *error;
     GLKTextureInfo *info;
     NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], GLKTextureLoaderOriginBottomLeft, nil];

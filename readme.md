@@ -40,8 +40,16 @@ acceptable image sizes: (4096×2048), 2048×1024, 1024×512, 512×256, 256×128 
 
 ```objective-c
 -(void) setShowTouches:(BOOL)      // overlay latitude longitude intersects
--(CGPoint) imagePixelFromScreenLocation:(CGPoint)   // which pixel did you touch?
 -(BOOL) touchInRect:(CGRect)       // hotspot detection in world coordinates
+```
+
+### 2D - 3D conversion
+
+```objective-c
+-(CGPoint) screenLocationFromVector:(GLKVector3)vector;  // 2D screen point from a 3D point
+-(GLKVector3) vectorFromScreenLocation:(CGPoint)screenPoint // 3D point from 2D screen point
+-(CGPoint) imagePixelAtScreenLocation:(CGPoint)point  // 3D point from 2D screen point
+  // except this 3D point is expressed as 2D pixel unit in the panorama image
 ```
 
 # usage
@@ -66,6 +74,8 @@ also in your `GLKViewController`:
 
 * no device landscape/portrait auto-rotation
 
+![device](https://raw.github.com/robbykraft/Panorama/master/readme/device_orient.png)
+
 # orientation
 
 * __azimuth__ and __altitude__
@@ -75,7 +85,7 @@ also in your `GLKViewController`:
 
 The program begins by facing the center column of the image, or azimuth 0°
 
-![sample](https://raw.github.com/robbykraft/Panorama/master/readme/azimuth-altitude-pixels.png)
+![wikipedia](https://raw.github.com/robbykraft/Panorama/master/readme/azimuth-altitude-pixels.png)
 
 # about equirectangular
 
