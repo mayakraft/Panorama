@@ -249,6 +249,24 @@ GLKQuaternion GLKQuaternionFromTwoVectors(GLKVector3 u, GLKVector3 v){
     GLKVector4 vec = GLKMatrix4MultiplyVector4(inverse, screen);
     return GLKVector3Normalize(GLKVector3Make(vec.x, vec.y, vec.z));
 }
+-(CGPoint)screenLocationFromVector:(GLKVector3)vector{
+    GLKMatrix4 matrix = GLKMatrix4Multiply(_projectionMatrix, _attitudeMatrix);
+    GLKVector3 screenVector = GLKMatrix4MultiplyVector3(matrix, vector);
+    return CGPointMake( (screenVector.x/screenVector.z/2.0 + 0.5) * self.frame.size.width,
+                       (0.5-screenVector.y/screenVector.z/2) * self.frame.size.height );
+}
+-(BOOL)computeScreenLocation:(CGPoint*)location fromVector:(GLKVector3)vector inAttitude:(GLKMatrix4)matrix{
+    GLKVector4 screenVector;
+    GLKVector4 vector4;
+    if(location == NULL)
+        return NO;
+    matrix = GLKMatrix4Multiply(_projectionMatrix, matrix);
+    vector4 = GLKVector4Make(vector.x, vector.y, vector.z, 1);
+    screenVector = GLKMatrix4MultiplyVector4(matrix, vector4);
+    location->x = (screenVector.x/screenVector.w/2.0 + 0.5) * self.frame.size.width;
+    location->y = (0.5-screenVector.y/screenVector.w/2) * self.frame.size.height;
+    return (screenVector.z >= 0);
+}
 -(CGPoint) imagePixelFromVector:(GLKVector3)vector{
     CGPoint pxl = CGPointMake((M_PI-atan2f(-vector.z, -vector.x))/(2*M_PI), acosf(vector.y)/M_PI);
     CGPoint tex = [sphere getTextureSize];

@@ -77,13 +77,23 @@
 
 /// Dynamic overlay of latitude and longitude intersection lines for all touches
 @property (nonatomic) BOOL showTouches;
+
 /**
- * Converts screen coordinate to image pixel coordinate
+ * Convert a 3D world-coordinate (specified by a vector distance from origin) to a 2D on-screen coordinate
  *
- * @param CGPoint device screen coordinate
- * @return CGPoint image coordinate in pixels, or betwee 0.0 and 1.0 if no image
+ * @param GLKVector3 coordinate location from origin. Use with CGRectContainsPoint( [[UIScreen mainScreen] bounds], screenPoint )
+ * @return a screen pixel coordinate representation of a 3D world coordinate
+ */
+-(CGPoint)screenLocationFromVector:(GLKVector3)vector;
+
+/**
+ * Converts a 2D on-screen coordinate to a pixel (x,y) of the loaded panorama image
+ *
+ * @param CGPoint screen coordinate
+ * @return CGPoint image coordinate in pixels. If no image, between 0.0 and 1.0
  */
 -(CGPoint) imagePixelAtScreenLocation:(CGPoint)point;
+
 /**
  * Hit-detection for all active touches
  *
@@ -92,6 +102,4 @@
  */
 -(BOOL) touchInRect:(CGRect)rect;
 
-
 @end
-
