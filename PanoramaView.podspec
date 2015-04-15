@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "PanoramaView"
-  s.version          = "1.0.0"
+  s.version          = "1.0.1"
   s.summary          = "sensor-oriented panorama view for iOS"
   s.description      = <<-DESC
                        a dynamic GLKView with a touch and motion sensor interface to align and immerse the perspective inside an equirectangular panorama projection
@@ -15,8 +15,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '5.0'
   s.requires_arc = true
 
-  s.source_files = 'Panorama/PanoramaView.m'
+  s.source_files = 'Panorama/PanoramaView.m', 'Panorama/PanoramaView.h'
 
-  s.public_header_files = 'Panorama/PanoramaView.h'
   s.frameworks = 'UIKit', 'OpenGLES', 'GLKit', 'CoreMotion'
 end
