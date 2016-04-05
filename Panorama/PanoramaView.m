@@ -463,6 +463,20 @@ GLKQuaternion GLKQuaternionFromTwoVectors(GLKVector3 u, GLKVector3 v){
     }
     return self;
 }
+-(void) dealloc{
+    GLuint name = m_TextureInfo.name;
+    glDeleteTextures(1, &name);
+    
+    if(m_TexCoordsData != nil){
+        free(m_TexCoordsData);
+    }
+    if(m_NormalData != nil){
+        free(m_NormalData);
+    }
+    if(m_VertexData != nil){
+        free(m_VertexData);
+    }
+}
 -(bool) execute{
     glEnableClientState(GL_NORMAL_ARRAY);
     glEnableClientState(GL_VERTEX_ARRAY);
