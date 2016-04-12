@@ -36,6 +36,7 @@ GLKQuaternion GLKQuaternionFromTwoVectors(GLKVector3 u, GLKVector3 v){
 -(bool) execute;
 -(id) init:(GLint)stacks slices:(GLint)slices radius:(GLfloat)radius textureFile:(NSString *)textureFile;
 -(void) swapTexture:(NSString*)textureFile;
+-(void) swapTextureWithImage:(UIImage*)image;
 -(CGPoint) getTextureSize;
 
 @end
@@ -107,6 +108,9 @@ GLKQuaternion GLKQuaternionFromTwoVectors(GLKVector3 u, GLKVector3 v){
 }
 -(void) setImage:(NSString*)fileName{
     [sphere swapTexture:fileName];
+}
+-(void) setImageWithImage:(UIImage *)image {
+    [sphere swapTextureWithImage:image];
 }
 -(void) setTouchToPan:(BOOL)touchToPan{
     _touchToPan = touchToPan;
@@ -386,6 +390,7 @@ GLKQuaternion GLKQuaternionFromTwoVectors(GLKVector3 u, GLKVector3 v){
 }
 -(GLKTextureInfo *) loadTextureFromBundle:(NSString *) filename;
 -(GLKTextureInfo *) loadTextureFromPath:(NSString *) path;
+-(GLKTextureInfo *) loadTextureFromImage:(UIImage *) image;
 @end
 @implementation Sphere
 -(id) init:(GLint)stacks slices:(GLint)slices radius:(GLfloat)radius textureFile:(NSString *)textureFile{
@@ -514,6 +519,19 @@ GLKQuaternion GLKQuaternionFromTwoVectors(GLKVector3 u, GLKVector3 v){
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, IMAGE_SCALING);
     return info;
 }
+-(GLKTextureInfo *) loadTextureFromImage:(UIImage *) image {
+    if(!image) return nil;
+    NSError *error;
+    GLKTextureInfo *info;
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES],GLKTextureLoaderOriginBottomLeft, nil];
+    info = [GLKTextureLoader textureWithCGImage:image.CGImage options:options error:&error];
+    glBindTexture(GL_TEXTURE_2D, info.name);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, IMAGE_SCALING);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, IMAGE_SCALING);
+    return info;
+}
 -(void)swapTexture:(NSString*)textureFile{
     GLuint name = m_TextureInfo.name;
     glDeleteTextures(1, &name);
@@ -523,6 +541,11 @@ GLKQuaternion GLKQuaternionFromTwoVectors(GLKVector3 u, GLKVector3 v){
     else {
         m_TextureInfo = [self loadTextureFromBundle:textureFile];
     }
+}
+-(void)swapTextureWithImage:(UIImage*)image {
+    GLuint name = m_TextureInfo.name;
+    glDeleteTextures(1, &name);
+    m_TextureInfo = [self loadTextureFromImage:image];
 }
 -(CGPoint)getTextureSize{
     if(m_TextureInfo){
