@@ -72,6 +72,29 @@ also in your `GLKViewController`:
 
 ### make sure
 
+
+###SWIFT Example
+
+```swift
+class MainView: GLKViewController {
+    
+    var panoramaView = PanoramaView()
+    
+    override func viewDidLoad() {
+        panoramaView.setImage("imagename.jpg")
+        panoramaView.touchToPan = true          // Use touch input to pan
+        panoramaView.orientToDevice = false     // Use motion sensors to pan
+        panoramaView.pinchToZoom = true         // Use pinch gesture to zoom
+        panoramaView.showTouches = true         // Show touches
+        self.view = panoramaView
+    }
+    
+    override func glkView(view: GLKView, drawInRect rect: CGRect) {
+        panoramaView.draw()
+    }
+}
+```
+
 * no device landscape/portrait auto-rotation
 
 ![device](https://raw.github.com/robbykraft/Panorama/master/readme/device_orient.png)
