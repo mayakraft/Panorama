@@ -18,6 +18,7 @@
 
 /// Set image by path or bundle - will check at both
 -(void) setImage:(NSString*)fileName;
+-(void) setImageWithImage:(UIImage*)image;
 
 
 /* orientation */
