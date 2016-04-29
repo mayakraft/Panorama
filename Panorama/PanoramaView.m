@@ -106,10 +106,10 @@ GLKQuaternion GLKQuaternionFromTwoVectors(GLKVector3 u, GLKVector3 v){
     _fieldOfView = fieldOfView;
     [self rebuildProjectionMatrix];
 }
--(void) setImage:(NSString*)fileName{
+-(void) setImageWithName:(NSString*)fileName{
     [sphere swapTexture:fileName];
 }
--(void) setImageWithImage:(UIImage *)image {
+-(void) setImage:(UIImage *)image {
     [sphere swapTextureWithImage:image];
 }
 -(void) setTouchToPan:(BOOL)touchToPan{
