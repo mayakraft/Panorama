@@ -375,6 +375,9 @@ GLKQuaternion GLKQuaternionFromTwoVectors(GLKVector3 u, GLKVector3 v){
     glDisableClientState(GL_VERTEX_ARRAY);
     glPopMatrix();
 }
+-(void) dealloc{
+    [EAGLContext setCurrentContext:nil];
+}
 @end
 
 @interface Sphere (){
