@@ -34,6 +34,10 @@
 /// forward vertical altitude (-.5π to .5π)
 @property (nonatomic, readonly) float lookAltitude;
 
+// bool Keep "head" from tilting defaults to true.
+@property (nonatomic) BOOL headTilt;
+// Y axis stop point to reduce fluttering at extremes. Defaults to 0.9
+@property (nonatomic) float yStop;
 
 // At this point, it's still recommended to activate either OrientToDevice or TouchToPan, not both
 //   it's possible to have them simultaneously, but the effect is confusing and disorienting
