@@ -14,7 +14,8 @@ acceptable image sizes: (4096×2048), 2048×1024, 1024×512, 512×256, 256×128 
 ### image
 
 ```objective-c
--(void) setImage:(NSString*)fileName;  // path or bundle. will check at both
+-(void) setImage:(UIImage*)image;
+-(void) setImageWithName:(NSString*)fileName;  // path or bundle. will check at both
 ```
 
 ### orientation
@@ -77,6 +78,28 @@ also in your `GLKViewController`:
 ![device](https://raw.github.com/robbykraft/Panorama/master/readme/device_orient.png)
 
 * works properly under any of the 4 device orientations
+
+# swift
+
+```swift
+class MainView: GLKViewController {
+    
+    var panoramaView = PanoramaView()
+    
+    override func viewDidLoad() {
+        panoramaView.setImageWithName("imagename.jpg")
+        panoramaView.touchToPan = true          // Use touch input to pan
+        panoramaView.orientToDevice = false     // Use motion sensors to pan
+        panoramaView.pinchToZoom = true         // Use pinch gesture to zoom
+        panoramaView.showTouches = true         // Show touches
+        self.view = panoramaView
+    }
+    
+    override func glkView(view: GLKView, drawInRect rect: CGRect) {
+        panoramaView.draw()
+    }
+}
+```
 
 # orientation
 

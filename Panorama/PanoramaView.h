@@ -16,9 +16,11 @@
 
 -(void) draw;  // place in GLKViewController's glkView:drawInRect:
 
-/// Set image by path or bundle - will check at both
--(void) setImage:(NSString*)fileName;
--(void) setImageWithImage:(UIImage*)image;
+/// set image
+-(void) setImage:(UIImage*)image;
+
+/// set image by path or bundle - will check at both
+-(void) setImageWithName:(NSString*)fileName;
 
 
 /* orientation */
