@@ -53,6 +53,16 @@ acceptable image sizes: (4096×2048), 2048×1024, 1024×512, 512×256, 256×128 
   // except this 3D point is expressed as 2D pixel unit in the panorama image
 ```
 
+### VR Split screen
+
+```objective-c
+-(void) setVRMode:(BOOL)
+```
+
+This activates a split screen that works inside of VR headsets like Google Cardboard. TBD if more VR best practices are needed, such as a barrel shader.
+
+* Illusion of varying depth is not available. The two screens are rendered using the same image with no difference between camera IPD.
+
 # usage
 
 make your `ViewController` a subclass of `GLKViewController`

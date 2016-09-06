@@ -23,6 +23,8 @@
 		D55E8FE31828D3F50076A9D7 /* 72.png in Resources */ = {isa = PBXBuildFile; fileRef = D55E8FDA1828D3F50076A9D7 /* 72.png */; };
 		D55E8FE41828D3F50076A9D7 /* 76.png in Resources */ = {isa = PBXBuildFile; fileRef = D55E8FDB1828D3F50076A9D7 /* 76.png */; };
 		D55E8FE51828D3F50076A9D7 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D55E8FDC1828D3F50076A9D7 /* icon.png */; };
+		D560B0B51D7F260500535DCF /* button-screen-double.png in Resources */ = {isa = PBXBuildFile; fileRef = D560B0B31D7F260500535DCF /* button-screen-double.png */; };
+		D560B0B61D7F260500535DCF /* button-screen-single.png in Resources */ = {isa = PBXBuildFile; fileRef = D560B0B41D7F260500535DCF /* button-screen-single.png */; };
 		D5C8B44C18A8E58700051A88 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D5C8B44B18A8E58700051A88 /* Default-568h@2x.png */; };
 		D5EC7AB9183AFBC400F62609 /* park_2048.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D5EC7AB8183AFBC400F62609 /* park_2048.jpg */; };
 		D5FAE07917C8956600AE6EC9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5FAE07817C8956600AE6EC9 /* Foundation.framework */; };
@@ -48,7 +50,7 @@
 		D55E8F941828D2360076A9D7 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D55E8F951828D2360076A9D7 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		D55E8F9B1828D2360076A9D7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		D55E8F9C1828D2360076A9D7 /* equirectangular-projection-lines.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "equirectangular-projection-lines.png"; sourceTree = "<group>"; };
+		D55E8F9C1828D2360076A9D7 /* equirectangular-projection-lines.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "equirectangular-projection-lines.png"; path = "images/equirectangular-projection-lines.png"; sourceTree = "<group>"; };
 		D55E8FA71828D2360076A9D7 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D55E8FA81828D2360076A9D7 /* PanoramaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PanoramaView.h; sourceTree = "<group>"; };
 		D55E8FA91828D2360076A9D7 /* PanoramaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PanoramaView.m; sourceTree = "<group>"; };
@@ -68,8 +70,10 @@
 		D55E8FDA1828D3F50076A9D7 /* 72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 72.png; sourceTree = "<group>"; };
 		D55E8FDB1828D3F50076A9D7 /* 76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 76.png; sourceTree = "<group>"; };
 		D55E8FDC1828D3F50076A9D7 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
-		D5C8B44B18A8E58700051A88 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		D5EC7AB8183AFBC400F62609 /* park_2048.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = park_2048.jpg; sourceTree = "<group>"; };
+		D560B0B31D7F260500535DCF /* button-screen-double.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-screen-double.png"; path = "images/button-screen-double.png"; sourceTree = "<group>"; };
+		D560B0B41D7F260500535DCF /* button-screen-single.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-screen-single.png"; path = "images/button-screen-single.png"; sourceTree = "<group>"; };
+		D5C8B44B18A8E58700051A88 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "images/Default-568h@2x.png"; sourceTree = "<group>"; };
+		D5EC7AB8183AFBC400F62609 /* park_2048.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = park_2048.jpg; path = images/park_2048.jpg; sourceTree = "<group>"; };
 		D5FAE07517C8956600AE6EC9 /* Panorama.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Panorama.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5FAE07817C8956600AE6EC9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D5FAE07A17C8956600AE6EC9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -136,6 +140,8 @@
 			children = (
 				D5EC7AB8183AFBC400F62609 /* park_2048.jpg */,
 				D55E8F9C1828D2360076A9D7 /* equirectangular-projection-lines.png */,
+				D560B0B31D7F260500535DCF /* button-screen-double.png */,
+				D560B0B41D7F260500535DCF /* button-screen-single.png */,
 			);
 			name = images;
 			sourceTree = "<group>";
@@ -249,6 +255,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Robby Kraft";
 				TargetAttributes = {
+					D5FAE07417C8956600AE6EC9 = {
+						DevelopmentTeam = 78C98TD784;
+					};
 					D5FAE09817C8956600AE6EC9 = {
 						TestTargetID = D5FAE07417C8956600AE6EC9;
 					};
@@ -288,8 +297,10 @@
 				D55E8FE51828D3F50076A9D7 /* icon.png in Resources */,
 				D5EC7AB9183AFBC400F62609 /* park_2048.jpg in Resources */,
 				D5C8B44C18A8E58700051A88 /* Default-568h@2x.png in Resources */,
+				D560B0B51D7F260500535DCF /* button-screen-double.png in Resources */,
 				D55E8FE21828D3F50076A9D7 /* 60.png in Resources */,
 				D55E8FB61828D2360076A9D7 /* equirectangular-projection-lines.png in Resources */,
+				D560B0B61D7F260500535DCF /* button-screen-single.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -427,11 +438,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Panorama/Panorama-Prefix.pch";
 				INFOPLIST_FILE = "Panorama/Panorama-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = Panorama;
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -440,11 +455,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Panorama/Panorama-Prefix.pch";
 				INFOPLIST_FILE = "Panorama/Panorama-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = Panorama;
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

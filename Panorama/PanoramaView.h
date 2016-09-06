@@ -67,9 +67,13 @@
 
 /*  projection & touches  */
 
+/// Split screen mode for use in VR headsets
+@property (nonatomic) BOOL VRMode;
 
+/// Set of (UITouch*) touches currently active
 @property (nonatomic, readonly) NSSet *touches;
 
+/// The number of active screen touches
 @property (nonatomic, readonly) NSInteger numberOfTouches;
 
 /// Field of view in DEGREES
