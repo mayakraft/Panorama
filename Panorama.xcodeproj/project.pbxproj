@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D543FEC91D8485FF00DA5ED4 /* spectrum.png in Resources */ = {isa = PBXBuildFile; fileRef = D543FEC81D8485FF00DA5ED4 /* spectrum.png */; };
 		D55E8FB21828D2360076A9D7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D55E8F951828D2360076A9D7 /* AppDelegate.m */; };
 		D55E8FB61828D2360076A9D7 /* equirectangular-projection-lines.png in Resources */ = {isa = PBXBuildFile; fileRef = D55E8F9C1828D2360076A9D7 /* equirectangular-projection-lines.png */; };
 		D55E8FC01828D2360076A9D7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D55E8FA71828D2360076A9D7 /* main.m */; };
@@ -47,6 +48,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D543FEC81D8485FF00DA5ED4 /* spectrum.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = spectrum.png; path = images/spectrum.png; sourceTree = "<group>"; };
 		D55E8F941828D2360076A9D7 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D55E8F951828D2360076A9D7 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		D55E8F9B1828D2360076A9D7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				D5EC7AB8183AFBC400F62609 /* park_2048.jpg */,
+				D543FEC81D8485FF00DA5ED4 /* spectrum.png */,
 				D55E8F9C1828D2360076A9D7 /* equirectangular-projection-lines.png */,
 				D560B0B31D7F260500535DCF /* button-screen-double.png */,
 				D560B0B41D7F260500535DCF /* button-screen-single.png */,
@@ -299,6 +302,7 @@
 				D5C8B44C18A8E58700051A88 /* Default-568h@2x.png in Resources */,
 				D560B0B51D7F260500535DCF /* button-screen-double.png in Resources */,
 				D55E8FE21828D3F50076A9D7 /* 60.png in Resources */,
+				D543FEC91D8485FF00DA5ED4 /* spectrum.png in Resources */,
 				D55E8FB61828D2360076A9D7 /* equirectangular-projection-lines.png in Resources */,
 				D560B0B61D7F260500535DCF /* button-screen-single.png in Resources */,
 			);

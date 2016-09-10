@@ -37,7 +37,7 @@ GLKQuaternion GLKQuaternionFromTwoVectors(GLKVector3 u, GLKVector3 v){
 -(id) init:(GLint)stacks slices:(GLint)slices radius:(GLfloat)radius textureFile:(NSString *)textureFile;
 -(void) swapTexture:(NSString*)textureFile;
 -(void) swapTextureWithImage:(UIImage*)image;
--(CGPoint) getTextureSize;
+-(CGSize) getTextureSize;
 
 @end
 
@@ -273,12 +273,13 @@ GLKQuaternion GLKQuaternionFromTwoVectors(GLKVector3 u, GLKVector3 v){
 	return [self imagePixelFromVector:[self vectorFromScreenLocation:point inAttitude:_attitudeMatrix]];
 }
 -(CGPoint) imagePixelFromVector:(GLKVector3)vector{
-	CGPoint pxl = CGPointMake((M_PI-atan2f(-vector.z, -vector.x))/(2*M_PI), acosf(vector.y)/M_PI);
-	CGPoint tex = [sphere getTextureSize];
+	CGPoint pxl = CGPointMake((atan2f(-vector.x, vector.z))/(2*M_PI), acosf(vector.y)/M_PI);
+	if(pxl.x < 0.0) pxl.x += 1.0;
+	CGSize tex = [sphere getTextureSize];
 	// if no texture exists, returns between 0.0 - 1.0
-	if(!(tex.x == 0.0f && tex.y == 0.0f)){
-		pxl.x *= tex.x;
-		pxl.y *= tex.y;
+	if(!(tex.width == 0.0f && tex.height == 0.0f)){
+		pxl.x *= tex.width;
+		pxl.y *= tex.height;
 	}
 	return pxl;
 }
@@ -587,12 +588,12 @@ GLKQuaternion GLKQuaternionFromTwoVectors(GLKVector3 u, GLKVector3 v){
 	glDeleteTextures(1, &name);
 	m_TextureInfo = [self loadTextureFromImage:image];
 }
--(CGPoint)getTextureSize{
+-(CGSize)getTextureSize{
 	if(m_TextureInfo){
-		return CGPointMake(m_TextureInfo.width, m_TextureInfo.height);
+		return CGSizeMake(m_TextureInfo.width, m_TextureInfo.height);
 	}
 	else{
-		return CGPointZero;
+		return CGSizeZero;
 	}
 }
 
