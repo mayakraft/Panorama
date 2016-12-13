@@ -449,6 +449,18 @@ GLKQuaternion GLKQuaternionFromTwoVectors(GLKVector3 u, GLKVector3 v){
 }
 
 
+- (void)addButton:(UIButton *)button toAngleDegrees:(float)degrees {
+    GLKVector3 vector = [PanoramaView vector3FromAngleDegree:degrees];
+    [self addButton:button toPositionVector:vector];
+}
+
+
+- (void)addButton:(UIButton *)button toAngleRadians:(float)radians {
+    GLKVector3 vector = [PanoramaView vector3FromAngleRadian:radians];
+    [self addButton:button toPositionVector:vector];
+}
+
+
 - (void)updateButtonsLocation {
     for (NSDictionary *buttonDataDict in buttonsArray) {
         // Gets Button
