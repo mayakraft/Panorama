@@ -45,6 +45,9 @@
 /// Enables UIPanGestureRecognizer to affect view orientation
 @property (nonatomic) BOOL touchToPan;
 
+/// Activates accelerometer + gyro orientation
+@property (nonatomic) BOOL horizontalOnly;
+
 /// Fixes up-vector during panning. (trade off: no panning past the poles)
 //@property (nonatomic) BOOL preventHeadTilt;
 
