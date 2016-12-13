@@ -470,6 +470,22 @@ GLKQuaternion GLKQuaternionFromTwoVectors(GLKVector3 u, GLKVector3 v){
 }
 
 
++ (GLKVector3)vector3FromAngleDegree:(float)degrees {
+    float radians = (degrees * M_PI) / 180;
+    return [self vector3FromAngleRadian:radians];
+}
+
+
++ (GLKVector3)vector3FromAngleRadian:(float)radian {
+    float z = 0.1;
+    float x = tan(radian) * z;
+    if (fabsf(radian) > M_PI_2) {
+        z = -z;
+    }
+    return GLKVector3Make(x, 0, z);
+}
+
+
 @end
 
 @interface Sphere (){

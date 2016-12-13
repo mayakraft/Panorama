@@ -128,4 +128,20 @@
  */
 - (void)addButton:(UIButton *)button toPositionVector:(GLKVector3)vector;
 
+/**
+ * Gathers 3D Vector to represent a given angle (in degrees)
+ *
+ * @param float is the angle in degrees
+ * @return GLKVector3 vector to represent that angle
+ */
++ (GLKVector3)vector3FromAngleDegree:(float)degrees;
+
+/**
+ * Gathers 3D Vector to represent a given angle (in radians)
+ *
+ * @param float is the angle in radians
+ * @return GLKVector3 vector to represent that angle
+ */
++ (GLKVector3)vector3FromAngleRadian:(float)radian;
+
 @end
