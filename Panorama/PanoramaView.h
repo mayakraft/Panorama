@@ -120,4 +120,12 @@
  */
 -(BOOL) touchInRect:(CGRect)rect;
 
+/**
+ * Adds a Button to a Location
+ *
+ * @param UIButton defined is the button itself
+ * @param GLKVector3 is the 3D vector where the button should be located in the 3D space
+ */
+- (void)addButton:(UIButton *)button toPositionVector:(GLKVector3)vector;
+
 @end

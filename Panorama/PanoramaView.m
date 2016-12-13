@@ -49,6 +49,7 @@ GLKQuaternion GLKQuaternionFromTwoVectors(GLKVector3 u, GLKVector3 v){
 	GLKMatrix4 _projectionMatrix, _attitudeMatrix, _offsetMatrix;
 	float _aspectRatio;
 	GLfloat circlePoints[64*3];  // meridian lines
+    NSMutableArray *buttonsArray;
 }
 @end
 
@@ -77,6 +78,7 @@ GLKQuaternion GLKQuaternionFromTwoVectors(GLKVector3 u, GLKVector3 v){
 		[self initOpenGL:context];
 		sphere = [[Sphere alloc] init:48 slices:48 radius:10.0 textureFile:nil];
 		meridians = [[Sphere alloc] init:48 slices:48 radius:8.0 textureFile:@"equirectangular-projection-lines.png"];
+        buttonsArray = [[NSMutableArray alloc] init];
 	}
 	return self;
 }
@@ -268,6 +270,8 @@ GLKQuaternion GLKQuaternionFromTwoVectors(GLKVector3 u, GLKVector3 v){
 								 -_attitudeMatrix.m22);
 	_lookAzimuth = atan2f(_lookVector.x, -_lookVector.z);
 	_lookAltitude = asinf(_lookVector.y);
+    
+    [self updateButtonsLocation];
 }
 -(CGPoint) imagePixelAtScreenLocation:(CGPoint)point{
 	return [self imagePixelFromVector:[self vectorFromScreenLocation:point inAttitude:_attitudeMatrix]];
@@ -299,10 +303,16 @@ GLKQuaternion GLKQuaternionFromTwoVectors(GLKVector3 u, GLKVector3 v){
 	return GLKVector3Normalize(GLKVector3Make(vec.x, vec.y, vec.z));
 }
 -(CGPoint) screenLocationFromVector:(GLKVector3)vector{
-	GLKMatrix4 matrix = GLKMatrix4Multiply(_projectionMatrix, _attitudeMatrix);
-	GLKVector3 screenVector = GLKMatrix4MultiplyVector3(matrix, vector);
-	return CGPointMake( (screenVector.x/screenVector.z/2.0 + 0.5) * self.frame.size.width,
-					   (0.5-screenVector.y/screenVector.z/2) * self.frame.size.height );
+	return [self screenLocationFromVector:vector positiveOnly:NO];
+}
+-(CGPoint) screenLocationFromVector:(GLKVector3)vector positiveOnly:(BOOL)positiveOnly {
+    GLKMatrix4 matrix = GLKMatrix4Multiply(_projectionMatrix, _attitudeMatrix);
+    GLKVector3 screenVector = GLKMatrix4MultiplyVector3(matrix, vector);
+    if (!positiveOnly || screenVector.z < 0) {
+        return CGPointMake( (screenVector.x/screenVector.z/2.0 + 0.5) * self.frame.size.width,
+                           (0.5-screenVector.y/screenVector.z/2) * self.frame.size.height );
+    }
+    return CGPointZero;
 }
 -(BOOL) computeScreenLocation:(CGPoint*)location fromVector:(GLKVector3)vector inAttitude:(GLKMatrix4)matrix{
 	//This method returns whether the point is before or behind the screen.
@@ -422,6 +432,44 @@ GLKQuaternion GLKQuaternionFromTwoVectors(GLKVector3 u, GLKVector3 v){
 -(void) dealloc{
 	[EAGLContext setCurrentContext:nil];
 }
+
+#pragma mark - Buttons
+
+- (void)addButton:(UIButton *)button toPositionVector:(GLKVector3)vector {
+    NSDictionary *buttonDataDict = @{
+                                     @"button": button,
+                                     @"vector": @{
+                                             @"x": @(vector.x),
+                                             @"y": @(vector.y),
+                                             @"z": @(vector.z)
+                                             }
+                                     };
+    [buttonsArray addObject:buttonDataDict];
+    [self addSubview:button];
+}
+
+
+- (void)updateButtonsLocation {
+    for (NSDictionary *buttonDataDict in buttonsArray) {
+        // Gets Button
+        UIButton *button = buttonDataDict[@"button"];
+        
+        // Gets Vector
+        NSNumber *xObject = buttonDataDict[@"vector"][@"x"];
+        NSNumber *yObject = buttonDataDict[@"vector"][@"y"];
+        NSNumber *zObject = buttonDataDict[@"vector"][@"z"];
+        GLKVector3 vector = GLKVector3Make(xObject.floatValue, yObject.floatValue, zObject.floatValue);
+        
+        // 2D Location
+        CGPoint buttonLocation = [self screenLocationFromVector:vector positiveOnly:YES];
+        
+        if (!CGPointEqualToPoint(buttonLocation, CGPointZero)){
+            [button setFrame:CGRectMake(buttonLocation.x, buttonLocation.y, 40, 40)];
+        }
+    }
+}
+
+
 @end
 
 @interface Sphere (){
