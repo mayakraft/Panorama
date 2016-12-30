@@ -45,6 +45,9 @@
 /// Enables UIPanGestureRecognizer to affect view orientation
 @property (nonatomic) BOOL touchToPan;
 
+/// If the event of a pan gesture, the view will remain vertically fixed on the horizon line
+@property (nonatomic) BOOL lockPanToHorizon;
+
 /// Fixes up-vector during panning. (trade off: no panning past the poles)
 //@property (nonatomic) BOOL preventHeadTilt;
 

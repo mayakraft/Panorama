@@ -361,6 +361,9 @@ GLKQuaternion GLKQuaternionFromTwoVectors(GLKVector3 u, GLKVector3 v){
 	static GLKVector3 touchVector;
 	if([sender state] == 1){
 		CGPoint location = [sender locationInView:sender.view];
+		if (_lockPanToHorizon) {
+			location.y = self.frame.size.height / 2.0;
+		}
 		if(_VRMode){
 			location.y = ( (int)location.y % (int)(self.frame.size.height * 0.5) ) * 2.0;
 		}
@@ -368,6 +371,9 @@ GLKQuaternion GLKQuaternionFromTwoVectors(GLKVector3 u, GLKVector3 v){
 	}
 	else if([sender state] == 2){
 		CGPoint location = [sender locationInView:sender.view];
+		if (_lockPanToHorizon) {
+			location.y = self.frame.size.height / 2.0;
+		}
 		if(_VRMode){
 			location.y = ( (int)location.y % (int)(self.frame.size.height * 0.5) ) * 2.0;
 		}
