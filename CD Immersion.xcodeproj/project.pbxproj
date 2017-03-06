@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		65DF79521E6D121C0083F056 /* cd-vr-1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65DF79501E6D121C0083F056 /* cd-vr-1.jpg */; };
+		65DF79531E6D121C0083F056 /* cd-vr-2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65DF79511E6D121C0083F056 /* cd-vr-2.jpg */; };
+		65DF79551E6D17AC0083F056 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65DF79541E6D17AC0083F056 /* Default-568h@2x.png */; };
 		D55E8FB21828D2360076A9D7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D55E8F951828D2360076A9D7 /* AppDelegate.m */; };
 		D55E8FB61828D2360076A9D7 /* equirectangular-projection-lines.png in Resources */ = {isa = PBXBuildFile; fileRef = D55E8F9C1828D2360076A9D7 /* equirectangular-projection-lines.png */; };
 		D55E8FC01828D2360076A9D7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D55E8FA71828D2360076A9D7 /* main.m */; };
@@ -14,19 +17,9 @@
 		D55E8FC61828D2360076A9D7 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D55E8FB11828D2360076A9D7 /* ViewController.m */; };
 		D55E8FCF1828D2510076A9D7 /* PanoramaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D55E8FC81828D23C0076A9D7 /* PanoramaTests.m */; };
 		D55E8FD01828D2620076A9D7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D55E8FC91828D23C0076A9D7 /* InfoPlist.strings */; };
-		D55E8FDD1828D3F50076A9D7 /* 114.png in Resources */ = {isa = PBXBuildFile; fileRef = D55E8FD41828D3F50076A9D7 /* 114.png */; };
-		D55E8FDE1828D3F50076A9D7 /* 120.png in Resources */ = {isa = PBXBuildFile; fileRef = D55E8FD51828D3F50076A9D7 /* 120.png */; };
-		D55E8FDF1828D3F50076A9D7 /* 144.png in Resources */ = {isa = PBXBuildFile; fileRef = D55E8FD61828D3F50076A9D7 /* 144.png */; };
-		D55E8FE01828D3F50076A9D7 /* 152.png in Resources */ = {isa = PBXBuildFile; fileRef = D55E8FD71828D3F50076A9D7 /* 152.png */; };
-		D55E8FE11828D3F50076A9D7 /* 57.png in Resources */ = {isa = PBXBuildFile; fileRef = D55E8FD81828D3F50076A9D7 /* 57.png */; };
-		D55E8FE21828D3F50076A9D7 /* 60.png in Resources */ = {isa = PBXBuildFile; fileRef = D55E8FD91828D3F50076A9D7 /* 60.png */; };
-		D55E8FE31828D3F50076A9D7 /* 72.png in Resources */ = {isa = PBXBuildFile; fileRef = D55E8FDA1828D3F50076A9D7 /* 72.png */; };
-		D55E8FE41828D3F50076A9D7 /* 76.png in Resources */ = {isa = PBXBuildFile; fileRef = D55E8FDB1828D3F50076A9D7 /* 76.png */; };
-		D55E8FE51828D3F50076A9D7 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D55E8FDC1828D3F50076A9D7 /* icon.png */; };
 		D560B0B51D7F260500535DCF /* button-screen-double.png in Resources */ = {isa = PBXBuildFile; fileRef = D560B0B31D7F260500535DCF /* button-screen-double.png */; };
 		D560B0B61D7F260500535DCF /* button-screen-single.png in Resources */ = {isa = PBXBuildFile; fileRef = D560B0B41D7F260500535DCF /* button-screen-single.png */; };
-		D5C8B44C18A8E58700051A88 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D5C8B44B18A8E58700051A88 /* Default-568h@2x.png */; };
-		D5EC7AB9183AFBC400F62609 /* park_2048.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D5EC7AB8183AFBC400F62609 /* park_2048.jpg */; };
+		D5EC7AB9183AFBC400F62609 /* sample.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D5EC7AB8183AFBC400F62609 /* sample.jpg */; };
 		D5FAE07917C8956600AE6EC9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5FAE07817C8956600AE6EC9 /* Foundation.framework */; };
 		D5FAE09B17C8956600AE6EC9 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5FAE09A17C8956600AE6EC9 /* XCTest.framework */; };
 		D5FAE09C17C8956600AE6EC9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5FAE07817C8956600AE6EC9 /* Foundation.framework */; };
@@ -47,7 +40,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		D543FEC81D8485FF00DA5ED4 /* spectrum.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = spectrum.png; path = images/spectrum.png; sourceTree = "<group>"; };
+		65DF79501E6D121C0083F056 /* cd-vr-1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "cd-vr-1.jpg"; sourceTree = "<group>"; };
+		65DF79511E6D121C0083F056 /* cd-vr-2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "cd-vr-2.jpg"; sourceTree = "<group>"; };
+		65DF79541E6D17AC0083F056 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
 		D55E8F941828D2360076A9D7 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D55E8F951828D2360076A9D7 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		D55E8F9B1828D2360076A9D7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -55,31 +50,21 @@
 		D55E8FA71828D2360076A9D7 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D55E8FA81828D2360076A9D7 /* PanoramaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PanoramaView.h; sourceTree = "<group>"; };
 		D55E8FA91828D2360076A9D7 /* PanoramaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PanoramaView.m; sourceTree = "<group>"; };
-		D55E8FAD1828D2360076A9D7 /* Panorama-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Panorama-Info.plist"; sourceTree = "<group>"; };
-		D55E8FAE1828D2360076A9D7 /* Panorama-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Panorama-Prefix.pch"; sourceTree = "<group>"; };
+		D55E8FAD1828D2360076A9D7 /* CD Immersion-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CD Immersion-Info.plist"; sourceTree = "<group>"; };
+		D55E8FAE1828D2360076A9D7 /* CD Immersion-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CD Immersion-Prefix.pch"; sourceTree = "<group>"; };
 		D55E8FB01828D2360076A9D7 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		D55E8FB11828D2360076A9D7 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		D55E8FC81828D23C0076A9D7 /* PanoramaTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PanoramaTests.m; sourceTree = "<group>"; };
 		D55E8FCA1828D23C0076A9D7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		D55E8FCB1828D23D0076A9D7 /* PanoramaTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "PanoramaTests-Info.plist"; sourceTree = "<group>"; };
-		D55E8FD41828D3F50076A9D7 /* 114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 114.png; sourceTree = "<group>"; };
-		D55E8FD51828D3F50076A9D7 /* 120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 120.png; sourceTree = "<group>"; };
-		D55E8FD61828D3F50076A9D7 /* 144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 144.png; sourceTree = "<group>"; };
-		D55E8FD71828D3F50076A9D7 /* 152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 152.png; sourceTree = "<group>"; };
-		D55E8FD81828D3F50076A9D7 /* 57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 57.png; sourceTree = "<group>"; };
-		D55E8FD91828D3F50076A9D7 /* 60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 60.png; sourceTree = "<group>"; };
-		D55E8FDA1828D3F50076A9D7 /* 72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 72.png; sourceTree = "<group>"; };
-		D55E8FDB1828D3F50076A9D7 /* 76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 76.png; sourceTree = "<group>"; };
-		D55E8FDC1828D3F50076A9D7 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		D55E8FCB1828D23D0076A9D7 /* CD ImmersionTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CD ImmersionTests-Info.plist"; sourceTree = "<group>"; };
 		D560B0B31D7F260500535DCF /* button-screen-double.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-screen-double.png"; path = "images/button-screen-double.png"; sourceTree = "<group>"; };
 		D560B0B41D7F260500535DCF /* button-screen-single.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-screen-single.png"; path = "images/button-screen-single.png"; sourceTree = "<group>"; };
-		D5C8B44B18A8E58700051A88 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "images/Default-568h@2x.png"; sourceTree = "<group>"; };
-		D5EC7AB8183AFBC400F62609 /* park_2048.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = park_2048.jpg; path = images/park_2048.jpg; sourceTree = "<group>"; };
-		D5FAE07517C8956600AE6EC9 /* Panorama.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Panorama.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D5EC7AB8183AFBC400F62609 /* sample.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = sample.jpg; path = images/sample.jpg; sourceTree = "<group>"; };
+		D5FAE07517C8956600AE6EC9 /* CD Immersion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CD Immersion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5FAE07817C8956600AE6EC9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D5FAE07A17C8956600AE6EC9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		D5FAE07C17C8956600AE6EC9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		D5FAE09917C8956600AE6EC9 /* PanoramaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PanoramaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D5FAE09917C8956600AE6EC9 /* CD ImmersionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CD ImmersionTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5FAE09A17C8956600AE6EC9 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		D5FAE0B017C895AB00AE6EC9 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		D5FAE0B217C895B200AE6EC9 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
@@ -131,7 +116,7 @@
 			children = (
 				D55E8FC81828D23C0076A9D7 /* PanoramaTests.m */,
 				D55E8FC91828D23C0076A9D7 /* InfoPlist.strings */,
-				D55E8FCB1828D23D0076A9D7 /* PanoramaTests-Info.plist */,
+				D55E8FCB1828D23D0076A9D7 /* CD ImmersionTests-Info.plist */,
 			);
 			path = PanoramaTests;
 			sourceTree = "<group>";
@@ -139,11 +124,13 @@
 		D55E8FD11828D3400076A9D7 /* images */ = {
 			isa = PBXGroup;
 			children = (
-				D5EC7AB8183AFBC400F62609 /* park_2048.jpg */,
-				D543FEC81D8485FF00DA5ED4 /* spectrum.png */,
+				65DF79501E6D121C0083F056 /* cd-vr-1.jpg */,
+				65DF79511E6D121C0083F056 /* cd-vr-2.jpg */,
+				D5EC7AB8183AFBC400F62609 /* sample.jpg */,
 				D55E8F9C1828D2360076A9D7 /* equirectangular-projection-lines.png */,
 				D560B0B31D7F260500535DCF /* button-screen-double.png */,
 				D560B0B41D7F260500535DCF /* button-screen-single.png */,
+				65DF79541E6D17AC0083F056 /* Default-568h@2x.png */,
 			);
 			name = images;
 			sourceTree = "<group>";
@@ -151,30 +138,12 @@
 		D55E8FD21828D3790076A9D7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				D55E8FD31828D3F50076A9D7 /* icons */,
 				D55E8FA71828D2360076A9D7 /* main.m */,
-				D55E8FAD1828D2360076A9D7 /* Panorama-Info.plist */,
+				D55E8FAD1828D2360076A9D7 /* CD Immersion-Info.plist */,
 				D55E8F9A1828D2360076A9D7 /* InfoPlist.strings */,
-				D55E8FAE1828D2360076A9D7 /* Panorama-Prefix.pch */,
-				D5C8B44B18A8E58700051A88 /* Default-568h@2x.png */,
+				D55E8FAE1828D2360076A9D7 /* CD Immersion-Prefix.pch */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		D55E8FD31828D3F50076A9D7 /* icons */ = {
-			isa = PBXGroup;
-			children = (
-				D55E8FD41828D3F50076A9D7 /* 114.png */,
-				D55E8FD51828D3F50076A9D7 /* 120.png */,
-				D55E8FD61828D3F50076A9D7 /* 144.png */,
-				D55E8FD71828D3F50076A9D7 /* 152.png */,
-				D55E8FD81828D3F50076A9D7 /* 57.png */,
-				D55E8FD91828D3F50076A9D7 /* 60.png */,
-				D55E8FDA1828D3F50076A9D7 /* 72.png */,
-				D55E8FDB1828D3F50076A9D7 /* 76.png */,
-				D55E8FDC1828D3F50076A9D7 /* icon.png */,
-			);
-			path = icons;
 			sourceTree = "<group>";
 		};
 		D5FAE06C17C8956500AE6EC9 = {
@@ -190,8 +159,8 @@
 		D5FAE07617C8956600AE6EC9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D5FAE07517C8956600AE6EC9 /* Panorama.app */,
-				D5FAE09917C8956600AE6EC9 /* PanoramaTests.xctest */,
+				D5FAE07517C8956600AE6EC9 /* CD Immersion.app */,
+				D5FAE09917C8956600AE6EC9 /* CD ImmersionTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -213,9 +182,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D5FAE07417C8956600AE6EC9 /* Panorama */ = {
+		D5FAE07417C8956600AE6EC9 /* CD Immersion */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D5FAE0AA17C8956600AE6EC9 /* Build configuration list for PBXNativeTarget "Panorama" */;
+			buildConfigurationList = D5FAE0AA17C8956600AE6EC9 /* Build configuration list for PBXNativeTarget "CD Immersion" */;
 			buildPhases = (
 				D5FAE07117C8956600AE6EC9 /* Sources */,
 				D5FAE07217C8956600AE6EC9 /* Frameworks */,
@@ -225,14 +194,14 @@
 			);
 			dependencies = (
 			);
-			name = Panorama;
+			name = "CD Immersion";
 			productName = "360 Panorama";
-			productReference = D5FAE07517C8956600AE6EC9 /* Panorama.app */;
+			productReference = D5FAE07517C8956600AE6EC9 /* CD Immersion.app */;
 			productType = "com.apple.product-type.application";
 		};
-		D5FAE09817C8956600AE6EC9 /* PanoramaTests */ = {
+		D5FAE09817C8956600AE6EC9 /* CD ImmersionTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D5FAE0AD17C8956600AE6EC9 /* Build configuration list for PBXNativeTarget "PanoramaTests" */;
+			buildConfigurationList = D5FAE0AD17C8956600AE6EC9 /* Build configuration list for PBXNativeTarget "CD ImmersionTests" */;
 			buildPhases = (
 				D5FAE09517C8956600AE6EC9 /* Sources */,
 				D5FAE09617C8956600AE6EC9 /* Frameworks */,
@@ -243,9 +212,9 @@
 			dependencies = (
 				D5FAE09F17C8956600AE6EC9 /* PBXTargetDependency */,
 			);
-			name = PanoramaTests;
+			name = "CD ImmersionTests";
 			productName = "360 PanoramaTests";
-			productReference = D5FAE09917C8956600AE6EC9 /* PanoramaTests.xctest */;
+			productReference = D5FAE09917C8956600AE6EC9 /* CD ImmersionTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -255,17 +224,17 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0500;
-				ORGANIZATIONNAME = "Robby Kraft";
+				ORGANIZATIONNAME = Vixinet;
 				TargetAttributes = {
 					D5FAE07417C8956600AE6EC9 = {
-						DevelopmentTeam = 78C98TD784;
+						DevelopmentTeam = 5BW4YVNT68;
 					};
 					D5FAE09817C8956600AE6EC9 = {
 						TestTargetID = D5FAE07417C8956600AE6EC9;
 					};
 				};
 			};
-			buildConfigurationList = D5FAE07017C8956600AE6EC9 /* Build configuration list for PBXProject "Panorama" */;
+			buildConfigurationList = D5FAE07017C8956600AE6EC9 /* Build configuration list for PBXProject "CD Immersion" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -278,8 +247,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D5FAE07417C8956600AE6EC9 /* Panorama */,
-				D5FAE09817C8956600AE6EC9 /* PanoramaTests */,
+				D5FAE07417C8956600AE6EC9 /* CD Immersion */,
+				D5FAE09817C8956600AE6EC9 /* CD ImmersionTests */,
 			);
 		};
 /* End PBXProject section */
@@ -289,19 +258,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D55E8FE31828D3F50076A9D7 /* 72.png in Resources */,
-				D55E8FE41828D3F50076A9D7 /* 76.png in Resources */,
-				D55E8FDD1828D3F50076A9D7 /* 114.png in Resources */,
-				D55E8FE01828D3F50076A9D7 /* 152.png in Resources */,
-				D55E8FDE1828D3F50076A9D7 /* 120.png in Resources */,
-				D55E8FDF1828D3F50076A9D7 /* 144.png in Resources */,
-				D55E8FE11828D3F50076A9D7 /* 57.png in Resources */,
-				D55E8FE51828D3F50076A9D7 /* icon.png in Resources */,
-				D5EC7AB9183AFBC400F62609 /* park_2048.jpg in Resources */,
-				D5C8B44C18A8E58700051A88 /* Default-568h@2x.png in Resources */,
+				65DF79521E6D121C0083F056 /* cd-vr-1.jpg in Resources */,
+				D5EC7AB9183AFBC400F62609 /* sample.jpg in Resources */,
+				65DF79531E6D121C0083F056 /* cd-vr-2.jpg in Resources */,
 				D560B0B51D7F260500535DCF /* button-screen-double.png in Resources */,
-				D55E8FE21828D3F50076A9D7 /* 60.png in Resources */,
 				D55E8FB61828D2360076A9D7 /* equirectangular-projection-lines.png in Resources */,
+				65DF79551E6D17AC0083F056 /* Default-568h@2x.png in Resources */,
 				D560B0B61D7F260500535DCF /* button-screen-single.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -341,7 +303,7 @@
 /* Begin PBXTargetDependency section */
 		D5FAE09F17C8956600AE6EC9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = D5FAE07417C8956600AE6EC9 /* Panorama */;
+			target = D5FAE07417C8956600AE6EC9 /* CD Immersion */;
 			targetProxy = D5FAE09E17C8956600AE6EC9 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -439,15 +401,16 @@
 		D5FAE0AB17C8956600AE6EC9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 5BW4YVNT68;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Panorama/Panorama-Prefix.pch";
-				INFOPLIST_FILE = "Panorama/Panorama-Info.plist";
+				GCC_PREFIX_HEADER = "Panorama/CD Immersion-Prefix.pch";
+				INFOPLIST_FILE = "Panorama/CD Immersion-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				PRODUCT_NAME = Panorama;
+				PRODUCT_BUNDLE_IDENTIFIER = pro.capture.immersion;
+				PRODUCT_NAME = "CD Immersion";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
@@ -456,15 +419,16 @@
 		D5FAE0AC17C8956600AE6EC9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 5BW4YVNT68;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Panorama/Panorama-Prefix.pch";
-				INFOPLIST_FILE = "Panorama/Panorama-Info.plist";
+				GCC_PREFIX_HEADER = "Panorama/CD Immersion-Prefix.pch";
+				INFOPLIST_FILE = "Panorama/CD Immersion-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				PRODUCT_NAME = Panorama;
+				PRODUCT_BUNDLE_IDENTIFIER = pro.capture.immersion;
+				PRODUCT_NAME = "CD Immersion";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
@@ -485,8 +449,8 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "PanoramaTests/PanoramaTests-Info.plist";
-				PRODUCT_NAME = PanoramaTests;
+				INFOPLIST_FILE = "PanoramaTests/CD ImmersionTests-Info.plist";
+				PRODUCT_NAME = "CD ImmersionTests";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -503,8 +467,8 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Panorama/Panorama-Prefix.pch";
-				INFOPLIST_FILE = "PanoramaTests/PanoramaTests-Info.plist";
-				PRODUCT_NAME = PanoramaTests;
+				INFOPLIST_FILE = "PanoramaTests/CD ImmersionTests-Info.plist";
+				PRODUCT_NAME = "CD ImmersionTests";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -513,7 +477,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D5FAE07017C8956600AE6EC9 /* Build configuration list for PBXProject "Panorama" */ = {
+		D5FAE07017C8956600AE6EC9 /* Build configuration list for PBXProject "CD Immersion" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D5FAE0A817C8956600AE6EC9 /* Debug */,
@@ -522,7 +486,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D5FAE0AA17C8956600AE6EC9 /* Build configuration list for PBXNativeTarget "Panorama" */ = {
+		D5FAE0AA17C8956600AE6EC9 /* Build configuration list for PBXNativeTarget "CD Immersion" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D5FAE0AB17C8956600AE6EC9 /* Debug */,
@@ -531,7 +495,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D5FAE0AD17C8956600AE6EC9 /* Build configuration list for PBXNativeTarget "PanoramaTests" */ = {
+		D5FAE0AD17C8956600AE6EC9 /* Build configuration list for PBXNativeTarget "CD ImmersionTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D5FAE0AE17C8956600AE6EC9 /* Debug */,

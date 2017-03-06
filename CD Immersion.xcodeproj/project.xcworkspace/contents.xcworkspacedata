@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:Panorama.xcodeproj">
+      location = "self:/Users/Daniel/GitHub/cd-immersion/CD Immersion.xcodeproj">
    </FileRef>
 </Workspace>
