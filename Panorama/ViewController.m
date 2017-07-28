@@ -19,10 +19,11 @@
 - (void)viewDidLoad{
 	[super viewDidLoad];
 	panoramaView = [[PanoramaView alloc] init];
-	[panoramaView setImageWithName:@"cd-vr-2.jpg"];
+    [panoramaView setImage:[UIImage imageNamed:@"scene.jpg"]];
+//	[panoramaView setImageWithName:@"cd-vr-3.jpg"];
 	[panoramaView setOrientToDevice:YES];
 	[panoramaView setTouchToPan:NO];
-	[panoramaView setPinchToZoom:NO];
+	[panoramaView setPinchToZoom:YES];
 	[panoramaView setShowTouches:YES];
 	[panoramaView setVRMode:YES];
 	[self setView:panoramaView];
@@ -35,11 +36,11 @@
 -(void) viewWillAppear:(BOOL)animated{
 	[super viewWillAppear:animated];
 	CGFloat PAD = 15.0;
-	UIButton *VRButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
+	UIButton *VRButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
 	[VRButton setTransform:CGAffineTransformMakeRotation(M_PI*0.5)];
 	[VRButton setCenter:CGPointMake(VRButton.frame.size.width*0.5 + PAD,
 									self.view.bounds.size.height - VRButton.frame.size.height*0.5 - PAD)];
-	[VRButton setImage:[UIImage imageNamed:@"button-screen-double"] forState:UIControlStateNormal];
+	[VRButton setImage:[UIImage imageNamed:@"button-screen-single"] forState:UIControlStateNormal];
 	[VRButton setAlpha:0.5];
 	[VRButton addTarget:self action:@selector(vrButtonHandler:) forControlEvents:UIControlEventTouchUpInside];
 	[self.view addSubview:VRButton];

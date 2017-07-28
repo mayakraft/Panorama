@@ -7,19 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		65DF79521E6D121C0083F056 /* cd-vr-1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65DF79501E6D121C0083F056 /* cd-vr-1.jpg */; };
-		65DF79531E6D121C0083F056 /* cd-vr-2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65DF79511E6D121C0083F056 /* cd-vr-2.jpg */; };
-		65DF79551E6D17AC0083F056 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65DF79541E6D17AC0083F056 /* Default-568h@2x.png */; };
+		65E0284F1E6F39FC0074E73F /* Image.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65E0284E1E6F39FC0074E73F /* Image.xcassets */; };
+		65E028511E6FD5D80074E73F /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65E028501E6FD5D80074E73F /* Default-568h@2x.png */; };
 		D55E8FB21828D2360076A9D7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D55E8F951828D2360076A9D7 /* AppDelegate.m */; };
-		D55E8FB61828D2360076A9D7 /* equirectangular-projection-lines.png in Resources */ = {isa = PBXBuildFile; fileRef = D55E8F9C1828D2360076A9D7 /* equirectangular-projection-lines.png */; };
 		D55E8FC01828D2360076A9D7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D55E8FA71828D2360076A9D7 /* main.m */; };
 		D55E8FC11828D2360076A9D7 /* PanoramaView.m in Sources */ = {isa = PBXBuildFile; fileRef = D55E8FA91828D2360076A9D7 /* PanoramaView.m */; };
 		D55E8FC61828D2360076A9D7 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D55E8FB11828D2360076A9D7 /* ViewController.m */; };
 		D55E8FCF1828D2510076A9D7 /* PanoramaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D55E8FC81828D23C0076A9D7 /* PanoramaTests.m */; };
 		D55E8FD01828D2620076A9D7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D55E8FC91828D23C0076A9D7 /* InfoPlist.strings */; };
-		D560B0B51D7F260500535DCF /* button-screen-double.png in Resources */ = {isa = PBXBuildFile; fileRef = D560B0B31D7F260500535DCF /* button-screen-double.png */; };
-		D560B0B61D7F260500535DCF /* button-screen-single.png in Resources */ = {isa = PBXBuildFile; fileRef = D560B0B41D7F260500535DCF /* button-screen-single.png */; };
-		D5EC7AB9183AFBC400F62609 /* sample.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D5EC7AB8183AFBC400F62609 /* sample.jpg */; };
 		D5FAE07917C8956600AE6EC9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5FAE07817C8956600AE6EC9 /* Foundation.framework */; };
 		D5FAE09B17C8956600AE6EC9 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5FAE09A17C8956600AE6EC9 /* XCTest.framework */; };
 		D5FAE09C17C8956600AE6EC9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5FAE07817C8956600AE6EC9 /* Foundation.framework */; };
@@ -40,13 +35,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		65DF79501E6D121C0083F056 /* cd-vr-1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "cd-vr-1.jpg"; sourceTree = "<group>"; };
-		65DF79511E6D121C0083F056 /* cd-vr-2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "cd-vr-2.jpg"; sourceTree = "<group>"; };
-		65DF79541E6D17AC0083F056 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
+		65E0284E1E6F39FC0074E73F /* Image.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Image.xcassets; sourceTree = "<group>"; };
+		65E028501E6FD5D80074E73F /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
 		D55E8F941828D2360076A9D7 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D55E8F951828D2360076A9D7 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		D55E8F9B1828D2360076A9D7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		D55E8F9C1828D2360076A9D7 /* equirectangular-projection-lines.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "equirectangular-projection-lines.png"; path = "images/equirectangular-projection-lines.png"; sourceTree = "<group>"; };
 		D55E8FA71828D2360076A9D7 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D55E8FA81828D2360076A9D7 /* PanoramaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PanoramaView.h; sourceTree = "<group>"; };
 		D55E8FA91828D2360076A9D7 /* PanoramaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PanoramaView.m; sourceTree = "<group>"; };
@@ -57,9 +50,6 @@
 		D55E8FC81828D23C0076A9D7 /* PanoramaTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PanoramaTests.m; sourceTree = "<group>"; };
 		D55E8FCA1828D23C0076A9D7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D55E8FCB1828D23D0076A9D7 /* CD ImmersionTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CD ImmersionTests-Info.plist"; sourceTree = "<group>"; };
-		D560B0B31D7F260500535DCF /* button-screen-double.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-screen-double.png"; path = "images/button-screen-double.png"; sourceTree = "<group>"; };
-		D560B0B41D7F260500535DCF /* button-screen-single.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-screen-single.png"; path = "images/button-screen-single.png"; sourceTree = "<group>"; };
-		D5EC7AB8183AFBC400F62609 /* sample.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = sample.jpg; path = images/sample.jpg; sourceTree = "<group>"; };
 		D5FAE07517C8956600AE6EC9 /* CD Immersion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CD Immersion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5FAE07817C8956600AE6EC9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D5FAE07A17C8956600AE6EC9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -105,7 +95,6 @@
 				D55E8FB11828D2360076A9D7 /* ViewController.m */,
 				D55E8FA81828D2360076A9D7 /* PanoramaView.h */,
 				D55E8FA91828D2360076A9D7 /* PanoramaView.m */,
-				D55E8FD11828D3400076A9D7 /* images */,
 				D55E8FD21828D3790076A9D7 /* Supporting Files */,
 			);
 			path = Panorama;
@@ -121,26 +110,14 @@
 			path = PanoramaTests;
 			sourceTree = "<group>";
 		};
-		D55E8FD11828D3400076A9D7 /* images */ = {
-			isa = PBXGroup;
-			children = (
-				65DF79501E6D121C0083F056 /* cd-vr-1.jpg */,
-				65DF79511E6D121C0083F056 /* cd-vr-2.jpg */,
-				D5EC7AB8183AFBC400F62609 /* sample.jpg */,
-				D55E8F9C1828D2360076A9D7 /* equirectangular-projection-lines.png */,
-				D560B0B31D7F260500535DCF /* button-screen-double.png */,
-				D560B0B41D7F260500535DCF /* button-screen-single.png */,
-				65DF79541E6D17AC0083F056 /* Default-568h@2x.png */,
-			);
-			name = images;
-			sourceTree = "<group>";
-		};
 		D55E8FD21828D3790076A9D7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				65E0284E1E6F39FC0074E73F /* Image.xcassets */,
+				65E028501E6FD5D80074E73F /* Default-568h@2x.png */,
 				D55E8FA71828D2360076A9D7 /* main.m */,
-				D55E8FAD1828D2360076A9D7 /* CD Immersion-Info.plist */,
 				D55E8F9A1828D2360076A9D7 /* InfoPlist.strings */,
+				D55E8FAD1828D2360076A9D7 /* CD Immersion-Info.plist */,
 				D55E8FAE1828D2360076A9D7 /* CD Immersion-Prefix.pch */,
 			);
 			name = "Supporting Files";
@@ -223,7 +200,7 @@
 		D5FAE06D17C8956600AE6EC9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = Vixinet;
 				TargetAttributes = {
 					D5FAE07417C8956600AE6EC9 = {
@@ -258,13 +235,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				65DF79521E6D121C0083F056 /* cd-vr-1.jpg in Resources */,
-				D5EC7AB9183AFBC400F62609 /* sample.jpg in Resources */,
-				65DF79531E6D121C0083F056 /* cd-vr-2.jpg in Resources */,
-				D560B0B51D7F260500535DCF /* button-screen-double.png in Resources */,
-				D55E8FB61828D2360076A9D7 /* equirectangular-projection-lines.png in Resources */,
-				65DF79551E6D17AC0083F056 /* Default-568h@2x.png in Resources */,
-				D560B0B61D7F260500535DCF /* button-screen-single.png in Resources */,
+				65E0284F1E6F39FC0074E73F /* Image.xcassets in Resources */,
+				65E028511E6FD5D80074E73F /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,25 +313,32 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -379,19 +358,25 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -408,7 +393,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Panorama/CD Immersion-Prefix.pch";
 				INFOPLIST_FILE = "Panorama/CD Immersion-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = pro.capture.immersion;
 				PRODUCT_NAME = "CD Immersion";
 				PROVISIONING_PROFILE = "";
@@ -426,7 +411,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Panorama/CD Immersion-Prefix.pch";
 				INFOPLIST_FILE = "Panorama/CD Immersion-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = pro.capture.immersion;
 				PRODUCT_NAME = "CD Immersion";
 				PROVISIONING_PROFILE = "";
@@ -450,6 +435,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "PanoramaTests/CD ImmersionTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.robbykraft.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "CD ImmersionTests";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -468,6 +454,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Panorama/Panorama-Prefix.pch";
 				INFOPLIST_FILE = "PanoramaTests/CD ImmersionTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.robbykraft.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "CD ImmersionTests";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
