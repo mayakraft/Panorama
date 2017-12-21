@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "PanoramaView"
-  s.version          = "1.0.1"
+  s.version          = "1.0.2"
   s.summary          = "sensor-oriented panorama view for iOS"
   s.description      = <<-DESC
                        a dynamic GLKView with a touch and motion sensor interface to align and immerse the perspective inside an equirectangular panorama projection
