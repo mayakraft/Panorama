@@ -48,6 +48,7 @@ GLKQuaternion GLKQuaternionFromTwoVectors(GLKVector3 u, GLKVector3 v){
 	UIPanGestureRecognizer *panGesture;
 	GLKMatrix4 _projectionMatrix, _attitudeMatrix, _offsetMatrix;
 	float _aspectRatio;
+	float _retinaScale;
 	GLfloat circlePoints[64*3];  // meridian lines
 }
 @end
@@ -144,6 +145,10 @@ GLKQuaternion GLKQuaternionFromTwoVectors(GLKVector3 u, GLKVector3 v){
 	[(CAEAGLLayer*)self.layer setOpaque:NO];
 	_aspectRatio = self.frame.size.width/self.frame.size.height;
 	_fieldOfView = 45 + 45 * atanf(_aspectRatio); // hell ya
+	_retinaScale = [UIScreen mainScreen].scale;
+	if ([[UIScreen mainScreen] respondsToSelector:@selector(nativeScale)]){
+		_retinaScale = [UIScreen mainScreen].nativeScale;
+	}
 	[self rebuildProjectionMatrix];
 	_attitudeMatrix = GLKMatrix4Identity;
 	_offsetMatrix = GLKMatrix4Identity;
@@ -175,15 +180,14 @@ GLKQuaternion GLKQuaternionFromTwoVectors(GLKVector3 u, GLKVector3 v){
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 	if(_VRMode) {
-		float scale = [UIScreen mainScreen].scale;
 		// one eye
 		glMatrixMode(GL_PROJECTION);
-		glViewport(0, 0, self.frame.size.width * scale, self.frame.size.height * scale * 0.5);
+		glViewport(0, 0, self.frame.size.width * _retinaScale, self.frame.size.height * _retinaScale * 0.5);
 		glMatrixMode(GL_MODELVIEW);
 		[self renderScene];
 		// other eye
 		glMatrixMode(GL_PROJECTION);
-		glViewport(0, self.frame.size.height * scale * 0.5, self.frame.size.width * scale, self.frame.size.height * scale* 0.5);
+		glViewport(0, self.frame.size.height * _retinaScale * 0.5, self.frame.size.width * _retinaScale, self.frame.size.height * _retinaScale * 0.5);
 		glMatrixMode(GL_MODELVIEW);
 		[self renderScene];
 	}else{
