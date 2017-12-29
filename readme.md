@@ -1,21 +1,39 @@
-# 360° panorama view
-### equirectangular projections
+# 360° spherical panorama view
 
-OpenGL, device-oriented, touch-interactive
+## Features
+
+* OpenGL powered
+* orientation sensors to look around
+* touch interactive
+  * pan to look around
+  * pinch to zoom
+* a split screen mode for VR headsets
+* helper functions to orient direction of camera and touches
 
 ![example](https://68.media.tumblr.com/befc76dfe47c212d1af30e8bef87672a/tumblr_od5kdgZ0Iv1vfq168o1_500.gif)
 
-acceptable image sizes: (4096×2048), 2048×1024, 1024×512, 512×256, 256×128 ...
+## Equirectangular projections
 
-* (4096 supported on iPhone 4s and iPad2 onward)
+*OpenGL has strict texture size requirements*
 
-#methods
+acceptable image sizes:
+
+* 4096 × 2048
+* 2048 × 1024
+* 1024 × 512
+* 512 × 256
+* 256 × 128
+* ... (any smaller power of 2)
+
+*4096 supported on iPhone 4s / iPad2 and newer*
+
+## Methods
 
 ### image
 
 ```objective-c
--(void) setImage:(UIImage*)image;
--(void) setImageWithName:(NSString*)fileName;  // path or bundle. will check at both
+-(void) setImage:(UIImage*)image
+-(void) setImageWithName:(NSString*)fileName  // path or bundle. will check at both
 ```
 
 ### orientation
@@ -28,6 +46,9 @@ acceptable image sizes: (4096×2048), 2048×1024, 1024×512, 512×256, 256×128 
  // aligns z-axis (into screen)
 -(void) orientToVector:(GLKVector3)
 -(void) orientToAzimuth:(float) Altitude:(float)
+
+// rotate cardinal north around the image horizon. in degrees
+-(void) setCardinalOffset:(float)
 ```
 
 ### field of view
@@ -63,21 +84,57 @@ This activates a split screen that works inside of VR headsets like Google Cardb
 
 * Illusion of varying depth is not available. The two screens are rendered using the same image with no difference between camera IPD.
 
-# usage
+## Installation
 
-make your `ViewController` a subclass of `GLKViewController`
+copy PanoramaView.h/.m into your project or use [CocoaPods](https://cocoapods.org/pods/PanoramaView)
+
+1. use a `GLKViewController` instead of `UIViewController`
+2. initialize your panoramaView and set it as `self.view`
+3. implement glkView:drawInRect:
 
 ```objective-c
-panoramaView = [[PanoramaView alloc] init];
- // load image and any other customization
-[self setView:panoramaView];
+@interface ViewController (){
+	PanoramaView *panoramaView;
+}
+@end
+
+@implementation ViewController
+- (void)viewDidLoad{
+	[super viewDidLoad];
+	panoramaView = [[PanoramaView alloc] init];
+	[panoramaView setImageWithName:@"image.jpg"];
+	[self setView:panoramaView];
+}
+-(void) glkView:(GLKView *)view drawInRect:(CGRect)rect{
+	[panoramaView draw];
+}
+@end
 ```
 
-also in your `GLKViewController`:
+## Swift
 
-```objective-c
--(void) glkView:(GLKView *)view drawInRect:(CGRect)rect{
-    [panoramaView draw];
+* installation is easiest with [CocoaPods](https://cocoapods.org/pods/PanoramaView). add `use_frameworks!` to your podfile
+* or, create a bridging header, copy in PanoramaView.h/.m
+
+```swift
+import PanoramaView
+
+class ViewController: GLKViewController {
+
+	let panoramaView:PanoramaView
+
+	required init?(coder aDecoder: NSCoder) {
+		panoramaView = PanoramaView()
+		super.init(coder: aDecoder)
+	}
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		panoramaView.setImageWithName("image.jpg")
+		self.view = panoramaView
+	}
+	override func glkView(_ view: GLKView, drawIn rect: CGRect) {
+		panoramaView.draw()
+	}
 }
 ```
 
@@ -87,31 +144,9 @@ also in your `GLKViewController`:
 
 ![device](https://raw.github.com/robbykraft/Panorama/master/readme/device_orient.png)
 
-* works properly under any of the 4 device orientations
+* any of the 4 device orientations works, use only 1.
 
-# swift
-
-```swift
-class MainView: GLKViewController {
-    
-    var panoramaView = PanoramaView()
-    
-    override func viewDidLoad() {
-        panoramaView.setImageWithName("imagename.jpg")
-        panoramaView.touchToPan = true          // Use touch input to pan
-        panoramaView.orientToDevice = false     // Use motion sensors to pan
-        panoramaView.pinchToZoom = true         // Use pinch gesture to zoom
-        panoramaView.showTouches = true         // Show touches
-        self.view = panoramaView
-    }
-    
-    override func glkView(view: GLKView, drawInRect rect: CGRect) {
-        panoramaView.draw()
-    }
-}
-```
-
-# orientation
+## Orientation
 
 * __azimuth__ and __altitude__
 * __look direction__, the Z vector pointing through the center of the screen
@@ -122,12 +157,12 @@ The program begins by facing the center column of the image, or azimuth 0°
 
 ![wikipedia](https://raw.github.com/robbykraft/Panorama/master/readme/azimuth-altitude-pixels.png)
 
-# about equirectangular
+## About equirectangular
 
 ![sample](https://raw.github.com/robbykraft/Panorama/master/readme/park_small.jpg)
 
 equirectangular images mapped to the inside of a celestial sphere come out looking like the original scene, and the math is relatively simple [http://en.wikipedia.org/wiki/Equirectangular_projection](http://en.wikipedia.org/wiki/Equirectangular_projection)
 
-# license
+## License
 
 MIT

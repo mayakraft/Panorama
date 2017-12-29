@@ -201,6 +201,7 @@ GLKQuaternion GLKQuaternionFromTwoVectors(GLKVector3 u, GLKVector3 v){
 		_attitudeMatrix = GLKMatrix4Multiply([self getDeviceOrientationMatrix], _offsetMatrix);
 		[self updateLook];
 		glMultMatrixf(_attitudeMatrix.m);
+		glRotatef(_cardinalOffset, 0, 1, 0);
 		glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, whiteColor);  // panorama at full color
 		[sphere execute];
 		glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, clearColor);
