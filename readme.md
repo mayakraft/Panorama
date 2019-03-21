@@ -1,6 +1,6 @@
 # 360° spherical panorama view
 
-## Features
+##1:Features
 
 * OpenGL powered
 * orientation sensors to look around
